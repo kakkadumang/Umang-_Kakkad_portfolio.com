@@ -1,0 +1,1992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Umang Kakkad | Software Developer &amp; MCA Student</title>
+  <meta name="description" content="Personal portfolio of Umang Kakkad - Software Developer &amp; MCA Student at GLS University, Ahmedabad. Explore projects, technical skills, and experience.">
+
+  <!-- Favicon SVG -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23050814'/><text x='50' y='65' font-family='monospace' font-size='50' font-weight='bold' fill='%2300f5ff' text-anchor='middle'>&lt;UK/&gt;</text></svg>">
+
+  <!-- Core Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    .professional-profile-card {
+      padding: 30px;
+      height: 100%;
+      box-sizing: border-box;
+    }
+    .professional-profile-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+    }
+    .profile-icon {
+      width: 52px;
+      height: 52px;
+      min-width: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      font-size: 25px;
+      background: rgba(0,229,255,0.08);
+      border: 1px solid rgba(0,229,255,0.25);
+      box-shadow: 0 0 22px rgba(0,229,255,0.08);
+    }
+    .profile-card-label {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: #00e5ff;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+    .profile-card-title {
+      margin: 0;
+      font-size: 22px;
+      color: #ffffff;
+    }
+    .professional-profile-details {
+      display: flex;
+      flex-direction: column;
+      gap: 17px;
+    }
+    .profile-detail-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .profile-detail-icon {
+      width: 38px;
+      height: 38px;
+      min-width: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      background: rgba(123,92,255,0.10);
+      border: 1px solid rgba(123,92,255,0.20);
+      font-size: 17px;
+    }
+    .profile-detail-content {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      min-width: 0;
+    }
+    .profile-detail-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      opacity: 0.55;
+    }
+    .profile-detail-content strong {
+      font-size: 14px;
+      color: #ffffff;
+    }
+    .profile-detail-content small {
+      font-size: 12px;
+      line-height: 1.45;
+      opacity: 0.65;
+    }
+    .profile-tech-section {
+      margin-top: 25px;
+    }
+    .profile-tech-label {
+      display: block;
+      margin-bottom: 11px;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      color: #00e5ff;
+      font-weight: 600;
+    }
+    .profile-tech-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .profile-tech-chip {
+      padding: 6px 11px;
+      border-radius: 7px;
+      font-size: 12px;
+      color: #d8eaff;
+      background: rgba(255,255,255,0.045);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+    .profile-availability {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-top: 25px;
+      padding: 12px 14px;
+      border-radius: 9px;
+      background: rgba(0,255,150,0.055);
+      border: 1px solid rgba(0,255,150,0.16);
+      color: #baffdf;
+      font-size: 13px;
+    }
+    .availability-dot {
+      width: 8px;
+      height: 8px;
+      min-width: 8px;
+      border-radius: 50%;
+      background: #00ff96;
+      box-shadow: 0 0 10px #00ff96;
+    }
+    @media (max-width: 900px) {
+      .professional-profile-card {
+        padding: 24px;
+      }
+    }
+
+    /* Premium Portfolio Search */
+    .portfolio-search-wrap{position:relative;display:flex;align-items:center;z-index:1002}
+    .portfolio-search-btn{width:42px;height:42px;border-radius:12px;border:1px solid rgba(0,229,255,.28);background:rgba(0,229,255,.06);color:#00e5ff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.25s;box-shadow:0 0 18px rgba(0,229,255,.06)}
+    .portfolio-search-btn:hover{transform:translateY(-1px);background:rgba(0,229,255,.12);box-shadow:0 0 24px rgba(0,229,255,.18)}
+    .portfolio-search-panel{position:absolute;top:52px;right:0;width:min(430px,calc(100vw - 28px));padding:12px;border:1px solid rgba(0,229,255,.22);background:rgba(5,8,20,.94);backdrop-filter:blur(18px);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.45),0 0 30px rgba(0,229,255,.08);display:none}
+    .portfolio-search-panel.open{display:block;animation:searchDrop .18s ease-out}
+    @keyframes searchDrop{from{opacity:0;transform:translateY(-7px) scale(.98)}to{opacity:1;transform:none}}
+    .portfolio-search-input-row{display:flex;align-items:center;gap:9px;padding:4px 6px 4px 12px;border:1px solid rgba(255,255,255,.10);border-radius:11px;background:rgba(255,255,255,.045)}
+    .portfolio-search-input{width:100%;border:0;outline:0;background:transparent;color:#fff;font:500 14px inherit;padding:10px 0}
+    .portfolio-search-input::placeholder{color:rgba(255,255,255,.45)}
+    .portfolio-search-clear{border:0;background:transparent;color:rgba(255,255,255,.5);cursor:pointer;font-size:18px;padding:5px}
+    .portfolio-search-hint{font-size:11px;color:rgba(255,255,255,.42);padding:9px 4px 5px}
+    .portfolio-search-results{max-height:310px;overflow:auto;margin-top:5px}
+    .portfolio-search-result{display:block;width:100%;text-align:left;border:1px solid transparent;background:transparent;color:#fff;padding:11px 10px;border-radius:10px;cursor:pointer;margin:2px 0}
+    .portfolio-search-result:hover,.portfolio-search-result:focus{outline:none;background:rgba(0,229,255,.08);border-color:rgba(0,229,255,.15)}
+    .portfolio-search-result strong{display:block;font-size:13px}
+    .portfolio-search-result span{display:block;font-size:11px;color:rgba(255,255,255,.5);margin-top:3px}
+    .portfolio-search-empty{padding:15px 10px;color:rgba(255,255,255,.55);font-size:12px;text-align:center}
+    @media(max-width:900px){.portfolio-search-wrap{order:1}.portfolio-search-panel{position:fixed;top:72px;right:14px;left:14px;width:auto}.portfolio-search-btn{width:40px;height:40px}.nav-actions{gap:8px}}
+    @media(max-width:560px){.portfolio-search-panel{top:68px;right:10px;left:10px;border-radius:14px}.portfolio-search-input{font-size:13px}.portfolio-search-results{max-height:55vh}.portfolio-search-btn{width:38px;height:38px}}
+
+    /* Professional Feedback Section */
+    .feedback-section{margin-top:42px}
+    .feedback-card{padding:30px}
+    .feedback-header{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+    .feedback-icon{width:48px;height:48px;display:flex;align-items:center;justify-content:center;border-radius:14px;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.22);font-size:22px}
+    .feedback-title{margin:0;color:#fff;font-size:21px}
+    .feedback-subtitle{margin:5px 0 0;color:rgba(255,255,255,.58);font-size:13px;line-height:1.6}
+    .feedback-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .feedback-full{grid-column:1/-1}
+    .feedback-rating{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+    .feedback-rating label{cursor:pointer}
+    .feedback-rating input{position:absolute;opacity:0;pointer-events:none}
+    .feedback-rating span{display:inline-flex;padding:8px 12px;border-radius:9px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:rgba(255,255,255,.7);font-size:13px;transition:.2s}
+    .feedback-rating label:hover span,.feedback-rating input:checked+span{border-color:rgba(0,229,255,.45);background:rgba(0,229,255,.09);color:#00e5ff}
+    .feedback-note{margin-top:12px;font-size:11px;color:rgba(255,255,255,.4)}
+    @media(max-width:700px){.feedback-card{padding:22px}.feedback-form-grid{grid-template-columns:1fr}.feedback-full{grid-column:auto}}
+  </style>
+</head>
+<body>
+
+  <!-- Dynamic Particle Canvas Background -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Ambient Neon Light Glows -->
+  <div class="ambient-glow glow-top-left"></div>
+  <div class="ambient-glow glow-bottom-right"></div>
+  <div class="ambient-glow glow-center"></div>
+
+  <!-- Cyber Grid Background Pattern Overlay -->
+  <div class="cyber-grid-overlay"></div>
+
+  <!-- ==========================================================================
+       TOP NAVIGATION BAR
+       ========================================================================== -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="#home" class="logo" aria-label="Home"><span class="logo-text">Umang Kakkad</span></a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="nav-links">
+        <a href="#home" class="nav-link active">Home</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#education" class="nav-link">Education</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#experience" class="nav-link">Experience</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#certificates" class="nav-link">Certificates</a>
+        <a href="#resume" class="nav-link">Resume</a>
+        <a href="#contact" class="nav-link">Contact</a>
+        <a href="#feedback" class="nav-link">Feedback</a>
+      </nav>
+
+      <!-- Nav Actions -->
+      <div class="nav-actions">
+        <!-- Premium Portfolio Search -->
+        <div class="portfolio-search-wrap">
+          <button id="portfolio-search-btn" class="portfolio-search-btn" type="button" aria-label="Search portfolio" aria-expanded="false" title="Search portfolio (Ctrl+K)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><line x1="20" y1="20" x2="16.2" y2="16.2"></line></svg>
+          </button>
+          <div id="portfolio-search-panel" class="portfolio-search-panel" role="search">
+            <div class="portfolio-search-input-row">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="20" y1="20" x2="16.2" y2="16.2"></line></svg>
+              <input id="portfolio-search-input" class="portfolio-search-input" type="search" placeholder="Search skills, projects, certificates..." autocomplete="off">
+              <button id="portfolio-search-clear" class="portfolio-search-clear" type="button" aria-label="Clear search">&times;</button>
+            </div>
+            <div class="portfolio-search-hint">Try: Python, Django, MCA, certificates, projects, internship, contact</div>
+            <div id="portfolio-search-results" class="portfolio-search-results"></div>
+          </div>
+        </div>
+
+        <!-- Sci-Fi Audio Synthesizer Toggle -->
+        <button id="sound-toggle-btn" class="sound-toggle-btn" aria-label="Toggle Cyber Sound Effects" title="Toggle UI Sound Effects">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+        </button>
+
+        <a href="#contact" class="btn btn-neon-cyan btn-sm btn-sweep">Contact Me</a>
+
+        <!-- Mobile Hamburger Toggle -->
+        <button id="hamburger-btn" class="hamburger" aria-label="Toggle Navigation Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu Overlay -->
+  <div id="mobile-nav-overlay" class="mobile-nav-overlay">
+    <nav class="mobile-nav-links">
+      <a href="#home" class="mobile-nav-link">Home</a>
+      <a href="#about" class="mobile-nav-link">About Me</a>
+      <a href="#education" class="mobile-nav-link">Education</a>
+      <a href="#skills" class="mobile-nav-link">Skills</a>
+      <a href="#experience" class="mobile-nav-link">Experience</a>
+      <a href="#projects" class="mobile-nav-link">Projects</a>
+      <a href="#certificates" class="mobile-nav-link">Certificates</a>
+      <a href="#resume" class="mobile-nav-link">Resume</a>
+      <a href="#contact" class="mobile-nav-link">Contact</a>
+      <a href="#feedback" class="mobile-nav-link">Feedback</a>
+    </nav>
+    <div class="mobile-nav-actions">
+      <a href="#contact" class="btn btn-neon-cyan btn-sm">Initialize Contact</a>
+      <button class="btn btn-cyber-outline btn-sm download-resume-btn">Download Resume</button>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       SECTION 1: HOME (HERO)
+       ========================================================================== -->
+  <section id="home" class="section hero-section">
+    <div class="container">
+      <div class="hero-grid">
+        <!-- Hero Left Column: Narrative & CTA -->
+        <div class="hero-content reveal-left">
+          <div class="hero-status-pill">
+            <span class="status-dot"></span>
+            <span>SOFTWARE DEVELOPER &bull; OPEN TO OPPORTUNITIES</span>
+          </div>
+
+          <p class="hero-greeting">Welcome to my professional portfolio</p>
+          <h1 class="hero-name">
+            <span class="neon-text-gradient">Umang Kakkad</span>
+          </h1>
+
+          <!-- Typewriter Dynamic Headline -->
+          <div class="hero-typewriter-wrapper">
+            <span class="typewriter-prefix">&gt;</span>
+            <span id="typewriter-text" class="typewriter-text">Software Developer | MCA Student</span>
+          </div>
+
+          <p class="hero-desc">
+            Passionate Software Developer and MCA student at GLS University, Ahmedabad. Building reliable desktop and web applications with C#, .NET Framework, Python, Django, SQL Server, and modern web technologies. Focused on writing clean, scalable code and delivering seamless user experiences.
+          </p>
+
+          <!-- Primary Neon Buttons -->
+          <div class="hero-cta-group">
+            <a href="#projects" class="btn btn-neon-cyan btn-sweep">
+              <span>View Projects</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+
+            <a href="#contact" class="btn btn-neon-purple btn-sweep">
+              <span>Get In Touch</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </a>
+
+            <button class="btn btn-cyber-outline download-resume-btn">
+              <span>Download CV</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            </button>
+          </div>
+
+          <!-- Social Quick Links Strip -->
+          <div class="hero-social-strip">
+            <span class="social-strip-label">// NETWORK LINKS:</span>
+            <div class="social-strip-links">
+              <!-- LinkedIn Button -->
+              <a href="https://www.linkedin.com/in/umangkakkad/" target="_blank" rel="noopener noreferrer" class="social-icon-btn purple-hover" aria-label="LinkedIn: Umang Kakkad" title="LinkedIn: Umang Kakkad">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+              </a>
+
+              <!-- GitHub Button -->
+              <a href="https://github.com/kakkadumang" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="GitHub: kakkadumang" title="GitHub: kakkadumang">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+              </a>
+
+              <!-- Email Button -->
+              <a href="mailto:kakkadumang08@gmail.com" class="social-icon-btn" aria-label="Email: kakkadumang08@gmail.com" title="Email: kakkadumang08@gmail.com">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+              </a>
+
+              <!-- Phone Button -->
+              <a href="tel:+919428879100" class="social-icon-btn purple-hover" aria-label="Phone: +91 9428879100" title="Phone: +91 9428879100">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Right Column: Profile Hologram Frame -->
+        <div class="hero-visual-wrapper reveal-right">
+          <div class="hologram-card-container">
+            <!-- Dynamic Conic Neon Glow Ring -->
+            <div class="hologram-conic-glow"></div>
+
+            <!-- Profile Hologram Card -->
+            <div class="hologram-frame">
+              <div class="hologram-top-badge">
+                <span></span>
+                <span>STATUS: VERIFIED</span>
+              </div>
+
+              <!-- Profile Photo Placeholder Container -->
+              <div class="avatar-image-box">
+                <img src="assets/images/profile.jpg" alt="Umang Kakkad - Profile Photo" width="250" height="250">
+              </div>
+
+              <div class="hologram-footer-info">
+                <div class="hologram-dev-name">Umang Kakkad</div>
+                <div class="hologram-dev-role">SOFTWARE DEVELOPER | MCA</div>
+              </div>
+            </div>
+
+            <!-- Floating Sci-Fi Badges -->
+            <div class="floating-badge badge-top-right">
+              <span>⚡</span>
+              <span>C# &bull; Python &bull; SQL</span>
+            </div>
+
+            <div class="floating-badge badge-bottom-left">
+              <span>🛡️</span>
+              <span>Clean Code &bull; MCA</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Statistics Bar Strip -->
+      <div class="hero-stats-bar reveal delay-200">
+        <div class="stat-item">
+          <div class="stat-number" data-target="MCA">MCA</div>
+          <div class="stat-label">GLS University, Ahmedabad</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-target="2+">2+</div>
+          <div class="stat-label">Core Featured Projects</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-target="1">1</div>
+          <div class="stat-label">Industry Internship Exposure</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-target="100%">100%</div>
+          <div class="stat-label">Dedication &amp; Clean Code</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 2: ABOUT ME
+       ========================================================================== -->
+  <section id="about" class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">PROFILE</span>
+        <h2 class="section-title">About Me</h2>
+        <p class="section-subtitle">Dedicated Software Developer with strong programming foundations, database proficiency, and practical IT exposure.</p>
+      </div>
+
+      <div class="about-grid">
+        <!-- Left: Narrative & Key Strengths -->
+        <div class="about-text-content reveal-left">
+          <p class="about-intro-p">
+            I am Umang Kakkad, a passionate Software Developer currently pursuing my Master of Computer Applications (MCA) at GLS University, Ahmedabad.
+          </p>
+          <p class="about-body-p">
+            With a comprehensive technical foundation across core programming languages such as C, C++, Java, C#, and Python, I specialize in building structured, reliable applications. My database expertise spans MySQL and SQL Server, enabling me to design optimized schemas and implement ACID-compliant transactional workflows.
+          </p>
+          <p class="about-body-p">
+            During my internship at AnantaX Technology in Rajkot, I gained valuable practical industry exposure, working with modern software development concepts, technical execution tasks, and active professional team collaboration. I enjoy tackling software challenges and continuously expanding my skillset across web and desktop platforms.
+          </p>
+
+          <!-- Core Attributes Grid -->
+          <div class="about-key-points">
+            <div class="key-point-card">
+              <div class="key-point-icon">⚡</div>
+              <div>
+                <h3 class="key-point-title">Core Programming</h3>
+                <p class="key-point-desc">Solid grounding in C, C++, Java, C#, and Python with OOP design principles.</p>
+              </div>
+            </div>
+
+            <div class="key-point-card">
+              <div class="key-point-icon">🛡️</div>
+              <div>
+                <h3 class="key-point-title">Database Management</h3>
+                <p class="key-point-desc">Proficient in relational databases, indexing, and queries with MySQL &amp; SQL Server.</p>
+              </div>
+            </div>
+
+            <div class="key-point-card">
+              <div class="key-point-icon">🌐</div>
+              <div>
+                <h3 class="key-point-title">Web &amp; Frameworks</h3>
+                <p class="key-point-desc">Hands-on application development using Python Django, ASP.NET, HTML, CSS, and JS.</p>
+              </div>
+            </div>
+
+            <div class="key-point-card">
+              <div class="key-point-icon">🤝</div>
+              <div>
+                <h3 class="key-point-title">Industry Exposure</h3>
+                <p class="key-point-desc">Hands-on internship experience at AnantaX Technology, Rajkot with collaborative teamwork.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Professional Profile Card -->
+        <div class="reveal-right">
+          <div class="glass-card professional-profile-card">
+
+            <div class="professional-profile-header">
+              <div class="profile-icon">👨‍💻</div>
+              <div>
+                <span class="profile-card-label">PROFESSIONAL PROFILE</span>
+                <h3 class="profile-card-title">Software Developer</h3>
+              </div>
+            </div>
+
+            <div class="professional-profile-details">
+              <div class="profile-detail-item">
+                <div class="profile-detail-icon">💻</div>
+                <div class="profile-detail-content">
+                  <span class="profile-detail-label">Current Role</span>
+                  <strong>Software Developer</strong>
+                  <small>Application &amp; Web Development</small>
+                </div>
+              </div>
+
+              <div class="profile-detail-item">
+                <div class="profile-detail-icon">🎓</div>
+                <div class="profile-detail-content">
+                  <span class="profile-detail-label">Master's Degree</span>
+                  <strong>MCA</strong>
+                  <small>GLS University, Ahmedabad · Currently Pursuing</small>
+                </div>
+              </div>
+
+              <div class="profile-detail-item">
+                <div class="profile-detail-icon">🎓</div>
+                <div class="profile-detail-content">
+                  <span class="profile-detail-label">Bachelor's Degree</span>
+                  <strong>BCA</strong>
+                  <small>Graduation Completed · Shree G.K. &amp; C.K. Bosamia Arts &amp; Commerce College</small>
+                </div>
+              </div>
+
+              <div class="profile-detail-item">
+                <div class="profile-detail-icon">💼</div>
+                <div class="profile-detail-content">
+                  <span class="profile-detail-label">Internship</span>
+                  <strong>AnantaX Technology</strong>
+                  <small>Rajkot · IT / Software Development</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="profile-tech-section">
+              <span class="profile-tech-label">CORE TECHNOLOGIES</span>
+              <div class="profile-tech-list">
+                <span class="profile-tech-chip">C</span>
+                <span class="profile-tech-chip">C++</span>
+                <span class="profile-tech-chip">Java</span>
+                <span class="profile-tech-chip">C#</span>
+                <span class="profile-tech-chip">Python</span>
+                <span class="profile-tech-chip">Django</span>
+                <span class="profile-tech-chip">ASP.NET</span>
+                <span class="profile-tech-chip">JavaScript</span>
+              </div>
+            </div>
+
+            <div class="profile-tech-section">
+              <span class="profile-tech-label">DATABASES</span>
+              <div class="profile-tech-list">
+                <span class="profile-tech-chip">MySQL</span>
+                <span class="profile-tech-chip">SQL Server</span>
+              </div>
+            </div>
+
+            <div class="profile-availability">
+              <span class="availability-dot"></span>
+              <span>Open to Opportunities</span>
+            </div>
+
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 3: EDUCATION
+       ========================================================================== -->
+ <section id="education" class="section">
+  <div class="container">
+
+    <div class="section-header reveal">
+      <span class="section-tag">ACADEMICS</span>
+
+      <h2 class="section-title">
+        Education &amp; Qualifications
+      </h2>
+
+      <p class="section-subtitle">
+        Academic training in computer applications, software engineering,
+        and computational logic.
+      </p>
+    </div>
+
+
+    <div class="education-timeline">
+
+      <!-- ============================= -->
+      <!-- EDUCATION CARD 1 - MCA -->
+      <!-- ============================= -->
+
+      <div class="education-item reveal">
+
+        <div class="edu-node-icon">
+          <svg width="24" height="24"
+               viewBox="0 0 24 24"
+               fill="none"
+               stroke="currentColor"
+               stroke-width="2">
+
+            <path d="M22 10v6"></path>
+
+            <path d="M2 10l10-5 10 5-10 5z"></path>
+
+            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+
+          </svg>
+        </div>
+
+
+        <div class="glass-card education-card">
+
+          <div class="edu-card-header">
+
+            <div>
+
+              <h3 class="edu-degree">
+                MCA (Master of Computer Applications)
+              </h3>
+
+              <div class="edu-institution">
+                GLS University, Ahmedabad
+              </div>
+
+            </div>
+
+            <span class="edu-period-badge">
+              Currently Pursuing
+            </span>
+
+          </div>
+
+
+          <p class="edu-desc">
+            Currently pursuing Master of Computer Applications, acquiring
+            advanced training in software development lifecycles,
+            object-oriented methodologies, database design, web application
+            architectures, and emerging technologies.
+          </p>
+
+
+          <div class="edu-coursework-chips">
+
+            <span class="course-chip">
+              Object-Oriented Programming (Java, C++, C#)
+            </span>
+
+            <span class="course-chip">
+              Database Management Systems (MySQL, SQL Server)
+            </span>
+
+            <span class="course-chip">
+              Web Technologies (ASP.NET, HTML/CSS, JS)
+            </span>
+
+            <span class="course-chip">
+              Python Programming &amp; Machine Learning
+            </span>
+
+            <span class="course-chip">
+              Software Development Life Cycle
+            </span>
+
+            <span class="course-chip">
+              Operating Systems (Windows, Linux)
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- ============================= -->
+      <!-- EDUCATION CARD 2 - BCA -->
+      <!-- ============================= -->
+
+      <div class="education-item reveal">
+
+        <div class="edu-node-icon">
+          🎓
+        </div>
+
+
+        <div class="glass-card education-card">
+
+          <div class="edu-card-header">
+
+            <div>
+
+              <h3 class="edu-degree">
+                BCA (Bachelor of Computer Applications)
+              </h3>
+
+              <div class="edu-institution">
+                Shree G.K. &amp; C.K. Bosamia Arts &amp; Commerce College
+              </div>
+
+            </div>
+
+            <span class="edu-period-badge">
+              Graduation Completed
+            </span>
+
+          </div>
+
+
+          <p class="edu-desc">
+            Bachelor of Computer Applications (BCA) completed with a strong
+            foundation in programming, databases, web technologies and
+            software development.
+          </p>
+
+
+          <div class="edu-coursework-chips">
+
+            <span class="course-chip">
+              Programming
+            </span>
+
+            <span class="course-chip">
+              Database Management
+            </span>
+
+            <span class="course-chip">
+              Web Development
+            </span>
+
+            <span class="course-chip">
+              Software Development
+            </span>
+
+          </div>
+
+
+
+          <!-- ============================= -->
+          <!-- BCA CERTIFICATE -->
+          <!-- ============================= -->
+
+          <div style="
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255,255,255,0.10);
+          ">
+
+            <h4 style="
+              margin-bottom: 18px;
+              font-size: 18px;
+              color: #ffffff;
+            ">
+              🎓 BCA Graduation Certificate
+            </h4>
+
+
+            <!-- Certificate Image -->
+
+            <a
+              href="assets/images/bca-certificate.jpeg"
+              target="_blank"
+              rel="noopener noreferrer"
+              style="display: block;"
+            >
+
+              <img
+                src="assets/images/bca-certificate.jpeg"
+                alt="BCA Graduation Certificate"
+                loading="lazy"
+                style="
+                  width: 100%;
+                  max-width: 900px;
+                  height: auto;
+                  display: block;
+                  margin: 0 auto;
+                  border-radius: 12px;
+                  border: 1px solid rgba(255,255,255,0.15);
+                  box-shadow: 0 10px 35px rgba(0,0,0,0.35);
+                  cursor: pointer;
+                  transition: transform 0.3s ease;
+                "
+              >
+
+            </a>
+
+
+            <p style="
+              margin-top: 12px;
+              text-align: center;
+              font-size: 13px;
+              opacity: 0.7;
+            ">
+              Click the certificate image to view it in full size.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+  <!-- ==========================================================================
+       SECTION 4: SKILLS
+       ========================================================================== -->
+  <section id="skills" class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">CAPABILITIES</span>
+        <h2 class="section-title">Technical Skills &amp; Stack</h2>
+        <p class="section-subtitle">Core programming languages, database systems, web technologies, and software tools.</p>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="skills-filter-nav reveal">
+        <button class="filter-btn skill-filter-btn active" data-filter="all">All Skills</button>
+        <button class="filter-btn skill-filter-btn" data-filter="languages">Programming Languages</button>
+        <button class="filter-btn skill-filter-btn" data-filter="database">Databases</button>
+        <button class="filter-btn skill-filter-btn" data-filter="web">Web Technologies</button>
+        <button class="filter-btn skill-filter-btn" data-filter="tools">OS &amp; Other Skills</button>
+      </div>
+
+      <!-- Skills Cards Grid -->
+      <div class="skills-grid">
+        <!-- Programming Languages -->
+        <div class="glass-card skill-card reveal" data-category="languages">
+          <div class="skill-card-top">
+            <div class="skill-icon-wrap">C#</div>
+            <span class="skill-badge-category">Language</span>
+          </div>
+          <h3 class="skill-title">C# &amp; .NET Framework</h3>
+          <div class="skill-bar-wrap">
+            <div class="skill-level-row">
+              <span>Proficiency</span>
+              <span>Advanced</span>
+            </div>
+            <div class="skill-progress-track">
+              <div class="skill-progress-bar" style="width: 90%;"></div>
+            </div>
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag">Desktop Apps</span>
+            <span class="skill-tag">.NET Framework</span>
+            <span class="skill-tag">Windows Forms</span>
+            <span class="skill-tag">OOP</span>
+          </div>
+        </div>
+
+        <div class="glass-card skill-card reveal delay-100" data-category="languages">
+          <div class="skill-card-top">
+            <div class="skill-icon-wrap purple">🐍</div>
+            <span class="skill-badge-category">Language</span>
+          </div>
+          <h3 class="skill-title">Python &amp; Machine Learning</h3>
+          <div class="skill-bar-wrap">
+            <div class="skill-level-row">
+              <span>Proficiency</span>
+              <span>Advanced</span>
+            </div>
+            <div class="skill-progress-track">
+              <div class="skill-progress-bar purple-bar" style="width: 88%;"></div>
+            </div>
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag">Python 3</span>
+            <span class="skill-tag">Django</span>
+            <span class="skill-tag">Machine Learning</span>
+            <span class="skill-tag">API Integration</span>
+          </div>
+        </div>
+
+        <div class="glass-card skill-card reveal delay-200" data-category="languages">
+          <div class="skill-card-top">
+            <div class="skill-icon-wrap">☕</div>
+            <span class="skill-badge-category">Language</span>
+          </div>
+          <h3 class="skill-title">Java</h3>
+          <div class="skill-bar-wrap">
+            <div class="skill-level-row">
+              <span>Proficiency</span>
+              <span>Proficient</span>
+            </div>
+            <div class="skill-progress-track">
+              <div class="skill-progress-bar" style="width: 85%;"></div>
+            </div>
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag">Core Java</span>
+            <span class="skill-tag">OOP Architecture</span>
+            <span class="skill-tag">Collections</span>
+            <span class="skill-tag">Exception Handling</span>
+          </div>
+        </div>
+
+        <div class="glass-card skill-card reveal" data-category="languages">
+          <div class="skill-card-top">
+            <div class="skill-icon-wrap purple">C++</div>
+            <span class="skill-badge-category">Language</span>
+          </div>
+          <h3 class="skill-title">C &amp; C++</h3>
+          <div class="skill-bar-wrap">
+            <div class="skill-level-row">
+              <span>Proficiency</span>
+              <span>Strong Foundation</span>
+            </div>
+            <div class="skill-progress-track">
+              <div class="skill-progress-bar purple-bar" style="width: 88%;"></div>
+            </div>
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag">Pointers</span>
+            <span class="skill-tag">Memory Logic</span>
+            <span class="skill-tag">Data Structures</span>
+            <span class="skill-tag">Algorithms</span>
+          </div>
+        </div>
+
+        <!-- Databases -->
+        <div class="glass-card skill-card reveal delay-100" data-category="database">
+          <div class="skill-card-top">
+            <div class="skill-icon-wrap">🗄️</div>
+            <span class="skill-badge-category">Database</span>
+          </div>
+          <h3 class="skill-title">SQL Server</h3>
+          <div class="skill-bar-wrap">
+            <div class="skill-level-row">
+              <span>Proficiency</span>
+              <span>Advanced</span>
+            </div>
+            <div class="skill-progress-track">
+              <div class="skill-progress-bar" style="width: 90%;"></div>
+            </div>
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag">T-SQL</span>
+            <span class="skill-tag">Stored Procedures</span>
+            <span class="skill-tag">ACID Transactions</span>
+            <span class="skill-tag">Triggers &amp; Views</span>
+          </div>
+        </div>
+
+        <div class="glass-card skill-card reveal delay-200" data-category="database">
+          <div class="skill-card-top">
+            <div class="skill-icon-wrap purple">🐬</div>
+            <span class="skill-badge-category">Database</span>
+          </div>
+          <h3 class="skill-title">MySQL</h3>
+          <div class="skill-bar-wrap">
+            <div class="skill-level-row">
+              <span>Proficiency</span>
+              <span>Proficient</span>
+            </div>
+            <div class="skill-progress-track">
+              <div class="skill-progress-bar purple-bar" style="width: 86%;"></div>
+            </div>
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag">Relational Schemas</span>
+            <span class="skill-tag">Complex Joins</span>
+            <span class="skill-tag">Normalization</span>
+            <span class="skill-tag">Data Integrity</span>
+          </div>
+        </div>
+
+        <!-- Web Technologies -->
+        <div class="glass-card skill-card reveal" data-category="web">
+          <div class="skill-card-top">
+            <div class="skill-icon-wrap">🌐</div>
+            <span class="skill-badge-category">Web</span>
+          </div>
+          <h3 class="skill-title">ASP.NET</h3>
+          <div class="skill-bar-wrap">
+            <div class="skill-level-row">
+              <span>Proficiency</span>
+              <span>Proficient</span>
+            </div>
+            <div class="skill-progress-track">
+              <div class="skill-progress-bar" style="width: 84%;"></div>
+            </div>
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag">C# Backend</span>
+            <span class="skill-tag">Web Forms / MVC</span>
+            <span class="skill-tag">SQL Integration</span>
+            <span class="skill-tag">State Management</span>
+          </div>
+        </div>
+
+        <div class="glass-card skill-card reveal delay-100" data-category="web">
+          <div class="skill-card-top">
+            <div class="skill-icon-wrap purple">🎨</div>
+            <span class="skill-badge-category">Web</span>
+          </div>
+          <h3 class="skill-title">HTML &amp; CSS</h3>
+          <div class="skill-bar-wrap">
+            <div class="skill-level-row">
+              <span>Proficiency</span>
+              <span>Expert</span>
+            </div>
+            <div class="skill-progress-track">
+              <div class="skill-progress-bar purple-bar" style="width: 94%;"></div>
+            </div>
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag">HTML5 Semantic</span>
+            <span class="skill-tag">CSS3 Modern</span>
+            <span class="skill-tag">Responsive Design</span>
+            <span class="skill-tag">Flexbox &amp; Grid</span>
+          </div>
+        </div>
+
+        <div class="glass-card skill-card reveal delay-200" data-category="web">
+          <div class="skill-card-top">
+            <div class="skill-icon-wrap">⚡</div>
+            <span class="skill-badge-category">Web</span>
+          </div>
+          <h3 class="skill-title">JavaScript</h3>
+          <div class="skill-bar-wrap">
+            <div class="skill-level-row">
+              <span>Proficiency</span>
+              <span>Proficient</span>
+            </div>
+            <div class="skill-progress-track">
+              <div class="skill-progress-bar" style="width: 86%;"></div>
+            </div>
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag">DOM Manipulation</span>
+            <span class="skill-tag">ES6+</span>
+            <span class="skill-tag">Async / Fetch</span>
+            <span class="skill-tag">Client Validation</span>
+          </div>
+        </div>
+
+        <!-- Operating Systems & Tools -->
+        <div class="glass-card skill-card reveal" data-category="tools">
+          <div class="skill-card-top">
+            <div class="skill-icon-wrap purple">💻</div>
+            <span class="skill-badge-category">Operating System</span>
+          </div>
+          <h3 class="skill-title">Windows &amp; Linux (Basic)</h3>
+          <div class="skill-bar-wrap">
+            <div class="skill-level-row">
+              <span>Proficiency</span>
+              <span>Proficient</span>
+            </div>
+            <div class="skill-progress-track">
+              <div class="skill-progress-bar purple-bar" style="width: 88%;"></div>
+            </div>
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag">Windows OS</span>
+            <span class="skill-tag">Linux Commands</span>
+            <span class="skill-tag">Terminal &amp; Bash</span>
+            <span class="skill-tag">Environment Setup</span>
+          </div>
+        </div>
+
+        <div class="glass-card skill-card reveal delay-100" data-category="tools">
+          <div class="skill-card-top">
+            <div class="skill-icon-wrap">📊</div>
+            <span class="skill-badge-category">Office Suite</span>
+          </div>
+          <h3 class="skill-title">MS Office Suite</h3>
+          <div class="skill-bar-wrap">
+            <div class="skill-level-row">
+              <span>Proficiency</span>
+              <span>Advanced</span>
+            </div>
+            <div class="skill-progress-track">
+              <div class="skill-progress-bar" style="width: 92%;"></div>
+            </div>
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag">Microsoft Word</span>
+            <span class="skill-tag">Microsoft PowerPoint</span>
+            <span class="skill-tag">Documentation</span>
+            <span class="skill-tag">Technical Presentations</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 5: EXPERIENCE
+       ========================================================================== -->
+  <section id="experience" class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">EXPERIENCE</span>
+        <h2 class="section-title">Industry Experience</h2>
+        <p class="section-subtitle">Hands-on practical industry exposure, technical tasks, and professional collaboration.</p>
+      </div>
+
+      <div class="experience-timeline">
+        <!-- Experience 1 -->
+        <div class="exp-item reveal">
+          <div class="exp-milestone-node radar-pulse">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+          </div>
+          <div class="glass-card exp-card">
+            <div class="exp-header">
+              <div>
+                <h3 class="exp-role">Intern | IT / Software Development</h3>
+                <div class="exp-company">
+                  <span>AnantaX Technology, Rajkot</span>
+                  <span style="font-size:0.8rem; color:var(--text-dim);">&bull; Internship</span>
+                </div>
+              </div>
+              <span class="exp-badge-duration">Industry Internship</span>
+            </div>
+
+            <div class="exp-bullet-list">
+              <div class="exp-bullet-item">
+                <span class="exp-bullet-marker">▹</span>
+                <span>Gained practical industry exposure through an internship, working with software development concepts, technical tasks, and professional team collaboration.</span>
+              </div>
+              <div class="exp-bullet-item">
+                <span class="exp-bullet-marker">▹</span>
+                <span>Applied foundational programming and software engineering principles to assist in building technical features and resolving software bugs.</span>
+              </div>
+              <div class="exp-bullet-item">
+                <span class="exp-bullet-marker">▹</span>
+                <span>Collaborated actively with team members and technical leads, observing industry-standard development workflows, task management, and quality practices.</span>
+              </div>
+            </div>
+
+            <div class="exp-tech-chips">
+              <span class="tech-chip">Software Development</span>
+              <span class="tech-chip">IT Concepts</span>
+              <span class="tech-chip">Technical Tasks</span>
+              <span class="tech-chip">Team Collaboration</span>
+              <span class="tech-chip">Problem Solving</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Academic Visit: INFLIBNET Centre, Gandhinagar -->
+        <div class="exp-item reveal delay-100">
+          <div class="exp-milestone-node radar-pulse">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 7v5l3 2"></path>
+            </svg>
+          </div>
+
+          <div class="glass-card exp-card">
+            <div class="exp-header">
+              <div>
+                <h3 class="exp-role">Academic Visit | INFLIBNET Centre</h3>
+                <div class="exp-company">
+                  <span>INFLIBNET Centre, Gandhinagar</span>
+                  <span style="font-size:0.8rem; color:var(--text-dim);">&bull; College Visit</span>
+                </div>
+              </div>
+              <span class="exp-badge-duration">1-Day Academic Visit</span>
+            </div>
+
+            <p style="margin: 0 0 22px; color: var(--text-muted); line-height: 1.8;">
+              Visited the INFLIBNET Centre, Gandhinagar as part of a college academic visit.
+              The visit provided valuable exposure to digital library services, information
+              technology infrastructure, and professional technology-driven environments.
+            </p>
+
+            <!-- INFLIBNET Visit Photo Gallery: add 3-4 photos -->
+            <div style="
+              display:grid;
+              grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+              gap:14px;
+              margin:0 0 22px;
+            ">
+              <a href="assets/images/inflibnet-visit-1.jpeg"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 style="display:block; overflow:hidden; border-radius:14px; border:1px solid rgba(0,229,255,0.22); background:rgba(8,15,35,0.55);">
+                <img
+                  src="assets/images/inflibnet-visit-2.jpeg"
+                  alt="INFLIBNET Centre Gandhinagar academic visit - Photo 1"
+                  loading="lazy"
+                  style="width:100%; height:260px; object-fit:cover; display:block;"
+                >
+              </a>
+
+              <a href="assets/images/inflibnet-visit-2.jpeg"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 style="display:block; overflow:hidden; border-radius:14px; border:1px solid rgba(0,229,255,0.22); background:rgba(8,15,35,0.55);">
+                <img
+                  src="assets/images/inflibnet-visit-2.jpeg"
+                  alt="INFLIBNET Centre Gandhinagar academic visit - Photo 2"
+                  loading="lazy"
+                  style="width:100%; height:260px; object-fit:cover; display:block;"
+                >
+              </a>
+
+              <a href="assets/images/inflibnet-visit-3.jpeg"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 style="display:block; overflow:hidden; border-radius:14px; border:1px solid rgba(0,229,255,0.22); background:rgba(8,15,35,0.55);">
+                <img
+                  src="assets/images/inflibnet-visit-3.jpeg"
+                  alt="INFLIBNET Centre Gandhinagar academic visit - Photo 3"
+                  loading="lazy"
+                  style="width:100%; height:260px; object-fit:cover; display:block;"
+                >
+              </a>
+
+              <a href="assets/images/inflibnet-visit-4.jpeg"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 style="display:block; overflow:hidden; border-radius:14px; border:1px solid rgba(0,229,255,0.22); background:rgba(8,15,35,0.55);">
+                <img
+                  src="assets/images/inflibnet-visit-4.jpeg"
+                  alt="INFLIBNET Centre Gandhinagar academic visit - Photo 4"
+                  loading="lazy"
+                  style="width:100%; height:260px; object-fit:cover; display:block;"
+                >
+              </a>
+            </div>
+
+            <div class="exp-tech-chips">
+              <span class="tech-chip">Academic Visit</span>
+              <span class="tech-chip">INFLIBNET Centre</span>
+              <span class="tech-chip">Gandhinagar</span>
+              <span class="tech-chip">Technology Exposure</span>
+              <span class="tech-chip">Learning Experience</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 6: PROJECTS
+       ========================================================================== -->
+  <section id="projects" class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">CREATIONS</span>
+        <h2 class="section-title">Featured Projects</h2>
+        <p class="section-subtitle">Real-world desktop and web applications engineered with C# .NET, Python Django, and relational databases.</p>
+      </div>
+
+      <!-- Category Filter Tabs -->
+      <div class="projects-filter-nav reveal">
+        <button class="filter-btn project-filter-btn active" data-filter="all">All Projects</button>
+        <button class="filter-btn project-filter-btn" data-filter="desktop">Desktop Applications</button>
+        <button class="filter-btn project-filter-btn" data-filter="web">Web Applications</button>
+        <button class="filter-btn project-filter-btn" data-filter="python-ai">Python &amp; ML</button>
+      </div>
+
+      <!-- Projects Grid -->
+      <div class="projects-grid">
+        <!-- Project 1: Secure ATM Module -->
+        <div class="glass-card project-card reveal" data-category="desktop">
+          <div class="project-image-box">
+            <img src="assets/images/project-atm.svg" alt="Secure ATM Module Desktop Application" loading="lazy">
+            <span class="project-overlay-badge">Desktop Application</span>
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Secure ATM Module – Transaction &amp; Services Hub</h3>
+            <p class="project-desc">
+              A comprehensive desktop application engineered for secure ATM transactions and banking operations. Implements PIN verification, cash withdrawal, fund transfer, balance inquiries, and robust SQL Server audit trails.
+            </p>
+            <div class="project-tech-tags">
+              <span class="project-tag">C# .NET</span>
+              <span class="project-tag">SQL Server</span>
+              <span class="project-tag">Desktop App</span>
+              <span class="project-tag">Transactions</span>
+            </div>
+            <div class="project-actions">
+              <div class="project-action-links">
+                <a href="https://github.com/kakkadumang" target="_blank" rel="noopener noreferrer" class="project-link-btn" title="GitHub Repository">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                  <span>Code</span>
+                </a>
+              </div>
+              <button class="project-details-btn view-project-details-btn" data-project="secure-atm">
+                Details &rarr;
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2: Weather Forecast Web Application -->
+        <div class="glass-card project-card reveal delay-100" data-category="web">
+          <div class="project-image-box">
+            <img src="assets/images/project-weather.svg" alt="Weather Forecast Web Application" loading="lazy">
+            <span class="project-overlay-badge">Web Application</span>
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Weather Forecast Web Application</h3>
+            <p class="project-desc">
+              A dynamic web-based weather forecasting application developed using Python and Django. Integrates third-party Weather APIs to provide real-time weather analytics, search capabilities, and multi-day meteorological forecasts.
+            </p>
+            <div class="project-tech-tags">
+              <span class="project-tag">Python</span>
+              <span class="project-tag">Django</span>
+              <span class="project-tag">Weather API</span>
+              <span class="project-tag">HTML5/CSS3</span>
+            </div>
+            <div class="project-actions">
+              <div class="project-action-links">
+                <a href="https://github.com/kakkadumang" target="_blank" rel="noopener noreferrer" class="project-link-btn" title="GitHub Repository">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                  <span>Code</span>
+                </a>
+              </div>
+              <button class="project-details-btn view-project-details-btn" data-project="weather-forecast">
+                Details &rarr;
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 3: Nexus AI & Machine Learning Exploration -->
+        <div class="glass-card project-card reveal delay-200" data-category="python-ai">
+          <div class="project-image-box">
+            <img src="assets/images/project-1.svg" alt="Nexus AI Workspace Exploration" loading="lazy">
+            <span class="project-overlay-badge">Python &bull; ML</span>
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Nexus AI &amp; Machine Learning Workspace</h3>
+            <p class="project-desc">
+              Computational intelligence workspace integrating Python and machine learning algorithms for automated data processing, predictive pattern analysis, and real-time visualization.
+            </p>
+            <div class="project-tech-tags">
+              <span class="project-tag">Python</span>
+              <span class="project-tag">Machine Learning</span>
+              <span class="project-tag">Data Analysis</span>
+              <span class="project-tag">Algorithms</span>
+            </div>
+            <div class="project-actions">
+              <div class="project-action-links">
+                <a href="https://github.com/kakkadumang" target="_blank" rel="noopener noreferrer" class="project-link-btn" title="GitHub Repository">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                  <span>Code</span>
+                </a>
+              </div>
+              <button class="project-details-btn view-project-details-btn" data-project="nexus-ai">
+                Details &rarr;
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 4: Quantum E-Commerce in ASP.NET -->
+        <div class="glass-card project-card reveal" data-category="web">
+          <div class="project-image-box">
+            <img src="assets/images/project-5.svg" alt="Quantum E-Commerce Application" loading="lazy">
+            <span class="project-overlay-badge">ASP.NET &bull; SQL</span>
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Quantum Commerce Application</h3>
+            <p class="project-desc">
+              Web application developed with ASP.NET, C#, and SQL Server featuring product catalogs, responsive customer shopping carts, and structured relational order tables.
+            </p>
+            <div class="project-tech-tags">
+              <span class="project-tag">ASP.NET</span>
+              <span class="project-tag">C#</span>
+              <span class="project-tag">SQL Server</span>
+              <span class="project-tag">HTML5/JS</span>
+            </div>
+            <div class="project-actions">
+              <div class="project-action-links">
+                <a href="https://github.com/kakkadumang" target="_blank" rel="noopener noreferrer" class="project-link-btn" title="GitHub Repository">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                  <span>Code</span>
+                </a>
+              </div>
+              <button class="project-details-btn view-project-details-btn" data-project="quantum-commerce">
+                Details &rarr;
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 5: CyberStream Analytics -->
+        <div class="glass-card project-card reveal delay-100" data-category="web">
+          <div class="project-image-box">
+            <img src="assets/images/project-2.svg" alt="CyberStream Data Analytics Dashboard" loading="lazy">
+            <span class="project-overlay-badge">Data &bull; MySQL</span>
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">CyberStream Analytics Dashboard</h3>
+            <p class="project-desc">
+              Data visualization and metrics terminal powered by JavaScript, HTML5/CSS3, and MySQL database backends, providing interactive charts and telemetry monitoring.
+            </p>
+            <div class="project-tech-tags">
+              <span class="project-tag">JavaScript</span>
+              <span class="project-tag">MySQL</span>
+              <span class="project-tag">HTML5/CSS3</span>
+              <span class="project-tag">Chart.js</span>
+            </div>
+            <div class="project-actions">
+              <div class="project-action-links">
+                <a href="https://github.com/kakkadumang" target="_blank" rel="noopener noreferrer" class="project-link-btn" title="GitHub Repository">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                  <span>Code</span>
+                </a>
+              </div>
+              <button class="project-details-btn view-project-details-btn" data-project="cyberstream-defi">
+                Details &rarr;
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 6: CloudVault Storage Engine -->
+        <div class="glass-card project-card reveal delay-200" data-category="python-ai">
+          <div class="project-image-box">
+            <img src="assets/images/project-3.svg" alt="CloudVault Storage Engine" loading="lazy">
+            <span class="project-overlay-badge">Python &bull; SQL</span>
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">CloudVault Storage Engine</h3>
+            <p class="project-desc">
+              Secure file archiving platform engineered in Python and SQL Server with Linux environment deployment, RESTful endpoints, and encrypted access authentication.
+            </p>
+            <div class="project-tech-tags">
+              <span class="project-tag">Python</span>
+              <span class="project-tag">SQL Server</span>
+              <span class="project-tag">Linux</span>
+              <span class="project-tag">REST APIs</span>
+            </div>
+            <div class="project-actions">
+              <div class="project-action-links">
+                <a href="https://github.com/kakkadumang" target="_blank" rel="noopener noreferrer" class="project-link-btn" title="GitHub Repository">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                  <span>Code</span>
+                </a>
+              </div>
+              <button class="project-details-btn view-project-details-btn" data-project="cloudvault">
+                Details &rarr;
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 7: CERTIFICATES
+       ========================================================================== -->
+  <section id="certificates" class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">CREDENTIALS</span>
+        <h2 class="section-title">Certificates &amp; Achievements</h2>
+        <p class="section-subtitle">
+          Professional training, academic achievements, internship recognition, and verified educational credentials.
+        </p>
+      </div>
+
+      <div class="certificates-grid">
+
+        <!-- Certificate 1 -->
+        <article class="glass-card cert-card reveal" style="overflow:hidden;">
+          <a href="assets/images/internship-completion.jpg" target="_blank" rel="noopener noreferrer"
+             style="display:block; text-decoration:none;">
+            <div style="height:230px; padding:14px; display:flex; align-items:center;
+                        justify-content:center; background:rgba(3,10,28,.72);
+                        border-bottom:1px solid rgba(0,229,255,.16);">
+              <img src="assets/images/internship-completion.jpg" alt="Internship Completion Certificate" loading="lazy"
+                   style="width:100%; height:100%; object-fit:contain; border-radius:10px; display:block;">
+            </div>
+          </a>
+          <div style="padding:22px;">
+            <span class="cert-issuer">INTERNSHIP</span>
+            <h3 class="cert-title">Internship Completion Certificate</h3>
+            <p class="cert-meta">AnantaX Technology &bull; Software Development Internship</p>
+            <p style="margin:12px 0 18px; color:var(--text-muted); line-height:1.65;">Practical industry exposure in software development and professional workplace collaboration.</p>
+            <a href="assets/images/internship-completion.jpg" target="_blank" rel="noopener noreferrer"
+               class="btn btn-cyber-outline btn-sm"
+               style="display:inline-flex; align-items:center; justify-content:center; width:100%; text-decoration:none;">
+              View Certificate
+            </a>
+          </div>
+        </article>
+
+        <!-- Certificate 2 -->
+        <article class="glass-card cert-card reveal delay-100" style="overflow:hidden;">
+          <a href="assets/images/saraswati-honour-recognition.jpg" target="_blank" rel="noopener noreferrer"
+             style="display:block; text-decoration:none;">
+            <div style="height:230px; padding:14px; display:flex; align-items:center;
+                        justify-content:center; background:rgba(3,10,28,.72);
+                        border-bottom:1px solid rgba(0,229,255,.16);">
+              <img src="assets/images/saraswati-honour-recognition.jpg" alt="Saraswati Honour Ceremony Recognition" loading="lazy"
+                   style="width:100%; height:100%; object-fit:contain; border-radius:10px; display:block;">
+            </div>
+          </a>
+          <div style="padding:22px;">
+            <span class="cert-issuer">HONORS & RECOGNITION</span>
+            <h3 class="cert-title">Saraswati Honour Ceremony Recognition</h3>
+            <p class="cert-meta">Shree Lohana Mahajan, Jetpur &bull; Academic Achievement • First Rank</p>
+            <p style="margin:12px 0 18px; color:var(--text-muted); line-height:1.65;">Recognition received at the Saraswati Honour Ceremony for academic achievement.</p>
+            <a href="assets/images/saraswati-honour-recognition.jpg" target="_blank" rel="noopener noreferrer"
+               class="btn btn-cyber-outline btn-sm"
+               style="display:inline-flex; align-items:center; justify-content:center; width:100%; text-decoration:none;">
+              View Certificate
+            </a>
+          </div>
+        </article>
+
+        <!-- Certificate 3 -->
+        <article class="glass-card cert-card reveal delay-200" style="overflow:hidden;">
+          <a href="assets/images/letter-of-honour.jpg" target="_blank" rel="noopener noreferrer"
+             style="display:block; text-decoration:none;">
+            <div style="height:230px; padding:14px; display:flex; align-items:center;
+                        justify-content:center; background:rgba(3,10,28,.72);
+                        border-bottom:1px solid rgba(0,229,255,.16);">
+              <img src="assets/images/letter-of-honour.jpg" alt="Letter of Honour" loading="lazy"
+                   style="width:100%; height:100%; object-fit:contain; border-radius:10px; display:block;">
+            </div>
+          </a>
+          <div style="padding:22px;">
+            <span class="cert-issuer">HONORS & RECOGNITION</span>
+            <h3 class="cert-title">Letter of Honour</h3>
+            <p class="cert-meta">Shree Lohana Mahajan, Jetpur &bull; B.C.A. Academic Achievement • First</p>
+            <p style="margin:12px 0 18px; color:var(--text-muted); line-height:1.65;">Letter of Honour recognizing academic success in the B.C.A. program.</p>
+            <a href="assets/images/letter-of-honour.jpg" target="_blank" rel="noopener noreferrer"
+               class="btn btn-cyber-outline btn-sm"
+               style="display:inline-flex; align-items:center; justify-content:center; width:100%; text-decoration:none;">
+              View Certificate
+            </a>
+          </div>
+        </article>
+
+        <!-- Certificate 4 -->
+        <article class="glass-card cert-card reveal delay-300" style="overflow:hidden;">
+          <a href="assets/images/network-security-engineer.jpg" target="_blank" rel="noopener noreferrer"
+             style="display:block; text-decoration:none;">
+            <div style="height:230px; padding:14px; display:flex; align-items:center;
+                        justify-content:center; background:rgba(3,10,28,.72);
+                        border-bottom:1px solid rgba(0,229,255,.16);">
+              <img src="assets/images/network-security-engineer.jpg" alt="Network Security Engineer" loading="lazy"
+                   style="width:100%; height:100%; object-fit:contain; border-radius:10px; display:block;">
+            </div>
+          </a>
+          <div style="padding:22px;">
+            <span class="cert-issuer">SKILL INDIA / NSDC</span>
+            <h3 class="cert-title">Network Security Engineer</h3>
+            <p class="cert-meta">NASSCOM • Skill India Digital Hub &bull; Online Skilling Course • 1 Hour</p>
+            <p style="margin:12px 0 18px; color:var(--text-muted); line-height:1.65;">Certificate of participation for successfully completing the Network Security Engineer online skilling course.</p>
+            <a href="assets/images/network-security-engineer.jpg" target="_blank" rel="noopener noreferrer"
+               class="btn btn-cyber-outline btn-sm"
+               style="display:inline-flex; align-items:center; justify-content:center; width:100%; text-decoration:none;">
+              View Certificate
+            </a>
+          </div>
+        </article>
+
+        <!-- Certificate 5 -->
+        <article class="glass-card cert-card reveal delay-300" style="overflow:hidden;">
+          <a href="assets/images/ai-data-engineering-analyst.jpg" target="_blank" rel="noopener noreferrer"
+             style="display:block; text-decoration:none;">
+            <div style="height:230px; padding:14px; display:flex; align-items:center;
+                        justify-content:center; background:rgba(3,10,28,.72);
+                        border-bottom:1px solid rgba(0,229,255,.16);">
+              <img src="assets/images/ai-data-engineering-analyst.jpg" alt="AI - Data Engineering Analyst" loading="lazy"
+                   style="width:100%; height:100%; object-fit:contain; border-radius:10px; display:block;">
+            </div>
+          </a>
+          <div style="padding:22px;">
+            <span class="cert-issuer">SKILL INDIA / NSDC</span>
+            <h3 class="cert-title">AI - Data Engineering Analyst</h3>
+            <p class="cert-meta">NASSCOM • Skill India Digital Hub &bull; Online Skilling Course • 1 Hour</p>
+            <p style="margin:12px 0 18px; color:var(--text-muted); line-height:1.65;">Certificate of participation for successfully completing the AI - Data Engineering Analyst online skilling course.</p>
+            <a href="assets/images/ai-data-engineering-analyst.jpg" target="_blank" rel="noopener noreferrer"
+               class="btn btn-cyber-outline btn-sm"
+               style="display:inline-flex; align-items:center; justify-content:center; width:100%; text-decoration:none;">
+              View Certificate
+            </a>
+          </div>
+        </article>
+
+        <!-- Certificate 6 -->
+        <article class="glass-card cert-card reveal delay-300" style="overflow:hidden;">
+          <a href="assets/images/bca-provisional-degree.jpeg" target="_blank" rel="noopener noreferrer"
+             style="display:block; text-decoration:none;">
+            <div style="height:230px; padding:14px; display:flex; align-items:center;
+                        justify-content:center; background:rgba(3,10,28,.72);
+                        border-bottom:1px solid rgba(0,229,255,.16);">
+              <img src="assets/images/bca-certificate.jpeg" alt="Bachelor of Computer Application (BCA)" loading="lazy"
+                   style="width:100%; height:100%; object-fit:contain; border-radius:10px; display:block;">
+            </div>
+          </a>
+          <div style="padding:22px;">
+            <span class="cert-issuer">ACADEMIC QUALIFICATION</span>
+            <h3 class="cert-title">Bachelor of Computer Application (BCA)</h3>
+            <p class="cert-meta">Saurashtra University &bull; Provisional Degree Certificate • First Distinction</p>
+            <p style="margin:12px 0 18px; color:var(--text-muted); line-height:1.65;">Provisional degree certificate confirming successful completion of the B.C.A. program.</p>
+            <a href="assets/images/bca-certificate.jpeg" target="_blank" rel="noopener noreferrer"
+               class="btn btn-cyber-outline btn-sm"
+               style="display:inline-flex; align-items:center; justify-content:center; width:100%; text-decoration:none;">
+              View Certificate
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 8: RESUME
+       ========================================================================== -->
+  <section id="resume" class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">VITAE</span>
+        <h2 class="section-title">Curriculum Vitae</h2>
+        <p class="section-subtitle">Summary of professional competencies, academic status, and downloadable developer dossier.</p>
+      </div>
+
+      <div class="glass-card resume-box reveal">
+        <div class="resume-header">
+          <div class="resume-title-wrap">
+            <h3>Umang Kakkad &mdash; Developer Dossier</h3>
+            <p>Software Developer | MCA Student at GLS University, Ahmedabad | Contact: kakkadumang08@gmail.com</p>
+          </div>
+          <div class="resume-action-buttons">
+            <!-- Direct Download PDF Button -->
+            <button class="btn btn-neon-cyan download-resume-btn btn-sweep">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              <span>Download Resume (PDF)</span>
+            </button>
+
+            <!-- Full Screen Modal Viewer Button -->
+            <button class="btn btn-cyber-outline view-resume-modal-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              <span>View Full Resume</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick 3-Column Highlights -->
+        <div class="resume-overview-grid">
+          <div class="resume-col-card">
+            <h4 class="resume-col-title">
+              <span>💻</span> Programming Languages
+            </h4>
+            <ul class="resume-col-list">
+              <li>C &amp; C++ (Foundations &amp; Logic)</li>
+              <li>Java (Object-Oriented Design)</li>
+              <li>C# (.NET Desktop &amp; Backend)</li>
+              <li>Python &amp; Machine Learning</li>
+              <li>JavaScript (ES6+)</li>
+            </ul>
+          </div>
+
+          <div class="resume-col-card">
+            <h4 class="resume-col-title">
+              <span>🗄️</span> Databases &amp; Web
+            </h4>
+            <ul class="resume-col-list">
+              <li>SQL Server (T-SQL, Stored Procs)</li>
+              <li>MySQL (Relational Architecture)</li>
+              <li>Python Django Framework</li>
+              <li>ASP.NET Web Framework</li>
+              <li>HTML5 &amp; Modern CSS3</li>
+            </ul>
+          </div>
+
+          <div class="resume-col-card">
+            <h4 class="resume-col-title">
+              <span>🎯</span> Environment &amp; Professional
+            </h4>
+            <ul class="resume-col-list">
+              <li>MCA @ GLS University (Pursuing)</li>
+              <li>Internship @ AnantaX Technology</li>
+              <li>Windows &amp; Linux (Basic)</li>
+              <li>Microsoft Word &amp; PowerPoint</li>
+              <li>Active Team Collaboration</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="resume-cta-bottom">
+          <p style="color:var(--text-muted); font-size:0.9rem;">
+            Ready for software development roles and technical collaboration. Feel free to connect or send a message directly below.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 9: CONTACT
+       ========================================================================== -->
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">TRANSMISSION</span>
+        <h2 class="section-title">Get In Touch</h2>
+        <p class="section-subtitle">Interested in discussing software development roles, project collaboration, or technical inquiries? Reach out anytime.</p>
+      </div>
+
+      <div class="contact-grid">
+        <!-- Left: Direct Action Communication Cards -->
+        <div class="contact-info-col reveal-left">
+          <!-- Email Card -->
+          <div class="glass-card contact-card-item">
+            <div class="contact-item-left">
+              <div class="contact-icon-bubble">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+              </div>
+              <div>
+                <div class="contact-meta-type">Direct Email</div>
+                <div class="contact-meta-val">kakkadumang08@gmail.com</div>
+              </div>
+            </div>
+            <div style="display:flex; gap:8px;">
+              <button class="contact-btn-action copy-btn" data-copy="kakkadumang08@gmail.com" data-label="Email Address">Copy</button>
+              <a href="mailto:kakkadumang08@gmail.com" class="contact-btn-action">Send</a>
+            </div>
+          </div>
+
+          <!-- Phone Card -->
+          <div class="glass-card contact-card-item">
+            <div class="contact-item-left">
+              <div class="contact-icon-bubble purple">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              </div>
+              <div>
+                <div class="contact-meta-type">Phone / Mobile</div>
+                <div class="contact-meta-val">+91 9428879100</div>
+              </div>
+            </div>
+            <div style="display:flex; gap:8px;">
+              <button class="contact-btn-action copy-btn" data-copy="+91 9428879100" data-label="Phone Number">Copy</button>
+              <a href="tel:+919428879100" class="contact-btn-action">Call</a>
+            </div>
+          </div>
+
+          <!-- LinkedIn Card -->
+          <div class="glass-card contact-card-item">
+            <div class="contact-item-left">
+              <div class="contact-icon-bubble">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+              </div>
+              <div>
+                <div class="contact-meta-type">LinkedIn Profile</div>
+                <div class="contact-meta-val">linkedin.com/in/umangkakkad</div>
+              </div>
+            </div>
+            <a href="https://www.linkedin.com/in/umangkakkad/" target="_blank" rel="noopener noreferrer" class="contact-btn-action">Connect</a>
+          </div>
+
+          <!-- GitHub Card -->
+          <div class="glass-card contact-card-item">
+            <div class="contact-item-left">
+              <div class="contact-icon-bubble purple">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+              </div>
+              <div>
+                <div class="contact-meta-type">GitHub Profile</div>
+                <div class="contact-meta-val">github.com/kakkadumang</div>
+              </div>
+            </div>
+            <a href="https://github.com/kakkadumang" target="_blank" rel="noopener noreferrer" class="contact-btn-action">Follow</a>
+          </div>
+
+          <!-- Availability Card -->
+          <div class="contact-avail-card">
+            <div class="avail-dot"></div>
+            <div>
+              <div class="avail-title">Available for Software Roles</div>
+              <div class="avail-desc">Located in Gujarat, India &bull; Open for full-time entry/graduate roles &amp; technical opportunities.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Futuristic Contact Form -->
+        <div class="glass-card contact-form-wrap reveal-right">
+          <form id="contact-form" autocomplete="off">
+            <div class="form-group">
+              <label for="form-name" class="form-label">// YOUR NAME *</label>
+              <input type="text" id="form-name" class="form-input" placeholder="e.g. John Doe" required>
+            </div>
+
+            <div class="form-group">
+              <label for="form-email" class="form-label">// YOUR EMAIL *</label>
+              <input type="email" id="form-email" class="form-input" placeholder="e.g. user@domain.com" required>
+            </div>
+
+            <div class="form-group">
+              <label for="form-subject" class="form-label">TRANSMISSION SUBJECT *</label>
+              <input type="text" id="form-subject" class="form-input" placeholder="e.g. Software Developer Opportunity or Collaboration" required>
+            </div>
+
+            <div class="form-group">
+              <label for="form-message" class="form-label">TRANSMISSION PAYLOAD (MESSAGE) *</label>
+              <textarea id="form-message" class="form-textarea" placeholder="Write your message, project scope, or opportunity details here..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-neon-cyan btn-sweep" style="width: 100%;">
+              <span>Transmit Message</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       PROFESSIONAL FEEDBACK
+       ========================================================================== -->
+  <section id="feedback" class="section feedback-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">FEEDBACK</span>
+        <h2 class="section-title">Professional Feedback</h2>
+        <p class="section-subtitle">Have feedback about my portfolio, projects, or technical work? I would love to hear your suggestions.</p>
+      </div>
+
+      <div class="glass-card feedback-card reveal">
+        <div class="feedback-header">
+          <div class="feedback-icon">💬</div>
+          <div>
+            <h3 class="feedback-title">Share Your Feedback</h3>
+            <p class="feedback-subtitle">Your feedback helps me improve my work, portfolio, and professional presentation.</p>
+          </div>
+        </div>
+
+        <form id="feedback-form" autocomplete="off">
+          <div class="feedback-form-grid">
+            <div class="form-group">
+              <label for="feedback-name" class="form-label">YOUR NAME *</label>
+              <input type="text" id="feedback-name" class="form-input" placeholder="Your name" required>
+            </div>
+            <div class="form-group">
+              <label for="feedback-email" class="form-label">YOUR EMAIL *</label>
+              <input type="email" id="feedback-email" class="form-input" placeholder="you@example.com" required>
+            </div>
+            <div class="form-group feedback-full">
+              <label class="form-label">RATING</label>
+              <div class="feedback-rating" role="radiogroup" aria-label="Portfolio rating">
+                <label><input type="radio" name="feedback-rating" value="5" checked><span>★★★★★ Excellent</span></label>
+                <label><input type="radio" name="feedback-rating" value="4"><span>★★★★☆ Very Good</span></label>
+                <label><input type="radio" name="feedback-rating" value="3"><span>★★★☆☆ Good</span></label>
+              </div>
+            </div>
+            <div class="form-group feedback-full">
+              <label for="feedback-message" class="form-label">FEEDBACK / MESSAGE *</label>
+              <textarea id="feedback-message" class="form-textarea" placeholder="Share your feedback, suggestion, or professional recommendation..." required></textarea>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-neon-cyan btn-sweep" style="width:100%;margin-top:18px;">
+            <span>Submit Feedback</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+          </button>
+          <div class="feedback-note">Feedback is intended for portfolio improvement and professional suggestions.</div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 10: FOOTER
+       ========================================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top-grid">
+        <!-- Col 1: Brand & Tagline -->
+        <div class="footer-brand">
+          <a href="#home" class="logo">
+            <span class="logo-bracket">&lt;</span>
+            <span class="logo-text">Umang Kakkad</span>
+            <span class="logo-slash">/&gt;</span>
+          </a>
+          <p>
+            Software Developer &amp; MCA Student at GLS University, Ahmedabad. Building dependable desktop and web software solutions.
+          </p>
+          <div class="footer-social-row">
+            <a href="https://www.linkedin.com/in/umangkakkad/" target="_blank" rel="noopener noreferrer" class="social-icon-btn purple-hover" aria-label="LinkedIn: Umang Kakkad">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            </a>
+            <a href="https://github.com/kakkadumang" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="GitHub: kakkadumang">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+            </a>
+            <a href="mailto:kakkadumang08@gmail.com" class="social-icon-btn" aria-label="Email: kakkadumang08@gmail.com">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+            </a>
+            <a href="tel:+919428879100" class="social-icon-btn purple-hover" aria-label="Phone: +91 9428879100">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Col 2: Navigation Links -->
+        <div>
+          <h4 class="footer-col-title">Navigation</h4>
+          <div class="footer-nav-list">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#education">Education</a>
+            <a href="#skills">Skills</a>
+            <a href="#experience">Experience</a>
+            <a href="#projects">Projects</a>
+            <a href="#certificates">Certificates</a>
+            <a href="#resume">Resume</a>
+            <a href="#contact">Contact</a>
+          </div>
+        </div>
+
+        <!-- Col 3: Direct Connect Info -->
+        <div>
+          <h4 class="footer-col-title">Contact Channels</h4>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:8px;">Email: <a href="mailto:kakkadumang08@gmail.com" style="color:#ffffff;">kakkadumang08@gmail.com</a></p>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:8px;">Phone: <a href="tel:+919428879100" style="color:#ffffff;">+91 9428879100</a></p>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:8px;">GitHub: <a href="https://github.com/kakkadumang" target="_blank" rel="noopener noreferrer" style="color:var(--neon-cyan);">kakkadumang</a></p>
+          <p style="font-size:0.85rem; color:var(--text-muted);">LinkedIn: <a href="https://www.linkedin.com/in/umangkakkad/" target="_blank" rel="noopener noreferrer" style="color:var(--neon-purple);">umangkakkad</a></p>
+        </div>
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="footer-bottom">
+        <div class="footer-copy">
+          &copy; 2026 <strong>Umang Kakkad</strong>. All rights reserved. Designed & Developed by Umang Kakkad 
+        </div>
+        <div style="font-family:var(--font-mono); font-size:0.8rem; color:var(--text-dim);">
+          Building Ideas into Digital Solutions
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Back to Top Button -->
+  <button id="back-to-top-btn" class="back-to-top-btn" aria-label="Back to Top" title="Back to Top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+  </button>
+
+  <!-- Interactive Modal Container -->
+  <div id="modal-backdrop" class="modal-backdrop" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+      <button id="modal-close-btn" class="modal-close-btn" aria-label="Close Dialog">&times;</button>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+
+<script>
+(function(){
+  const btn=document.getElementById('portfolio-search-btn');
+  const panel=document.getElementById('portfolio-search-panel');
+  const input=document.getElementById('portfolio-search-input');
+  const results=document.getElementById('portfolio-search-results');
+  const clear=document.getElementById('portfolio-search-clear');
+  if(!btn||!panel||!input||!results)return;
+  const sections=[...document.querySelectorAll('section[id]')].map(sec=>({
+    id:sec.id,
+    title:(sec.querySelector('.section-title,h1,h2')?.textContent||sec.id).replace(/\s+/g,' ').trim(),
+    text:sec.innerText.replace(/\s+/g,' ').trim()
+  }));
+  function openSearch(){panel.classList.add('open');btn.setAttribute('aria-expanded','true');setTimeout(()=>input.focus(),30);}
+  function closeSearch(){panel.classList.remove('open');btn.setAttribute('aria-expanded','false');}
+  function render(){
+    const q=input.value.trim().toLowerCase();
+    if(!q){results.innerHTML='<div class="portfolio-search-empty">Start typing to search this portfolio.</div>';return;}
+    const words=q.split(/\s+/).filter(Boolean);
+    const matches=sections.map(s=>{const hay=(s.title+' '+s.text).toLowerCase();let score=0;words.forEach(w=>{if(s.title.toLowerCase().includes(w))score+=8;if(hay.includes(w))score+=2;});return {...s,score};}).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,8);
+    results.innerHTML=matches.length?matches.map(m=>`<button class="portfolio-search-result" type="button" data-target="${m.id}"><strong>${m.title}</strong><span>Open ${m.title} section</span></button>`).join(''):'<div class="portfolio-search-empty">No matching content found.</div>';
+  }
+  btn.addEventListener('click',()=>panel.classList.contains('open')?closeSearch():openSearch());
+  input.addEventListener('input',render);
+  clear.addEventListener('click',()=>{input.value='';render();input.focus();});
+  results.addEventListener('click',e=>{const item=e.target.closest('[data-target]');if(!item)return;const target=document.getElementById(item.dataset.target);if(target){closeSearch();target.scrollIntoView({behavior:'smooth',block:'start'});}});
+  document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openSearch();}if(e.key==='Escape')closeSearch();});
+  document.addEventListener('click',e=>{if(!e.target.closest('.portfolio-search-wrap'))closeSearch();});
+  render();
+})();
+</script>
+  <script src="js/particles.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/main.js">
+    const feedbackForm = document.getElementById('feedback-form');
+    if (feedbackForm) {
+      feedbackForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('feedback-name').value.trim();
+        alert(`Thank you${name ? ', ' + name : ''}! Your feedback has been received.`);
+        feedbackForm.reset();
+      });
+    }
+</script>
+</body>
+</html>
