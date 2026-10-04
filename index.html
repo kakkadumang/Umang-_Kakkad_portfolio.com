@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XP0RYNTJ34"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XP0RYNTJ34');
+  </script>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -1977,16 +1986,63 @@
 </script>
   <script src="js/particles.js"></script>
   <script src="js/animations.js"></script>
-  <script src="js/main.js">
+  <script src="js/main.js"></script>
+
+  <!-- Google Sheets Feedback Submission -->
+  <script>
     const feedbackForm = document.getElementById('feedback-form');
+
     if (feedbackForm) {
-      feedbackForm.addEventListener('submit', function(e) {
+      feedbackForm.addEventListener('submit', async function(e) {
         e.preventDefault();
+
         const name = document.getElementById('feedback-name').value.trim();
-        alert(`Thank you${name ? ', ' + name : ''}! Your feedback has been received.`);
-        feedbackForm.reset();
+        const email = document.getElementById('feedback-email').value.trim();
+        const rating =
+          document.querySelector('input[name="feedback-rating"]:checked')?.value || '5';
+        const message = document.getElementById('feedback-message').value.trim();
+
+        const submitButton = feedbackForm.querySelector('button[type="submit"]');
+        const originalText = submitButton.innerHTML;
+
+        if (!name || !email || !message) {
+          alert('Please fill in all required fields.');
+          return;
+        }
+
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<span>Submitting...</span>';
+
+        try {
+          await fetch(
+            'https://script.google.com/macros/s/AKfycbx9_6BGSWhJdBYNyP2iCDW0XrAmfFdhS7vPFNUbZNxXjKpSY36KbRSaZ_WZkaCnip495Q/exec',
+            {
+              method: 'POST',
+              mode: 'no-cors',
+              headers: {
+                'Content-Type': 'text/plain;charset=utf-8'
+              },
+              body: JSON.stringify({
+                name: name,
+                email: email,
+                rating: rating,
+                message: message
+              })
+            }
+          );
+
+          alert('Thank you, ' + name + '! Your feedback has been submitted successfully.');
+          feedbackForm.reset();
+
+        } catch (error) {
+          console.error('Feedback submission error:', error);
+          alert('Unable to submit feedback. Please try again.');
+        } finally {
+          submitButton.disabled = false;
+          submitButton.innerHTML = originalText;
+        }
       });
     }
-</script>
+  </script>
 </body>
 </html>
