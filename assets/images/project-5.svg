@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  <defs>
+    <linearGradient id="p5Bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#070d24"/>
+      <stop offset="100%" stop-color="#02030f"/>
+    </linearGradient>
+    <linearGradient id="cyberMesh" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f5ff"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="600" height="360" rx="16" fill="url(#p5Bg)"/>
+  <rect x="1" y="1" width="598" height="358" rx="15" fill="none" stroke="rgba(0, 245, 255, 0.2)" stroke-width="1.5"/>
+
+  <!-- Top bar -->
+  <rect x="0" y="0" width="600" height="42" rx="16" fill="#0b112c"/>
+  <circle cx="28" cy="21" r="5" fill="#f43f5e"/>
+  <circle cx="46" cy="21" r="5" fill="#fbbf24"/>
+  <circle cx="64" cy="21" r="5" fill="#10b981"/>
+  <text x="95" y="25" fill="#38bdf8" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="bold">QUANTUM COMMERCE 3.0</text>
+
+  <!-- Banner Hero Area -->
+  <rect x="25" y="58" width="550" height="110" rx="10" fill="rgba(14, 23, 61, 0.6)" stroke="rgba(168, 85, 247, 0.2)"/>
+  <text x="45" y="95" fill="#00f5ff" font-size="18" font-weight="bold" font-family="sans-serif">CYBER HARDWARE EDITION</text>
+  <text x="45" y="120" fill="#94a3b8" font-size="12" font-family="sans-serif">Ultra-low latency headless storefront with Instant Web3 Checkout</text>
+  <rect x="45" y="132" width="105" height="24" rx="4" fill="url(#cyberMesh)"/>
+  <text x="58" y="148" fill="#ffffff" font-size="10" font-weight="bold" font-family="sans-serif">EXPLORE DROP</text>
+
+  <!-- 3D Sphere / Hologram Mock on right of banner -->
+  <circle cx="480" cy="112" r="35" fill="none" stroke="#00f5ff" stroke-width="2"/>
+  <ellipse cx="480" cy="112" rx="35" ry="12" fill="none" stroke="#a855f7" stroke-width="1.5"/>
+  <ellipse cx="480" cy="112" rx="12" ry="35" fill="none" stroke="#ec4899" stroke-width="1.5"/>
+
+  <!-- Product Cards Grid -->
+  <!-- Product 1 -->
+  <rect x="25" y="185" width="170" height="150" rx="8" fill="rgba(255, 255, 255, 0.03)" stroke="rgba(255, 255, 255, 0.07)"/>
+  <rect x="35" y="195" width="150" height="75" rx="6" fill="#0a1233"/>
+  <!-- stylized item -->
+  <circle cx="110" cy="232" r="22" fill="rgba(0, 245, 255, 0.2)" stroke="#00f5ff" stroke-width="1.5"/>
+  <text x="40" y="290" fill="#f8fafc" font-size="11" font-weight="bold">Quantum Key Pro</text>
+  <text x="40" y="308" fill="#00f5ff" font-size="12" font-weight="bold">$249.00</text>
+  <rect x="135" y="293" width="50" height="22" rx="4" fill="rgba(0, 245, 255, 0.15)"/>
+  <text x="145" y="308" fill="#00f5ff" font-size="10">+ Add</text>
+
+  <!-- Product 2 -->
+  <rect x="215" y="185" width="170" height="150" rx="8" fill="rgba(255, 255, 255, 0.03)" stroke="rgba(255, 255, 255, 0.07)"/>
+  <rect x="225" y="195" width="150" height="75" rx="6" fill="#0a1233"/>
+  <polygon points="300,205 325,245 275,245" fill="rgba(168, 85, 247, 0.2)" stroke="#a855f7" stroke-width="1.5"/>
+  <text x="230" y="290" fill="#f8fafc" font-size="11" font-weight="bold">Neural Bridge X1</text>
+  <text x="230" y="308" fill="#a855f7" font-size="12" font-weight="bold">$599.00</text>
+  <rect x="325" y="293" width="50" height="22" rx="4" fill="rgba(168, 85, 247, 0.15)"/>
+  <text x="335" y="308" fill="#c084fc" font-size="10">+ Add</text>
+
+  <!-- Product 3 -->
+  <rect x="405" y="185" width="170" height="150" rx="8" fill="rgba(255, 255, 255, 0.03)" stroke="rgba(255, 255, 255, 0.07)"/>
+  <rect x="415" y="195" width="150" height="75" rx="6" fill="#0a1233"/>
+  <rect x="465" y="212" width="50" height="40" rx="4" fill="rgba(16, 185, 129, 0.2)" stroke="#10b981" stroke-width="1.5"/>
+  <text x="420" y="290" fill="#f8fafc" font-size="11" font-weight="bold">Edge Sentinel GPU</text>
+  <text x="420" y="308" fill="#10b981" font-size="12" font-weight="bold">$1,299.00</text>
+  <rect x="515" y="293" width="50" height="22" rx="4" fill="rgba(16, 185, 129, 0.15)"/>
+  <text x="525" y="308" fill="#10b981" font-size="10">+ Add</text>
+</svg>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <linearGradient id="gcpGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4285f4"/>
+      <stop offset="50%" stop-color="#34a853"/>
+      <stop offset="100%" stop-color="#ea4335"/>
+    </linearGradient>
+    <filter id="gcpGlow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <polygon points="100,10 180,55 180,145 100,190 20,145 20,55" fill="#091129" stroke="url(#gcpGrad)" stroke-width="3" filter="url(#gcpGlow)"/>
+  <polygon points="100,25 165,62 165,138 100,175 35,138 35,62" fill="rgba(66, 133, 244, 0.08)" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1.5"/>
+  <!-- Cloud Icon -->
+  <path d="M 75 110 A 18 18 0 0 1 95 85 A 24 24 0 0 1 130 90 A 18 18 0 0 1 135 110 H 75 Z" fill="rgba(66, 133, 244, 0.3)" stroke="#4285f4" stroke-width="3" stroke-linejoin="round"/>
+  <text x="100" y="70" text-anchor="middle" fill="#ffffff" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="900" letter-spacing="1">GOOGLE</text>
+  <text x="100" y="145" text-anchor="middle" fill="#34a853" font-family="'Segoe UI', sans-serif" font-size="10" font-weight="bold" letter-spacing="1">CLOUD ASSOC</text>
+  <text x="100" y="158" text-anchor="middle" fill="#94a3b8" font-family="'Segoe UI', sans-serif" font-size="9" font-weight="bold">ENGINEER</text>
+</svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <linearGradient id="awsGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff9900"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    <filter id="badgeGlow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <polygon points="100,10 180,55 180,145 100,190 20,145 20,55" fill="#0d1430" stroke="url(#awsGrad)" stroke-width="3" filter="url(#badgeGlow)"/>
+  <polygon points="100,25 165,62 165,138 100,175 35,138 35,62" fill="rgba(255, 153, 0, 0.08)" stroke="rgba(255, 153, 0, 0.3)" stroke-width="1.5"/>
+  <path d="M 60 90 Q 100 120 140 90" fill="none" stroke="#ff9900" stroke-width="3.5" stroke-linecap="round"/>
+  <polygon points="140,88 133,94 135,84" fill="#ff9900"/>
+  <text x="100" y="78" text-anchor="middle" fill="#ffffff" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="900" letter-spacing="1">AWS</text>
+  <text x="100" y="145" text-anchor="middle" fill="#ff9900" font-family="'Segoe UI', sans-serif" font-size="10" font-weight="bold" letter-spacing="1">SOLUTIONS</text>
+  <text x="100" y="158" text-anchor="middle" fill="#94a3b8" font-family="'Segoe UI', sans-serif" font-size="9" font-weight="bold">ARCHITECT</text>
+</svg>
