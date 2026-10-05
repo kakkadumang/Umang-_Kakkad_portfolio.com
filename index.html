@@ -3273,7 +3273,7 @@ body.theme-light .premium-nav-links{
 
       <div class="updates-toolbar reveal">
         <span id="updates-status" class="updates-status">Latest updates</span>
-        <button id="open-update-manager" class="btn btn-neon-cyan btn-sm" type="button">
+        <button id="open-update-manager" class="btn btn-neon-cyan btn-sm" type="button" hidden aria-hidden="true">
           + Publish Update
         </button>
       </div>
@@ -3439,8 +3439,9 @@ body.theme-light .premium-nav-links{
           <button class="btn btn-neon-cyan btn-sm" type="submit">Publish Update</button>
         </div>
         <div class="update-help">
-          Updates are saved in this browser using localStorage. To make a new update visible to everyone on your GitHub/hosted website,
-          you still need to commit/upload the updated HTML or connect this form to a real backend.
+          Owner mode only: this editor is hidden from normal visitors. Press Ctrl+Shift+U and enter your owner password to publish an update.
+          Because this is a static HTML website, this password is only a basic client-side lock; true secure admin access requires a backend/authentication service.
+          Updates created here are stored in this browser. For an update to be visible to everyone on your hosted/GitHub website, add it to the HTML (or connect this form to a real backend).
         </div>
       </form>
     </div>
@@ -3528,6 +3529,14 @@ body.theme-light .premium-nav-links{
 
   const defaultUpdates=[
     {
+      id:'isro-ai-ml-course',
+      title:'ISRO AI/ML Course — In Progress',
+      category:'Achievement',
+      date:'2026-10-05',
+      text:'Currently pursuing a 5-Day Artificial Intelligence & Machine Learning (AI/ML) Course by ISRO / IIRS from 5 October 2026 to 10 October 2026. This learning experience is helping me strengthen my knowledge of AI/ML concepts and applications.',
+      link:''
+    },
+    {
       id:'welcome-update',
       title:'Portfolio Website Launched',
       category:'Portfolio',
@@ -3542,8 +3551,16 @@ body.theme-light .premium-nav-links{
   function load(){
     try{
       const saved=JSON.parse(localStorage.getItem(key));
-      return Array.isArray(saved) ? saved : defaultUpdates;
-    }catch(e){return defaultUpdates;}
+      if(!Array.isArray(saved)) return [...defaultUpdates];
+
+      const byId=new Map(defaultUpdates.map(item=>[item.id,item]));
+      saved.forEach(item=>{
+        if(item && item.id) byId.set(item.id,item);
+      });
+      return Array.from(byId.values());
+    }catch(e){
+      return [...defaultUpdates];
+    }
   }
 
   function esc(value){
@@ -3570,7 +3587,17 @@ body.theme-light .premium-nav-links{
     `).join('');
   }
 
+  const OWNER_PASSWORD = '23SI002UG01998';
+
   function openManager(){
+    const entered = prompt('Owner access required. Enter your password:');
+    if(entered !== OWNER_PASSWORD){
+      if(entered !== null) alert('Access denied.');
+      return;
+    }
+
+    openBtn.hidden=true;
+    openBtn.setAttribute('aria-hidden','true');
     dateInput.value=new Date().toISOString().slice(0,10);
     manager.classList.add('open');
     manager.setAttribute('aria-hidden','false');
@@ -3585,6 +3612,14 @@ body.theme-light .premium-nav-links{
   openBtn.addEventListener('click',openManager);
   closeBtn.addEventListener('click',closeManager);
   manager.addEventListener('click',e=>{if(e.target===manager)closeManager();});
+
+  // Owner-only shortcut: Ctrl+Shift+U
+  document.addEventListener('keydown',e=>{
+    if(e.ctrlKey && e.shiftKey && e.key.toLowerCase()==='u'){
+      e.preventDefault();
+      openManager();
+    }
+  });
 
   form.addEventListener('submit',e=>{
     e.preventDefault();
