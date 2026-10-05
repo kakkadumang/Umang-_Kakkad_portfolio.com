@@ -193,7 +193,658 @@
     .feedback-rating label:hover span,.feedback-rating input:checked+span{border-color:rgba(0,229,255,.45);background:rgba(0,229,255,.09);color:#00e5ff}
     .feedback-note{margin-top:12px;font-size:11px;color:rgba(255,255,255,.4)}
     @media(max-width:700px){.feedback-card{padding:22px}.feedback-form-grid{grid-template-columns:1fr}.feedback-full{grid-column:auto}}
-  </style>
+  
+    /* ==========================================================
+       THEME SWITCHER + UPDATES SECTION
+       ========================================================== */
+    body{
+      transition:background-color .35s ease,color .35s ease;
+    }
+    .theme-toggle-btn{
+      width:42px;height:42px;border-radius:12px;
+      border:1px solid rgba(0,229,255,.28);
+      background:rgba(0,229,255,.06);
+      color:#00e5ff;display:flex;align-items:center;justify-content:center;
+      cursor:pointer;transition:.25s;box-shadow:0 0 18px rgba(0,229,255,.06);
+      font-size:18px;
+    }
+    .theme-toggle-btn:hover{transform:translateY(-1px);background:rgba(0,229,255,.12);box-shadow:0 0 24px rgba(0,229,255,.18)}
+    .updates-section{margin-top:42px}
+    .updates-toolbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+    .updates-status{font-size:12px;color:var(--text-muted,rgba(255,255,255,.55))}
+    .updates-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+    .update-card{padding:24px;border:1px solid rgba(0,229,255,.14);border-radius:18px;background:rgba(255,255,255,.035);backdrop-filter:blur(12px);transition:.25s}
+    .update-card:hover{transform:translateY(-4px);border-color:rgba(0,229,255,.32);box-shadow:0 16px 40px rgba(0,0,0,.18)}
+    .update-meta{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px}
+    .update-badge{display:inline-flex;align-items:center;padding:5px 9px;border-radius:999px;font-size:10px;letter-spacing:1px;font-weight:700;color:#00e5ff;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2)}
+    .update-date{font-size:11px;opacity:.55}
+    .update-title{margin:0 0 9px;font-size:18px;color:#fff}
+    .update-text{margin:0;color:rgba(255,255,255,.68);font-size:13px;line-height:1.7}
+    .update-link{display:inline-flex;margin-top:15px;color:#00e5ff;text-decoration:none;font-size:12px;font-weight:700}
+    .update-empty{grid-column:1/-1;padding:28px;text-align:center;border:1px dashed rgba(0,229,255,.22);border-radius:16px;color:rgba(255,255,255,.55)}
+    .update-manager{display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.68);backdrop-filter:blur(8px);padding:20px;overflow:auto}
+    .update-manager.open{display:flex;align-items:center;justify-content:center}
+    .update-manager-card{width:min(620px,100%);padding:26px;border-radius:20px;background:#07101f;border:1px solid rgba(0,229,255,.25);box-shadow:0 30px 80px rgba(0,0,0,.45)}
+    .update-manager-head{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:20px}
+    .update-manager-head h3{margin:0;color:#fff}
+    .update-close{border:0;background:transparent;color:#fff;font-size:28px;cursor:pointer}
+    .update-form{display:grid;gap:14px}
+    .update-form input,.update-form textarea,.update-form select{
+      width:100%;box-sizing:border-box;padding:12px 13px;border-radius:10px;
+      border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);
+      color:#fff;outline:none;font:inherit;
+    }
+    .update-form textarea{min-height:120px;resize:vertical}
+    .update-form input:focus,.update-form textarea:focus,.update-form select:focus{border-color:rgba(0,229,255,.5);box-shadow:0 0 0 3px rgba(0,229,255,.06)}
+    .update-actions{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+    .update-help{font-size:11px;line-height:1.6;color:rgba(255,255,255,.45)}
+    .theme-light{
+      --light-bg:#f5f8fc;
+      --light-surface:#ffffff;
+      --light-text:#142033;
+      --light-muted:#5b6678;
+    }
+    body.theme-light{
+      background:var(--light-bg)!important;color:var(--light-text)!important;
+    }
+    body.theme-light #particles-canvas,
+    body.theme-light .cyber-grid-overlay,
+    body.theme-light .ambient-glow{opacity:.08}
+    body.theme-light .navbar{background:rgba(255,255,255,.9)!important;border-bottom-color:rgba(20,32,51,.12)!important}
+    body.theme-light .logo-text,
+    body.theme-light .nav-link,
+    body.theme-light .section-title,
+    body.theme-light .hero-name,
+    body.theme-light .profile-card-title,
+    body.theme-light .profile-detail-content strong,
+    body.theme-light .update-title,
+    body.theme-light .feedback-title,
+    body.theme-light h1,body.theme-light h2,body.theme-light h3,body.theme-light h4{color:var(--light-text)!important}
+    body.theme-light .hero-desc,
+    body.theme-light .section-subtitle,
+    body.theme-light .about-body-p,
+    body.theme-light .about-intro-p,
+    body.theme-light .update-text,
+    body.theme-light .feedback-subtitle,
+    body.theme-light .profile-detail-content small{color:var(--light-muted)!important}
+    body.theme-light .glass-card,
+    body.theme-light .update-card,
+    body.theme-light .key-point-card,
+    body.theme-light .stat-item,
+    body.theme-light .contact-avail-card{
+      background:rgba(255,255,255,.88)!important;
+      border-color:rgba(20,32,51,.12)!important;
+      box-shadow:0 16px 40px rgba(20,32,51,.08);
+    }
+    body.theme-light .form-input,
+    body.theme-light .form-textarea,
+    body.theme-light .update-form input,
+    body.theme-light .update-form textarea,
+    body.theme-light .update-form select,
+    body.theme-light .portfolio-search-panel{
+      background:#fff!important;color:var(--light-text)!important;border-color:rgba(20,32,51,.14)!important;
+    }
+    body.theme-light .form-input::placeholder,
+    body.theme-light .form-textarea::placeholder,
+    body.theme-light .portfolio-search-input::placeholder{color:rgba(20,32,51,.42)!important}
+    body.theme-light .portfolio-search-panel{box-shadow:0 20px 60px rgba(20,32,51,.15)}
+    body.theme-light .portfolio-search-result{color:var(--light-text)!important}
+    body.theme-light .social-strip-label,
+    body.theme-light .profile-detail-label,
+    body.theme-light .footer-copy{color:var(--light-muted)!important}
+    body.theme-light .update-manager-card{background:#fff;border-color:rgba(20,32,51,.14)}
+    body.theme-light .update-manager-head h3,
+    body.theme-light .update-close{color:var(--light-text)}
+    body.theme-light .update-form input,
+    body.theme-light .update-form textarea,
+    body.theme-light .update-form select{background:#f7f9fc!important;color:var(--light-text)!important}
+    body.theme-light .update-help{color:var(--light-muted)}
+    body.theme-light .footer{background:#edf2f7!important}
+    @media(max-width:900px){.updates-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:600px){.updates-grid{grid-template-columns:1fr}.theme-toggle-btn{width:40px;height:40px}}
+
+  
+/* ==========================================================
+   FINAL POLISH — DARK MODE + RESPONSIVE NAVIGATION
+   ========================================================== */
+
+/* Keep the original portfolio as the master DARK design */
+body,
+body.theme-dark{
+  --page-bg:#050814;
+  --page-surface:#0a1020;
+  --page-surface-2:#0d1426;
+  --page-text:#f5f8ff;
+  --page-muted:#9aa8bd;
+  --page-border:rgba(255,255,255,.10);
+  background:#050814 !important;
+  color:#f5f8ff !important;
+}
+
+/* Dark-mode cards/sections */
+body.theme-dark .update-card,
+body:not(.theme-light) .update-card{
+  background:linear-gradient(145deg,rgba(11,19,37,.88),rgba(5,10,24,.92)) !important;
+  border:1px solid rgba(0,229,255,.16);
+  box-shadow:0 18px 45px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.025);
+}
+body.theme-dark .update-title,
+body:not(.theme-light) .update-title{color:#f5f8ff !important}
+body.theme-dark .update-text,
+body:not(.theme-light) .update-text{color:#aebbd0 !important}
+body.theme-dark .updates-status,
+body:not(.theme-light) .updates-status{color:#8492aa !important}
+
+/* Navigation — desktop */
+.navbar{
+  z-index:2000 !important;
+}
+.nav-container{
+  min-height:72px;
+  gap:18px;
+}
+.nav-links{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:clamp(10px,1.15vw,18px);
+  flex:1 1 auto;
+  min-width:0;
+}
+.nav-link{
+  white-space:nowrap;
+  font-size:12px !important;
+  padding:8px 3px !important;
+}
+.nav-actions{
+  display:flex !important;
+  align-items:center;
+  justify-content:flex-end;
+  gap:9px !important;
+  flex:0 0 auto;
+}
+.nav-actions .btn{
+  white-space:nowrap;
+}
+
+/* Search/theme/sound buttons match the dark cyber UI */
+.portfolio-search-btn,
+.sound-toggle-btn,
+.theme-toggle-btn{
+  flex:0 0 42px;
+  width:42px !important;
+  height:42px !important;
+  min-width:42px;
+  padding:0 !important;
+  display:inline-flex !important;
+  align-items:center;
+  justify-content:center;
+  border-radius:12px !important;
+}
+.theme-toggle-btn{
+  background:rgba(0,229,255,.055) !important;
+  border:1px solid rgba(0,229,255,.28) !important;
+  color:#00e5ff !important;
+}
+
+/* Don't let the desktop navigation collide at medium widths */
+@media (max-width:1280px){
+  .nav-container{gap:10px}
+  .logo-text{font-size:15px !important}
+  .nav-links{gap:8px}
+  .nav-link{font-size:11px !important}
+  .nav-actions .btn{padding-left:12px !important;padding-right:12px !important}
+}
+
+/* At laptop/tablet width, use the proper hamburger menu */
+@media (max-width:1120px){
+  .nav-links{display:none !important}
+  .nav-actions .btn.btn-neon-cyan{display:none !important}
+  .hamburger{
+    display:flex !important;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:5px;
+    width:42px !important;
+    height:42px !important;
+    padding:0 !important;
+    border-radius:12px !important;
+    background:rgba(0,229,255,.055) !important;
+    border:1px solid rgba(0,229,255,.28) !important;
+    cursor:pointer;
+  }
+  .hamburger span{
+    width:19px !important;
+    height:2px !important;
+    border-radius:3px;
+    background:#00e5ff !important;
+    display:block !important;
+    transition:.25s;
+  }
+  .mobile-nav-overlay{
+    z-index:1999 !important;
+  }
+}
+
+/* Phone layout — keep controls clean */
+@media (max-width:650px){
+  .nav-container{
+    min-height:64px;
+    padding-left:14px !important;
+    padding-right:14px !important;
+  }
+  .logo-text{font-size:14px !important}
+  .logo-bracket,.logo-slash{font-size:13px !important}
+  .portfolio-search-wrap{display:none !important}
+  .sound-toggle-btn{display:none !important}
+  .theme-toggle-btn,
+  .hamburger{width:40px !important;height:40px !important;min-width:40px}
+  .nav-actions{gap:7px !important}
+}
+
+/* Mobile drawer: clean, readable and scrollable */
+.mobile-nav-overlay{
+  background:
+    radial-gradient(circle at 80% 10%,rgba(0,229,255,.08),transparent 28%),
+    linear-gradient(180deg,rgba(5,8,20,.985),rgba(5,8,20,.99)) !important;
+  backdrop-filter:blur(18px);
+}
+.mobile-nav-links{
+  width:min(440px,calc(100% - 32px));
+  margin:0 auto;
+  padding-top:88px !important;
+  gap:4px !important;
+}
+.mobile-nav-link{
+  display:flex !important;
+  align-items:center;
+  min-height:48px;
+  padding:12px 16px !important;
+  border-radius:11px;
+  color:#dce7f7 !important;
+  border:1px solid transparent;
+  background:rgba(255,255,255,.025);
+}
+.mobile-nav-link:hover,
+.mobile-nav-link:focus{
+  color:#00e5ff !important;
+  border-color:rgba(0,229,255,.2);
+  background:rgba(0,229,255,.07);
+}
+.mobile-nav-actions{
+  width:min(440px,calc(100% - 32px));
+  margin:18px auto 30px !important;
+  gap:10px !important;
+}
+
+/* Light theme gets a genuinely white version of the same layout */
+body.theme-light{
+  --page-bg:#f5f7fb;
+  --page-surface:#ffffff;
+  --page-surface-2:#eef3f8;
+  --page-text:#172033;
+  --page-muted:#59677a;
+  --page-border:rgba(23,32,51,.12);
+  background:#f5f7fb !important;
+  color:#172033 !important;
+}
+body.theme-light .navbar{
+  background:rgba(255,255,255,.94) !important;
+  box-shadow:0 8px 28px rgba(20,32,51,.08);
+}
+body.theme-light .nav-link{color:#334155 !important}
+body.theme-light .nav-link.active,
+body.theme-light .nav-link:hover{color:#009fba !important}
+body.theme-light .theme-toggle-btn,
+body.theme-light .sound-toggle-btn,
+body.theme-light .portfolio-search-btn,
+body.theme-light .hamburger{
+  background:#f3f8fb !important;
+  border-color:rgba(0,160,190,.22) !important;
+  color:#008eaa !important;
+}
+body.theme-light .mobile-nav-overlay{
+  background:rgba(248,251,253,.985) !important;
+}
+body.theme-light .mobile-nav-link{
+  color:#243047 !important;
+  background:rgba(23,32,51,.035);
+}
+body.theme-light .mobile-nav-link:hover,
+body.theme-light .mobile-nav-link:focus{
+  color:#008da9 !important;
+  background:rgba(0,160,190,.07);
+  border-color:rgba(0,160,190,.18);
+}
+body.theme-light .update-card{
+  background:#fff !important;
+  border-color:rgba(23,32,51,.11) !important;
+  box-shadow:0 14px 35px rgba(23,32,51,.08) !important;
+}
+
+/* Update manager follows the selected theme */
+body.theme-light .update-manager{
+  background:rgba(220,228,238,.72);
+}
+body.theme-light .update-manager-card{
+  background:#fff !important;
+  color:#172033;
+  border-color:rgba(23,32,51,.12) !important;
+}
+body.theme-light .update-form input,
+body.theme-light .update-form textarea,
+body.theme-light .update-form select{
+  background:#f7f9fc !important;
+  color:#172033 !important;
+}
+
+/* Prevent anchor sections hiding under the fixed navbar */
+section[id]{scroll-margin-top:92px}
+
+/* Better update cards on smaller screens */
+@media (max-width:900px){
+  .updates-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+}
+@media (max-width:600px){
+  .updates-grid{grid-template-columns:1fr !important}
+  .update-card{padding:20px !important}
+  .updates-toolbar{align-items:flex-start}
+}
+
+
+/* ==========================================================
+   LIGHT THEME — FULL VISUAL OVERRIDE
+   Keeps the same cyber/neon identity, but makes EVERY element
+   readable on the light background.
+   ========================================================== */
+
+body.theme-light{
+  background:
+    radial-gradient(circle at 12% 18%, rgba(0,229,255,.10), transparent 28%),
+    radial-gradient(circle at 82% 35%, rgba(124,77,255,.09), transparent 30%),
+    linear-gradient(135deg,#f7fbff 0%,#eef4fb 48%,#f8faff 100%) !important;
+  color:#172033 !important;
+}
+
+/* Light background decorations */
+body.theme-light #particles-canvas{opacity:.22 !important}
+body.theme-light .cyber-grid-overlay{
+  opacity:.16 !important;
+  background-image:
+    linear-gradient(rgba(18,38,65,.055) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(18,38,65,.055) 1px,transparent 1px) !important;
+}
+body.theme-light .ambient-glow{opacity:.16 !important}
+
+/* NAVBAR */
+body.theme-light .navbar{
+  background:rgba(255,255,255,.94) !important;
+  border-bottom:1px solid rgba(18,38,65,.10) !important;
+  box-shadow:0 8px 30px rgba(18,38,65,.08) !important;
+}
+body.theme-light .logo-text{
+  color:#172033 !important;
+  -webkit-text-fill-color:#172033 !important;
+  opacity:1 !important;
+  text-shadow:none !important;
+}
+body.theme-light .logo-bracket,
+body.theme-light .logo-slash{
+  color:#00aeca !important;
+}
+body.theme-light .nav-link{
+  color:#334155 !important;
+  opacity:1 !important;
+}
+body.theme-light .nav-link:hover,
+body.theme-light .nav-link.active{
+  color:#009bb8 !important;
+}
+
+/* HERO TEXT */
+body.theme-light .hero-name{
+  color:#182235 !important;
+  -webkit-text-fill-color:transparent !important;
+  background:linear-gradient(90deg,#172033 0%,#00bcd4 48%,#7657e8 100%) !important;
+  -webkit-background-clip:text !important;
+  background-clip:text !important;
+  text-shadow:none !important;
+}
+body.theme-light .hero-name .gradient-text{
+  background:linear-gradient(90deg,#00bcd4,#7657e8) !important;
+  -webkit-background-clip:text !important;
+  background-clip:text !important;
+  -webkit-text-fill-color:transparent !important;
+}
+body.theme-light .hero-subtitle,
+body.theme-light .hero-role,
+body.theme-light .typed-text{
+  color:#00a9c4 !important;
+}
+body.theme-light .hero-desc{
+  color:#526176 !important;
+  opacity:1 !important;
+}
+body.theme-light .hero-eyebrow,
+body.theme-light .hero-tag{
+  color:#00a987 !important;
+  border-color:rgba(0,169,135,.25) !important;
+  background:rgba(0,169,135,.06) !important;
+}
+
+/* BUTTONS */
+body.theme-light .btn-neon-cyan,
+body.theme-light .btn.btn-neon-cyan{
+  color:#06212a !important;
+  background:linear-gradient(135deg,#08d5eb,#00b9d4) !important;
+  border-color:#00b9d4 !important;
+  box-shadow:0 10px 28px rgba(0,185,212,.22) !important;
+}
+body.theme-light .btn-neon-purple,
+body.theme-light .btn.btn-neon-purple{
+  color:#fff !important;
+  background:linear-gradient(135deg,#8648e8,#7145e7) !important;
+  border-color:#7b4de8 !important;
+  box-shadow:0 10px 28px rgba(117,73,232,.22) !important;
+}
+body.theme-light .btn-cyber-outline,
+body.theme-light .btn.btn-cyber-outline{
+  color:#008eaa !important;
+  background:#ffffff !important;
+  border:1px solid rgba(0,142,170,.35) !important;
+  box-shadow:0 8px 24px rgba(18,38,65,.07) !important;
+}
+body.theme-light .btn-cyber-outline:hover{
+  background:#f0fbfd !important;
+}
+
+/* NAV ICON BUTTONS */
+body.theme-light .portfolio-search-btn,
+body.theme-light .sound-toggle-btn,
+body.theme-light .theme-toggle-btn{
+  color:#008eaa !important;
+  background:#f7fcfe !important;
+  border-color:rgba(0,142,170,.24) !important;
+  box-shadow:none !important;
+}
+
+/* HERO PROFILE CARD stays intentionally dark — it gives the light
+   theme a strong visual anchor and keeps the portrait readable. */
+body.theme-light .professional-profile-card,
+body.theme-light .profile-card,
+body.theme-light .hero-profile-card{
+  color:#fff !important;
+}
+
+/* Hero network links */
+body.theme-light .social-strip-label{
+  color:#64748b !important;
+}
+body.theme-light .social-link,
+body.theme-light .social-icon{
+  color:#53657b !important;
+  border-color:rgba(18,38,65,.13) !important;
+  background:rgba(255,255,255,.72) !important;
+}
+body.theme-light .social-link:hover,
+body.theme-light .social-icon:hover{
+  color:#00aeca !important;
+  border-color:rgba(0,174,202,.30) !important;
+}
+
+/* SECTION HEADINGS / COMMON TEXT */
+body.theme-light .section-title{
+  color:#172033 !important;
+  -webkit-text-fill-color:#172033 !important;
+  text-shadow:none !important;
+}
+body.theme-light .section-subtitle{
+  color:#5b6a7f !important;
+}
+body.theme-light .section-tag{
+  color:#009bb8 !important;
+}
+
+/* CARDS */
+body.theme-light .glass-card,
+body.theme-light .key-point-card,
+body.theme-light .stat-item,
+body.theme-light .contact-avail-card,
+body.theme-light .update-card{
+  background:rgba(255,255,255,.86) !important;
+  color:#172033 !important;
+  border-color:rgba(18,38,65,.10) !important;
+  box-shadow:0 16px 40px rgba(18,38,65,.075) !important;
+}
+body.theme-light .glass-card:hover,
+body.theme-light .update-card:hover{
+  border-color:rgba(0,174,202,.28) !important;
+}
+
+/* Common headings inside white cards */
+body.theme-light .glass-card h1,
+body.theme-light .glass-card h2,
+body.theme-light .glass-card h3,
+body.theme-light .glass-card h4,
+body.theme-light .key-point-card h3,
+body.theme-light .stat-item h3,
+body.theme-light .contact-avail-card h3,
+body.theme-light .update-title{
+  color:#172033 !important;
+  -webkit-text-fill-color:#172033 !important;
+}
+body.theme-light .glass-card p,
+body.theme-light .key-point-card p,
+body.theme-light .stat-item p,
+body.theme-light .contact-avail-card p,
+body.theme-light .update-text{
+  color:#59677a !important;
+}
+
+/* Forms */
+body.theme-light .form-input,
+body.theme-light .form-textarea,
+body.theme-light input,
+body.theme-light textarea,
+body.theme-light select{
+  background:#fff !important;
+  color:#172033 !important;
+  border-color:rgba(18,38,65,.14) !important;
+}
+body.theme-light .form-input::placeholder,
+body.theme-light .form-textarea::placeholder,
+body.theme-light input::placeholder,
+body.theme-light textarea::placeholder{
+  color:#8290a3 !important;
+}
+
+/* UPDATE SECTION */
+body.theme-light .updates-status{
+  color:#6a788c !important;
+}
+body.theme-light .update-badge{
+  color:#008ea9 !important;
+  background:rgba(0,174,202,.07) !important;
+  border-color:rgba(0,174,202,.22) !important;
+}
+body.theme-light .update-date{
+  color:#7a8798 !important;
+}
+body.theme-light .update-link{
+  color:#008ea9 !important;
+}
+body.theme-light .update-empty{
+  color:#6a788c !important;
+  border-color:rgba(0,142,170,.22) !important;
+}
+
+/* FOOTER */
+body.theme-light .footer{
+  background:#edf3f8 !important;
+  color:#34445b !important;
+  border-top-color:rgba(18,38,65,.08) !important;
+}
+body.theme-light .footer a{
+  color:#008ea9 !important;
+}
+
+/* MOBILE MENU */
+body.theme-light .mobile-nav-overlay{
+  background:rgba(247,250,253,.985) !important;
+}
+body.theme-light .mobile-nav-link{
+  color:#26354a !important;
+  background:rgba(18,38,65,.035) !important;
+}
+body.theme-light .mobile-nav-link:hover{
+  color:#008ea9 !important;
+  background:rgba(0,174,202,.07) !important;
+}
+
+/* UPDATE PUBLISH MODAL */
+body.theme-light .update-manager{
+  background:rgba(28,45,65,.34) !important;
+}
+body.theme-light .update-manager-card{
+  background:#fff !important;
+  color:#172033 !important;
+  border-color:rgba(18,38,65,.12) !important;
+  box-shadow:0 30px 80px rgba(18,38,65,.22) !important;
+}
+body.theme-light .update-manager-head h3,
+body.theme-light .update-close{
+  color:#172033 !important;
+}
+body.theme-light .update-help{
+  color:#69778b !important;
+}
+
+/* SEARCH PANEL */
+body.theme-light .portfolio-search-panel{
+  background:rgba(255,255,255,.98) !important;
+  color:#172033 !important;
+  border-color:rgba(18,38,65,.12) !important;
+  box-shadow:0 20px 60px rgba(18,38,65,.16) !important;
+}
+body.theme-light .portfolio-search-result{
+  color:#172033 !important;
+}
+
+/* Prevent white-on-white text from inherited animation/utility classes */
+body.theme-light .text-white,
+body.theme-light .text-light,
+body.theme-light .text-muted-light{
+  color:#172033 !important;
+}
+
+/* Accessibility: strong readable selection */
+body.theme-light ::selection{
+  background:#00b9d4;
+  color:#fff;
+}
+
+</style>
 </head>
 <body>
 
@@ -226,7 +877,8 @@
         <a href="#certificates" class="nav-link">Certificates</a>
         <a href="#resume" class="nav-link">Resume</a>
         <a href="#contact" class="nav-link">Contact</a>
-        <a href="#feedback" class="nav-link">Feedback</a>
+        <a href="#updates" class="nav-link">Updates</a>
+<a href="#feedback" class="nav-link">Feedback</a>
       </nav>
 
       <!-- Nav Actions -->
@@ -256,6 +908,13 @@
           </svg>
         </button>
 
+
+        <!-- Dark / Light Theme Toggle -->
+        <button id="theme-toggle-btn" class="theme-toggle-btn" type="button"
+                aria-label="Switch theme" title="Switch dark/light theme">
+          <span id="theme-toggle-icon" aria-hidden="true">☀</span>
+        </button>
+
         <a href="#contact" class="btn btn-neon-cyan btn-sm btn-sweep">Contact Me</a>
 
         <!-- Mobile Hamburger Toggle -->
@@ -280,7 +939,8 @@
       <a href="#certificates" class="mobile-nav-link">Certificates</a>
       <a href="#resume" class="mobile-nav-link">Resume</a>
       <a href="#contact" class="mobile-nav-link">Contact</a>
-      <a href="#feedback" class="mobile-nav-link">Feedback</a>
+      <a href="#updates" class="mobile-nav-link">Updates</a>
+<a href="#feedback" class="mobile-nav-link">Feedback</a>
     </nav>
     <div class="mobile-nav-actions">
       <a href="#contact" class="btn btn-neon-cyan btn-sm">Initialize Contact</a>
@@ -421,9 +1081,11 @@
     </div>
   </section>
 
+
   <!-- ==========================================================================
-       SECTION 2: ABOUT ME
+       SECTION 2: UPDATES
        ========================================================================== -->
+
   <section id="about" class="section">
     <div class="container">
       <div class="section-header reveal">
@@ -1183,7 +1845,7 @@
                  rel="noopener noreferrer"
                  style="display:block; overflow:hidden; border-radius:14px; border:1px solid rgba(0,229,255,0.22); background:rgba(8,15,35,0.55);">
                 <img
-                  src="assets/images/inflibnet-visit-2.jpeg"
+                  src="assets/images/inflibnet-visit-1.jpeg"
                   alt="INFLIBNET Centre Gandhinagar academic visit - Photo 1"
                   loading="lazy"
                   style="width:100%; height:260px; object-fit:cover; display:block;"
@@ -1818,6 +2480,29 @@
   <!-- ==========================================================================
        PROFESSIONAL FEEDBACK
        ========================================================================== -->
+  <section id="updates" class="section updates-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">LATEST</span>
+        <h2 class="section-title">Updates</h2>
+        <p class="section-subtitle">Latest portfolio updates, new projects, achievements, and professional milestones.</p>
+      </div>
+
+      <div class="updates-toolbar reveal">
+        <span id="updates-status" class="updates-status">Latest updates</span>
+        <button id="open-update-manager" class="btn btn-neon-cyan btn-sm" type="button">
+          + Publish Update
+        </button>
+      </div>
+
+      <div id="updates-grid" class="updates-grid"></div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 3: ABOUT ME
+       ========================================================================== -->
+
   <section id="feedback" class="section feedback-section">
     <div class="container">
       <div class="section-header reveal">
@@ -1913,6 +2598,8 @@
             <a href="#certificates">Certificates</a>
             <a href="#resume">Resume</a>
             <a href="#contact">Contact</a>
+            <a href="#updates">Updates</a>
+            <a href="#feedback">Feedback</a>
           </div>
         </div>
 
@@ -1942,6 +2629,39 @@
   <button id="back-to-top-btn" class="back-to-top-btn" aria-label="Back to Top" title="Back to Top">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
   </button>
+
+
+  <!-- Update Manager -->
+  <div id="update-manager" class="update-manager" aria-hidden="true">
+    <div class="update-manager-card">
+      <div class="update-manager-head">
+        <h3>Publish Portfolio Update</h3>
+        <button id="close-update-manager" class="update-close" type="button" aria-label="Close">&times;</button>
+      </div>
+
+      <form id="update-form" class="update-form">
+        <input id="update-title" type="text" maxlength="90" placeholder="Update title" required>
+        <select id="update-category" required>
+          <option value="Portfolio">Portfolio</option>
+          <option value="Project">Project</option>
+          <option value="Achievement">Achievement</option>
+          <option value="Certificate">Certificate</option>
+          <option value="Career">Career</option>
+        </select>
+        <input id="update-date" type="date" required>
+        <textarea id="update-text" maxlength="500" placeholder="Write your update..." required></textarea>
+        <input id="update-link" type="url" placeholder="Optional link (https://...)">
+        <div class="update-actions">
+          <button id="clear-updates" class="btn btn-cyber-outline btn-sm" type="button">Reset Local Updates</button>
+          <button class="btn btn-neon-cyan btn-sm" type="submit">Publish Update</button>
+        </div>
+        <div class="update-help">
+          Updates are saved in this browser using localStorage. To make a new update visible to everyone on your GitHub/hosted website,
+          you still need to commit/upload the updated HTML or connect this form to a real backend.
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- Interactive Modal Container -->
   <div id="modal-backdrop" class="modal-backdrop" role="dialog" aria-modal="true">
@@ -1984,6 +2704,138 @@
   render();
 })();
 </script>
+
+<script>
+/* ==========================================================
+   DARK / LIGHT THEME
+   ========================================================== */
+(function(){
+  const body=document.body;
+  const btn=document.getElementById('theme-toggle-btn');
+  const icon=document.getElementById('theme-toggle-icon');
+  if(!btn)return;
+
+  function applyTheme(theme){
+    body.classList.toggle('theme-light', theme==='light');
+    body.classList.toggle('theme-dark', theme!=='light');
+    icon.textContent = theme==='light' ? '☾' : '☀';
+    btn.title = theme==='light' ? 'Switch to dark theme' : 'Switch to light theme';
+    btn.setAttribute('aria-label', btn.title);
+    localStorage.setItem('portfolio-theme', theme);
+  }
+
+  const saved=localStorage.getItem('portfolio-theme') || 'dark';
+  applyTheme(saved);
+  btn.addEventListener('click',()=>applyTheme(body.classList.contains('theme-light')?'dark':'light'));
+})();
+
+/* ==========================================================
+   PORTFOLIO UPDATES
+   ========================================================== */
+(function(){
+  const grid=document.getElementById('updates-grid');
+  const manager=document.getElementById('update-manager');
+  const openBtn=document.getElementById('open-update-manager');
+  const closeBtn=document.getElementById('close-update-manager');
+  const form=document.getElementById('update-form');
+  const resetBtn=document.getElementById('clear-updates');
+  const dateInput=document.getElementById('update-date');
+  const status=document.getElementById('updates-status');
+  if(!grid||!manager||!form)return;
+
+  const defaultUpdates=[
+    {
+      id:'welcome-update',
+      title:'Portfolio Website Launched',
+      category:'Portfolio',
+      date:'2026-10-05',
+      text:'My professional portfolio is now live with projects, skills, certificates, resume, contact and feedback sections.',
+      link:''
+    }
+  ];
+
+  const key='umang-portfolio-updates-v1';
+
+  function load(){
+    try{
+      const saved=JSON.parse(localStorage.getItem(key));
+      return Array.isArray(saved) ? saved : defaultUpdates;
+    }catch(e){return defaultUpdates;}
+  }
+
+  function esc(value){
+    return String(value||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+  }
+
+  function render(){
+    const items=load().sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+    status.textContent=items.length+' published update'+(items.length===1?'':'s');
+    if(!items.length){
+      grid.innerHTML='<div class="update-empty">No updates published yet.</div>';
+      return;
+    }
+    grid.innerHTML=items.map(item=>`
+      <article class="update-card reveal">
+        <div class="update-meta">
+          <span class="update-badge">${esc(item.category)}</span>
+          <span class="update-date">${esc(item.date)}</span>
+        </div>
+        <h3 class="update-title">${esc(item.title)}</h3>
+        <p class="update-text">${esc(item.text)}</p>
+        ${item.link ? `<a class="update-link" href="${esc(item.link)}" target="_blank" rel="noopener noreferrer">View update →</a>` : ''}
+      </article>
+    `).join('');
+  }
+
+  function openManager(){
+    dateInput.value=new Date().toISOString().slice(0,10);
+    manager.classList.add('open');
+    manager.setAttribute('aria-hidden','false');
+    document.getElementById('update-title').focus();
+  }
+
+  function closeManager(){
+    manager.classList.remove('open');
+    manager.setAttribute('aria-hidden','true');
+  }
+
+  openBtn.addEventListener('click',openManager);
+  closeBtn.addEventListener('click',closeManager);
+  manager.addEventListener('click',e=>{if(e.target===manager)closeManager();});
+
+  form.addEventListener('submit',e=>{
+    e.preventDefault();
+    const item={
+      id:'u-'+Date.now(),
+      title:document.getElementById('update-title').value.trim(),
+      category:document.getElementById('update-category').value,
+      date:document.getElementById('update-date').value,
+      text:document.getElementById('update-text').value.trim(),
+      link:document.getElementById('update-link').value.trim()
+    };
+    if(!item.title||!item.date||!item.text)return;
+
+    const items=load().filter(x=>x.id!=='welcome-update');
+    items.unshift(item);
+    localStorage.setItem(key,JSON.stringify(items));
+    form.reset();
+    dateInput.value=new Date().toISOString().slice(0,10);
+    render();
+    closeManager();
+    document.getElementById('updates').scrollIntoView({behavior:'smooth',block:'start'});
+  });
+
+  resetBtn.addEventListener('click',()=>{
+    if(confirm('Reset locally saved updates and restore the default update?')){
+      localStorage.removeItem(key);
+      render();
+    }
+  });
+
+  render();
+})();
+</script>
+
   <script src="js/particles.js"></script>
   <script src="js/animations.js"></script>
   <script src="js/main.js"></script>
