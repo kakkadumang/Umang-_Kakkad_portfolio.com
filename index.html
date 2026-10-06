@@ -1629,6 +1629,73 @@ body.theme-light .premium-nav-links{
 </style>
 
 
+<style id="visitor-captcha-style">
+#visitor-captcha-gate{
+  position:fixed;inset:0;z-index:2147483647;
+  display:flex;align-items:center;justify-content:center;
+  padding:20px;box-sizing:border-box;
+  background:rgba(3,7,15,.96);
+  font-family:inherit;
+}
+#visitor-captcha-gate[hidden]{display:none!important}
+.visitor-captcha-card{
+  width:min(430px,100%);box-sizing:border-box;
+  padding:26px;border-radius:16px;
+  background:linear-gradient(145deg,#111827,#07101d);
+  border:1px solid rgba(0,229,255,.35);
+  box-shadow:0 20px 70px rgba(0,0,0,.65),0 0 35px rgba(0,229,255,.10);
+  color:#fff;
+}
+.visitor-captcha-badge{
+  display:inline-block;padding:6px 10px;border-radius:999px;
+  font-size:11px;font-weight:800;letter-spacing:1.2px;
+  color:#00e5ff;background:rgba(0,229,255,.09);
+  border:1px solid rgba(0,229,255,.25);
+}
+.visitor-captcha-card h2{margin:14px 0 6px;font-size:26px}
+.visitor-captcha-note{margin:0 0 18px;color:rgba(255,255,255,.68)}
+.robot-row{
+  min-height:62px;display:flex;align-items:center;gap:12px;
+  padding:12px 14px;box-sizing:border-box;border-radius:7px;
+  background:#fff;color:#202124;cursor:pointer;user-select:none;
+}
+.robot-row input{position:absolute;opacity:0;pointer-events:none}
+.robot-box{
+  width:28px;height:28px;flex:0 0 28px;
+  border:2px solid #777;border-radius:3px;background:#fff;
+  display:grid;place-items:center;
+}
+.robot-row input:checked + .robot-box{background:#4285f4;border-color:#4285f4}
+.robot-row input:checked + .robot-box:after{content:"✓";color:#fff;font-size:20px;font-weight:900}
+.captcha-mini{margin-left:auto;color:#777;font-size:10px;font-weight:800}
+.visitor-captcha-panel{margin-top:14px}
+.visitor-captcha-panel[hidden]{display:none!important}
+.visitor-code-row{display:flex;gap:8px}
+.visitor-captcha-code{
+  flex:1;min-height:62px;display:flex;align-items:center;justify-content:center;
+  box-sizing:border-box;border:2px dashed rgba(0,229,255,.45);border-radius:8px;
+  background:#070d18;color:#fff;font:900 25px/1 Consolas,monospace;
+  letter-spacing:5px;text-shadow:2px 2px 0 rgba(0,229,255,.22);
+  user-select:none;
+}
+#visitor-captcha-refresh{
+  width:54px;border:0;border-radius:8px;background:#303744;color:#fff;
+  font-size:24px;cursor:pointer;
+}
+#visitor-captcha-input{
+  width:100%;box-sizing:border-box;margin-top:10px;padding:12px 14px;
+  border-radius:8px;border:1px solid rgba(255,255,255,.22);
+  background:#0d1625;color:#fff;font-size:17px;letter-spacing:3px;
+  outline:none;text-transform:none;
+}
+#visitor-captcha-input:focus{border-color:#00e5ff;box-shadow:0 0 0 2px rgba(0,229,255,.12)}
+.visitor-verify-btn{
+  width:100%;margin-top:10px;padding:12px;border:0;border-radius:8px;
+  background:#00e5ff;color:#061018;font-weight:900;cursor:pointer;
+}
+#visitor-captcha-status{min-height:22px;margin-top:9px;font-size:13px;text-align:center}
+</style>
+
 <style id="umang-cinematic-premium-12s">
 #cinematic-name-stage{position:fixed;inset:0;z-index:999999;display:none;overflow:hidden;background:#02040a;color:#fff;align-items:center;justify-content:center;opacity:0;pointer-events:none;perspective:1400px}
 #cinematic-name-stage.active{display:flex;animation:ukCineIn .8s ease forwards}
@@ -2319,24 +2386,148 @@ footer h4{
 </style>
 
 
-<style id="mobile-stability-fix">
-html,body{width:100%;max-width:100%;overflow-x:hidden!important}
-body{overscroll-behavior-x:none}
-img,video,canvas,iframe{max-width:100%}
-@media(max-width:768px){
-  html,body{overflow-x:hidden!important;overscroll-behavior:none;-webkit-overflow-scrolling:touch}
-  .ambient-glow{opacity:.30!important;filter:blur(40px)!important}
-  .cyber-grid-overlay{opacity:.15!important}
+<style id="mobile-browser-prompt-style">
+.mobile-browser-prompt{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:2147483647;
+  background:rgba(3,7,12,.96);
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
 }
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+.mobile-browser-prompt.show{display:flex}
+.mobile-browser-card{
+  width:min(420px,100%);
+  box-sizing:border-box;
+  padding:28px 22px;
+  border:1px solid rgba(0,220,255,.45);
+  border-radius:22px;
+  background:#0a1018;
+  color:#fff;
+  text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,.65);
 }
+.mobile-browser-icon{
+  width:54px;height:54px;line-height:54px;margin:0 auto 14px;
+  border-radius:50%;background:#111d2a;color:#00e5ff;font-size:28px;
+}
+.mobile-browser-card h2{margin:0 0 10px;font-size:22px}
+.mobile-browser-card p{margin:0 auto 20px;color:#b8c4d0;line-height:1.55;font-size:15px}
+.mobile-browser-actions{display:flex;gap:10px;flex-direction:column}
+.mobile-browser-actions button{
+  border:0;border-radius:12px;padding:13px 16px;font-size:15px;font-weight:700;
+  cursor:pointer;background:#00d9ff;color:#031018;
+}
+.mobile-browser-actions .mobile-continue{
+  background:#172330;color:#dbe8f2;border:1px solid #334556;
+}
+.mobile-browser-card small{display:block;margin-top:14px;color:#718091}
+@media (min-width:769px){.mobile-browser-prompt{display:none!important}}
 </style>
+
+
+<script id="mobile-browser-prompt-script">
+(function(){
+  function isMobile(){
+    return window.matchMedia('(max-width: 768px)').matches ||
+           /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+  }
+  function isInAppBrowser(){
+    var ua=navigator.userAgent||'';
+    return /Instagram|FBAN|FBAV|Facebook|Messenger|Twitter|LinkedInApp|Line\//i.test(ua);
+  }
+  function showPrompt(){
+    var box=document.getElementById('mobile-browser-prompt');
+    if(!box || !isMobile() || !isInAppBrowser()) return;
+    box.classList.add('show');
+    box.setAttribute('aria-hidden','false');
+    document.documentElement.style.overflow='hidden';
+    document.body.style.overflow='hidden';
+  }
+  function closePrompt(){
+    var box=document.getElementById('mobile-browser-prompt');
+    if(!box) return;
+    box.classList.remove('show');
+    box.setAttribute('aria-hidden','true');
+    document.documentElement.style.overflow='';
+    document.body.style.overflow='';
+    try{sessionStorage.setItem('mobileBrowserPromptSeen','1')}catch(e){}
+  }
+  function openExternal(){
+    var url=window.location.href;
+    // Android intent URL: asks Android to open the current page in an external browser.
+    if(/Android/i.test(navigator.userAgent)){
+      try{
+        var u=new URL(url);
+        var intent='intent://'+u.host+u.pathname+u.search+u.hash+
+          '#Intent;scheme='+u.protocol.replace(':','')+
+          ';action=android.intent.action.VIEW;end';
+        window.location.href=intent;
+        return;
+      }catch(e){}
+    }
+    // iOS/in-app browsers cannot be forced reliably; copy/open instructions are safer.
+    closePrompt();
+    alert('Tap the browser menu (⋯/⋮) and choose “Open in Browser” or “Open in Chrome/Safari”.');
+  }
+  document.addEventListener('DOMContentLoaded',function(){
+    var open=document.getElementById('mobile-open-browser');
+    var cont=document.getElementById('mobile-continue');
+    if(open) open.addEventListener('click',openExternal);
+    if(cont) cont.addEventListener('click',closePrompt);
+    setTimeout(showPrompt,250);
+  });
+})();
+</script>
 
 </head>
 <body>
 
+<!-- Mobile Browser Prompt -->
+<div id="mobile-browser-prompt" class="mobile-browser-prompt" aria-hidden="true">
+  <div class="mobile-browser-card">
+    <div class="mobile-browser-icon">↗</div>
+    <h2>Open in Chrome / Browser</h2>
+    <p>For the best experience on mobile, please open this portfolio in Chrome or another browser.</p>
+    <div class="mobile-browser-actions">
+      <button id="mobile-open-browser" type="button">Open in Browser</button>
+      <button id="mobile-continue" type="button" class="mobile-continue">Continue Here</button>
+    </div>
+    <small>Recommended for smooth scrolling and full animations.</small>
+  </div>
+</div>
 
+
+<!-- Visitor CAPTCHA gate -->
+  <div id="visitor-captcha-gate" aria-modal="true" role="dialog">
+    <div class="visitor-captcha-card">
+      <div class="visitor-captcha-badge">SECURITY VERIFICATION</div>
+      <h2>Verify you are human</h2>
+      <p class="visitor-captcha-note">Complete the CAPTCHA to open the portfolio.</p>
+
+      <label class="robot-row">
+        <input id="visitor-robot-check" type="checkbox">
+        <span class="robot-box"></span>
+        <span>I'm not a robot</span>
+        <span class="captcha-mini">CAPTCHA</span>
+      </label>
+
+      <div id="visitor-captcha-panel" class="visitor-captcha-panel" hidden>
+        <div class="visitor-code-row">
+          <div id="visitor-captcha-code" class="visitor-captcha-code"></div>
+          <button id="visitor-captcha-refresh" type="button" aria-label="Refresh CAPTCHA">↻</button>
+        </div>
+        <input id="visitor-captcha-input" type="text" maxlength="7"
+               autocomplete="off" spellcheck="false" placeholder="Enter CAPTCHA code">
+        <button id="visitor-captcha-verify" type="button" class="visitor-verify-btn">Verify</button>
+        <div id="visitor-captcha-status" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
 
 
   <!-- Dynamic Particle Canvas Background -->
@@ -4523,6 +4714,74 @@ function formatPublishedAt(value, fallbackDate){
       });
     }
   </script>
+
+<script id="visitor-captcha-script">
+(function(){
+  "use strict";
+  var gate=document.getElementById("visitor-captcha-gate");
+  var check=document.getElementById("visitor-robot-check");
+  var panel=document.getElementById("visitor-captcha-panel");
+  var codeBox=document.getElementById("visitor-captcha-code");
+  var input=document.getElementById("visitor-captcha-input");
+  var refresh=document.getElementById("visitor-captcha-refresh");
+  var verify=document.getElementById("visitor-captcha-verify");
+  var status=document.getElementById("visitor-captcha-status");
+
+  if(!gate||!check||!panel||!codeBox||!input||!refresh||!verify||!status){return;}
+
+  var current="";
+  var chars="ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789@#$%&*!?";
+  function newCaptcha(){
+    current="";
+    for(var i=0;i<6;i++){
+      current+=chars.charAt(Math.floor(Math.random()*chars.length));
+    }
+    codeBox.textContent=current;
+    input.value="";
+    status.textContent="";
+    status.style.color="";
+  }
+  function showCaptcha(){
+    panel.hidden=false;
+    newCaptcha();
+    setTimeout(function(){input.focus();},60);
+  }
+  function refreshCaptcha(e){
+    if(e){e.preventDefault();e.stopPropagation();}
+    showCaptcha();
+  }
+  function verifyCaptcha(e){
+    if(e){e.preventDefault();e.stopPropagation();}
+    if(input.value.trim().toLowerCase()!==current.toLowerCase()){
+      status.textContent="Incorrect CAPTCHA. A new code has been generated.";
+      status.style.color="#ff6b7a";
+      newCaptcha();
+      input.focus();
+      return;
+    }
+    status.textContent="Verified.";
+    status.style.color="#72ffad";
+    setTimeout(function(){
+      gate.hidden=true;
+      gate.setAttribute("aria-hidden","true");
+      
+    },120);
+  }
+
+  check.addEventListener("change",function(){
+    if(check.checked){showCaptcha();}
+    else{panel.hidden=true;input.value="";status.textContent="";}
+  });
+  refresh.addEventListener("click",refreshCaptcha,false);
+  verify.addEventListener("click",verifyCaptcha,false);
+  input.addEventListener("keydown",function(e){
+    if(e.key==="Enter"){verifyCaptcha(e);}
+  });
+})();
+</script>
+
+
+
 
 <script id="premium-3d-footer-motion">
 (function(){
