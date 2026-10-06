@@ -1627,75 +1627,6 @@ body.theme-light .premium-nav-links{
   }
 }
 </style>
-
-
-<style id="visitor-captcha-style">
-#visitor-captcha-gate{
-  position:fixed;inset:0;z-index:2147483647;
-  display:flex;align-items:center;justify-content:center;
-  padding:20px;box-sizing:border-box;
-  background:rgba(3,7,15,.96);
-  font-family:inherit;
-}
-#visitor-captcha-gate[hidden]{display:none!important}
-.visitor-captcha-card{
-  width:min(430px,100%);box-sizing:border-box;
-  padding:26px;border-radius:16px;
-  background:linear-gradient(145deg,#111827,#07101d);
-  border:1px solid rgba(0,229,255,.35);
-  box-shadow:0 20px 70px rgba(0,0,0,.65),0 0 35px rgba(0,229,255,.10);
-  color:#fff;
-}
-.visitor-captcha-badge{
-  display:inline-block;padding:6px 10px;border-radius:999px;
-  font-size:11px;font-weight:800;letter-spacing:1.2px;
-  color:#00e5ff;background:rgba(0,229,255,.09);
-  border:1px solid rgba(0,229,255,.25);
-}
-.visitor-captcha-card h2{margin:14px 0 6px;font-size:26px}
-.visitor-captcha-note{margin:0 0 18px;color:rgba(255,255,255,.68)}
-.robot-row{
-  min-height:62px;display:flex;align-items:center;gap:12px;
-  padding:12px 14px;box-sizing:border-box;border-radius:7px;
-  background:#fff;color:#202124;cursor:pointer;user-select:none;
-}
-.robot-row input{position:absolute;opacity:0;pointer-events:none}
-.robot-box{
-  width:28px;height:28px;flex:0 0 28px;
-  border:2px solid #777;border-radius:3px;background:#fff;
-  display:grid;place-items:center;
-}
-.robot-row input:checked + .robot-box{background:#4285f4;border-color:#4285f4}
-.robot-row input:checked + .robot-box:after{content:"✓";color:#fff;font-size:20px;font-weight:900}
-.captcha-mini{margin-left:auto;color:#777;font-size:10px;font-weight:800}
-.visitor-captcha-panel{margin-top:14px}
-.visitor-captcha-panel[hidden]{display:none!important}
-.visitor-code-row{display:flex;gap:8px}
-.visitor-captcha-code{
-  flex:1;min-height:62px;display:flex;align-items:center;justify-content:center;
-  box-sizing:border-box;border:2px dashed rgba(0,229,255,.45);border-radius:8px;
-  background:#070d18;color:#fff;font:900 25px/1 Consolas,monospace;
-  letter-spacing:5px;text-shadow:2px 2px 0 rgba(0,229,255,.22);
-  user-select:none;
-}
-#visitor-captcha-refresh{
-  width:54px;border:0;border-radius:8px;background:#303744;color:#fff;
-  font-size:24px;cursor:pointer;
-}
-#visitor-captcha-input{
-  width:100%;box-sizing:border-box;margin-top:10px;padding:12px 14px;
-  border-radius:8px;border:1px solid rgba(255,255,255,.22);
-  background:#0d1625;color:#fff;font-size:17px;letter-spacing:3px;
-  outline:none;text-transform:none;
-}
-#visitor-captcha-input:focus{border-color:#00e5ff;box-shadow:0 0 0 2px rgba(0,229,255,.12)}
-.visitor-verify-btn{
-  width:100%;margin-top:10px;padding:12px;border:0;border-radius:8px;
-  background:#00e5ff;color:#061018;font-weight:900;cursor:pointer;
-}
-#visitor-captcha-status{min-height:22px;margin-top:9px;font-size:13px;text-align:center}
-</style>
-
 <style id="umang-cinematic-premium-12s">
 #cinematic-name-stage{position:fixed;inset:0;z-index:999999;display:none;overflow:hidden;background:#02040a;color:#fff;align-items:center;justify-content:center;opacity:0;pointer-events:none;perspective:1400px}
 #cinematic-name-stage.active{display:flex;animation:ukCineIn .8s ease forwards}
@@ -2385,34 +2316,59 @@ footer h4{
 }
 </style>
 
+
+<style id="mobile-stability-fix">
+  html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden !important;
+  }
+
+  body {
+    overscroll-behavior-x: none;
+  }
+
+  #particles-canvas {
+    max-width: 100vw;
+  }
+
+  @media (max-width: 768px) {
+    /* Keep the page stable inside Instagram's in-app browser. */
+    html, body {
+      overflow-x: hidden !important;
+      overscroll-behavior: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Reduce expensive visual effects on phones without changing the design. */
+    .ambient-glow {
+      opacity: .35 !important;
+      filter: blur(45px) !important;
+    }
+
+    .cyber-grid-overlay {
+      opacity: .18 !important;
+    }
+
+    /* Prevent accidental horizontal movement from wide elements. */
+    img, video, canvas, iframe {
+      max-width: 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+</style>
+
 </head>
 <body>
-
-<!-- Visitor CAPTCHA gate -->
-  <div id="visitor-captcha-gate" aria-modal="true" role="dialog">
-    <div class="visitor-captcha-card">
-      <div class="visitor-captcha-badge">SECURITY VERIFICATION</div>
-      <h2>Verify you are human</h2>
-      <p class="visitor-captcha-note">Complete the CAPTCHA to open the portfolio.</p>
-
-      <label class="robot-row">
-        <input id="visitor-robot-check" type="checkbox">
-        <span class="robot-box"></span>
-        <span>I'm not a robot</span>
-        <span class="captcha-mini">CAPTCHA</span>
-      </label>
-
-      <div id="visitor-captcha-panel" class="visitor-captcha-panel" hidden>
-        <div class="visitor-code-row">
-          <div id="visitor-captcha-code" class="visitor-captcha-code"></div>
-          <button id="visitor-captcha-refresh" type="button" aria-label="Refresh CAPTCHA">↻</button>
-        </div>
-        <input id="visitor-captcha-input" type="text" maxlength="7"
-               autocomplete="off" spellcheck="false" placeholder="Enter CAPTCHA code">
-        <button id="visitor-captcha-verify" type="button" class="visitor-verify-btn">Verify</button>
-        <div id="visitor-captcha-status" aria-live="polite"></div>
-      </div>
-    </div>
+</div>
   </div>
 
 
@@ -4600,75 +4556,6 @@ function formatPublishedAt(value, fallbackDate){
       });
     }
   </script>
-
-<script id="visitor-captcha-script">
-(function(){
-  "use strict";
-  var gate=document.getElementById("visitor-captcha-gate");
-  var check=document.getElementById("visitor-robot-check");
-  var panel=document.getElementById("visitor-captcha-panel");
-  var codeBox=document.getElementById("visitor-captcha-code");
-  var input=document.getElementById("visitor-captcha-input");
-  var refresh=document.getElementById("visitor-captcha-refresh");
-  var verify=document.getElementById("visitor-captcha-verify");
-  var status=document.getElementById("visitor-captcha-status");
-
-  if(!gate||!check||!panel||!codeBox||!input||!refresh||!verify||!status){return;}
-
-  var current="";
-  var chars="ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789@#$%&*!?";
-  function newCaptcha(){
-    current="";
-    for(var i=0;i<6;i++){
-      current+=chars.charAt(Math.floor(Math.random()*chars.length));
-    }
-    codeBox.textContent=current;
-    input.value="";
-    status.textContent="";
-    status.style.color="";
-  }
-  function showCaptcha(){
-    panel.hidden=false;
-    newCaptcha();
-    setTimeout(function(){input.focus();},60);
-  }
-  function refreshCaptcha(e){
-    if(e){e.preventDefault();e.stopPropagation();}
-    showCaptcha();
-  }
-  function verifyCaptcha(e){
-    if(e){e.preventDefault();e.stopPropagation();}
-    if(input.value.trim().toLowerCase()!==current.toLowerCase()){
-      status.textContent="Incorrect CAPTCHA. A new code has been generated.";
-      status.style.color="#ff6b7a";
-      newCaptcha();
-      input.focus();
-      return;
-    }
-    status.textContent="Verified.";
-    status.style.color="#72ffad";
-    setTimeout(function(){
-      gate.hidden=true;
-      gate.setAttribute("aria-hidden","true");
-      
-    },120);
-  }
-
-  check.addEventListener("change",function(){
-    if(check.checked){showCaptcha();}
-    else{panel.hidden=true;input.value="";status.textContent="";}
-  });
-  refresh.addEventListener("click",refreshCaptcha,false);
-  verify.addEventListener("click",verifyCaptcha,false);
-  input.addEventListener("keydown",function(e){
-    if(e.key==="Enter"){verifyCaptcha(e);}
-  });
-})();
-</script>
-
-
-
-
 <script id="premium-3d-footer-motion">
 (function(){
   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -4690,126 +4577,6 @@ function formatPublishedAt(value, fallbackDate){
       card.style.transform = '';
     });
   });
-})();
-</script>
-
-
-<!-- Instagram in-app browser compatibility -->
-<style id="instagram-browser-compatibility">
-  /* Keep the CAPTCHA, but reduce expensive effects inside Instagram's browser. */
-  html.instagram-inapp body{
-    scroll-behavior:auto !important;
-  }
-  html.instagram-inapp #particles-canvas,
-  html.instagram-inapp .cyber-grid-overlay,
-  html.instagram-inapp .ambient-glow{
-    display:none !important;
-  }
-  html.instagram-inapp *{
-    animation-duration:.01ms !important;
-    animation-iteration-count:1 !important;
-    transition-duration:.01ms !important;
-    backdrop-filter:none !important;
-    -webkit-backdrop-filter:none !important;
-  }
-  html.instagram-inapp #visitor-captcha-gate{
-    background:#03070f !important;
-  }
-  .instagram-browser-help{
-    display:none;
-    margin:0 0 16px;
-    padding:12px 13px;
-    border-radius:11px;
-    background:rgba(0,229,255,.07);
-    border:1px solid rgba(0,229,255,.22);
-  }
-  html.instagram-inapp .instagram-browser-help{display:block;}
-  .instagram-browser-help-title{
-    margin:0 0 5px;
-    color:#fff;
-    font-size:13px;
-    font-weight:800;
-  }
-  .instagram-browser-help-text{
-    margin:0 0 10px;
-    color:rgba(255,255,255,.62);
-    font-size:11px;
-    line-height:1.5;
-  }
-  .instagram-open-browser-btn{
-    width:100%;
-    padding:10px 12px;
-    border:1px solid rgba(0,229,255,.38);
-    border-radius:9px;
-    background:linear-gradient(135deg,#00e5ff,#00b8d4);
-    color:#041018;
-    font-size:12px;
-    font-weight:900;
-    cursor:pointer;
-  }
-  .instagram-open-browser-btn:active{transform:scale(.98);}
-  @media(max-width:520px){
-    .instagram-browser-help{padding:11px;}
-    .instagram-browser-help-title{font-size:12px;}
-  }
-</style>
-<script id="instagram-browser-compatibility-script">
-(function(){
-  'use strict';
-  var ua=navigator.userAgent||'';
-  var isInstagram=/Instagram/i.test(ua);
-  if(!isInstagram) return;
-
-  document.documentElement.classList.add('instagram-inapp');
-
-  function setup(){
-    var gate=document.getElementById('visitor-captcha-gate');
-    var card=gate && gate.querySelector('.visitor-captcha-card');
-    if(!card || document.getElementById('instagram-browser-help')) return;
-
-    var box=document.createElement('div');
-    box.id='instagram-browser-help';
-    box.className='instagram-browser-help';
-    box.innerHTML=''+
-      '<p class="instagram-browser-help-title">Open in Chrome for a smoother experience</p>'+
-      '<p class="instagram-browser-help-text">Instagram's built-in browser can be slower with CAPTCHA and animations. Your CAPTCHA will remain enabled in Chrome.</p>'+
-      '<button type="button" class="instagram-open-browser-btn" id="instagram-open-browser-btn">↗ Open in Chrome</button>';
-
-    card.insertBefore(box, card.firstChild);
-
-    var btn=document.getElementById('instagram-open-browser-btn');
-    if(!btn) return;
-    btn.addEventListener('click',function(){
-      var url=window.location.href;
-      var isAndroid=/Android/i.test(ua);
-      var isIOS=/iPhone|iPad|iPod/i.test(ua);
-
-      if(isAndroid){
-        try{
-          var u=new URL(url);
-          var intent='intent://'+u.host+u.pathname+u.search+u.hash+'#Intent;scheme=https;package=com.android.chrome;end';
-          window.location.href=intent;
-          setTimeout(function(){
-            window.open(url,'_blank','noopener,noreferrer');
-          },900);
-          return;
-        }catch(e){}
-      }
-
-      if(isIOS){
-        try{
-          window.location.href='googlechrome://navigate?url='+encodeURIComponent(url);
-          setTimeout(function(){window.open(url,'_blank','noopener,noreferrer');},900);
-          return;
-        }catch(e){}
-      }
-
-      window.open(url,'_blank','noopener,noreferrer');
-    },false);
-  }
-
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',setup);
-  else setup();
 })();
 </script>
 
