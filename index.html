@@ -11,7 +11,7 @@
   </script>
 
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=1200, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Umang Kakkad | Software Developer &amp; MCA Student</title>
   <meta name="description" content="Personal portfolio of Umang Kakkad - Software Developer &amp; MCA Student at GLS University, Ahmedabad. Explore projects, technical skills, and experience.">
@@ -1627,6 +1627,8 @@ body.theme-light .premium-nav-links{
   }
 }
 </style>
+
+
 <style id="umang-cinematic-premium-12s">
 #cinematic-name-stage{position:fixed;inset:0;z-index:999999;display:none;overflow:hidden;background:#02040a;color:#fff;align-items:center;justify-content:center;opacity:0;pointer-events:none;perspective:1400px}
 #cinematic-name-stage.active{display:flex;animation:ukCineIn .8s ease forwards}
@@ -2317,58 +2319,29 @@ footer h4{
 </style>
 
 
-<style id="universal-desktop-fast">
-/* Universal desktop layout: mobile devices use the desktop layout too. */
-html, body{
-  min-width:1200px !important;
-  width:100%;
-  scroll-behavior:smooth;
-  -webkit-text-size-adjust:100%;
-  text-size-adjust:100%;
-  overscroll-behavior-x:none;
-}
-body{
-  overflow-x:auto;
-  -webkit-overflow-scrolling:touch;
-}
-img,video,canvas,svg{
-  max-width:100%;
-}
-*{
-  -webkit-tap-highlight-color:transparent;
-}
-@media (max-width:1199px){
-  /* Fallback for browsers that ignore the fixed layout viewport. */
-  html,body{min-width:1200px !important;}
+<style id="all-device-performance">
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-x:none}
+img,video{max-width:100%;height:auto}
+canvas{max-width:100%}
+*,*::before,*::after{box-sizing:border-box}
+button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
+@media (max-width:700px){
+  html{scroll-behavior:auto}
+  .cursor,.custom-cursor,.cursor-dot,.cursor-ring{display:none!important}
+  body{touch-action:pan-y}
 }
 @media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{
-    scroll-behavior:auto !important;
-  }
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+@media (max-width:700px) and (prefers-reduced-motion:no-preference){
+  /* Keep mobile animations short and lightweight. */
+  .particle,.particles,.particle-canvas{animation-duration:1.2s!important}
 }
 </style>
-<script id="universal-desktop-boot">
-(function(){
-  'use strict';
-  function forceDesktopViewport(){
-    var v=document.querySelector('meta[name="viewport"]');
-    if(!v){
-      v=document.createElement('meta');
-      v.name='viewport';
-      document.head.appendChild(v);
-    }
-    v.setAttribute('content','width=1200, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes');
-    document.documentElement.classList.add('desktop-layout');
-  }
-  if(document.readyState==='loading'){
-    document.addEventListener('DOMContentLoaded',forceDesktopViewport,{once:true});
-  }else{forceDesktopViewport();}
-  window.addEventListener('pageshow',forceDesktopViewport,{passive:true});
-})();
-</script>
-
 </head>
 <body>
+
 <!-- Dynamic Particle Canvas Background -->
   <canvas id="particles-canvas"></canvas>
 
@@ -4553,6 +4526,7 @@ function formatPublishedAt(value, fallbackDate){
       });
     }
   </script>
+
 <script id="premium-3d-footer-motion">
 (function(){
   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -4577,5 +4551,59 @@ function formatPublishedAt(value, fallbackDate){
 })();
 </script>
 
+
+<script id="all-device-performance-script">
+(function(){
+  "use strict";
+
+  function optimize(){
+    try{
+      document.querySelectorAll("img:not([loading])").forEach(function(img){
+        img.loading="lazy";
+        img.decoding="async";
+      });
+
+      document.querySelectorAll("iframe:not([loading])").forEach(function(frame){
+        frame.loading="lazy";
+      });
+
+      /* Let the browser skip rendering far-off sections when possible. */
+      document.querySelectorAll("section").forEach(function(el){
+        if(!el.style.contentVisibility) el.style.contentVisibility="auto";
+      });
+    }catch(e){}
+  }
+
+  function pauseCanvasWhenHidden(){
+    if(!document.hidden) return;
+    document.querySelectorAll("canvas").forEach(function(c){
+      c.dataset.wasVisible="1";
+      c.style.visibility="hidden";
+    });
+  }
+  function resumeCanvas(){
+    if(document.hidden) return;
+    document.querySelectorAll("canvas[data-was-visible]").forEach(function(c){
+      c.style.visibility="";
+      delete c.dataset.wasVisible;
+    });
+  }
+
+  if(document.readyState==="loading"){
+    document.addEventListener("DOMContentLoaded", optimize, {once:true});
+  }else{
+    optimize();
+  }
+  document.addEventListener("visibilitychange", function(){
+    if(document.hidden) pauseCanvasWhenHidden();
+    else resumeCanvas();
+  });
+
+  /* Never block page rendering with a long synchronous task. */
+  if("requestIdleCallback" in window){
+    requestIdleCallback(optimize,{timeout:1500});
+  }
+})();
+</script>
 </body>
 </html>
