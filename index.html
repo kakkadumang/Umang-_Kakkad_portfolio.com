@@ -1739,11 +1739,11 @@ body.theme-light .premium-nav-links{
 @media(prefers-reduced-motion:reduce){#cinematic-name-stage *{animation-duration:.01ms!important;animation-iteration-count:1!important}}
 
 /* Full website: premium 3D entrance after cinematic intro */
-body.cinematic-website-enter .navbar,body.cinematic-website-enter .section,body.cinematic-website-enter footer{animation:ukSiteReveal 1.25s cubic-bezier(.18,.8,.2,1) both;animation-delay:var(--cine-delay,0s)}
-body.cinematic-website-enter .navbar{--cine-delay:.25s}body.cinematic-website-enter #home{--cine-delay:.6s}body.cinematic-website-enter #about{--cine-delay:.95s}body.cinematic-website-enter #education{--cine-delay:1.3s}body.cinematic-website-enter #skills{--cine-delay:1.65s}body.cinematic-website-enter #experience{--cine-delay:2s}body.cinematic-website-enter #projects{--cine-delay:2.35s}body.cinematic-website-enter #certificates{--cine-delay:2.7s}body.cinematic-website-enter #resume{--cine-delay:3.05s}body.cinematic-website-enter #contact{--cine-delay:3.4s}body.cinematic-website-enter #updates{--cine-delay:3.75s}body.cinematic-website-enter #feedback{--cine-delay:4.1s}body.cinematic-website-enter footer{--cine-delay:4.45s}
-@keyframes ukSiteReveal{0%{opacity:0;filter:blur(12px);transform:perspective(1400px) translate3d(0,70px,-260px) rotateX(8deg) scale(.965)}60%{opacity:1;filter:blur(0);transform:perspective(1400px) translate3d(0,-5px,30px) rotateX(-1deg) scale(1.008)}100%{opacity:1;filter:none;transform:none}}
-body.cinematic-website-enter .section h1,body.cinematic-website-enter .section h2,body.cinematic-website-enter .section h3,body.cinematic-website-enter .section p,body.cinematic-website-enter .section .card,body.cinematic-website-enter .section .project-card,body.cinematic-website-enter .section .certificate-card{animation:ukDepthText 1s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--cine-delay,0s) + .25s)}
-@keyframes ukDepthText{0%{opacity:0;transform:perspective(900px) translateZ(-90px) translateY(24px) rotateX(5deg);filter:blur(5px)}100%{opacity:1;transform:none;filter:none}}
+
+
+60%{opacity:1;filter:blur(0);transform:perspective(1400px) translate3d(0,-5px,30px) rotateX(-1deg) scale(1.008)}100%{opacity:1;filter:none;transform:none}}
+
+100%{opacity:1;transform:none;filter:none}}
 
 /* ==========================================================
    EVENTS & EXPERIENCE
@@ -2388,26 +2388,7 @@ footer h4{
 </head>
 <body>
 
-<div id="cinematic-name-stage" aria-hidden="true">
-  <div class="cine-bg"></div>
-  <div class="cine-stars"></div>
-  <div class="cine-grid"></div>
-  <div class="cine-ring"></div>
-  <div class="cine-ring two"></div>
-  <div class="cine-vignette"></div>
-  <div class="cine-content">
-    
-    <div class="cine-copy">
-      <div class="cine-welcome">WELCOME TO MY DIGITAL PORTFOLIO</div>
-      <h1 class="cine-name">UMANG KAKKAD</h1>
-      <div class="cine-tagline">CODE • CREATE • INNOVATE</div>
-      <div class="cine-line"></div>
-      <div class="cine-explore">SOFTWARE DEVELOPER • MCA • AI / ML ENTHUSIAST</div>
-    </div>
-  </div>
-  <div class="cine-progress"><span></span></div>
-</div>
-  <!-- Visitor CAPTCHA gate -->
+<!-- Visitor CAPTCHA gate -->
   <div id="visitor-captcha-gate" aria-modal="true" role="dialog">
     <div class="visitor-captcha-card">
       <div class="visitor-captcha-badge">SECURITY VERIFICATION</div>
@@ -4669,7 +4650,7 @@ function formatPublishedAt(value, fallbackDate){
     setTimeout(function(){
       gate.hidden=true;
       gate.setAttribute("aria-hidden","true");
-      setTimeout(function(){ if(window.showPortfolioWelcome) window.showPortfolioWelcome(); }, 160);
+      
     },120);
   }
 
@@ -4685,28 +4666,7 @@ function formatPublishedAt(value, fallbackDate){
 })();
 </script>
 
-<script id="umang-cinematic-12s-js">
-(function(){
-  var stage=document.getElementById('cinematic-name-stage');
-  if(!stage) return;
-  window.showPortfolioWelcome=function(){
-    document.body.classList.remove('cinematic-finished');
-    document.body.classList.add('cinematic-website-enter');
-    stage.classList.remove('exit');
-    stage.classList.add('active');
-    stage.setAttribute('aria-hidden','false');
-    clearTimeout(window.__cineExit);
-    clearTimeout(window.__cineHide);
-    window.__cineExit=setTimeout(function(){stage.classList.add('exit');},10800);
-    window.__cineHide=setTimeout(function(){
-      stage.classList.remove('active','exit');
-      stage.setAttribute('aria-hidden','true');
-      document.body.classList.remove('cinematic-website-enter');
-      document.body.classList.add('cinematic-finished');
-    },12000);
-  };
-})();
-</script>
+
 
 
 <script id="premium-3d-footer-motion">
