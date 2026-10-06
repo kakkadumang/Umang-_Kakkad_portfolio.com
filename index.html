@@ -4693,5 +4693,125 @@ function formatPublishedAt(value, fallbackDate){
 })();
 </script>
 
+
+<!-- Instagram in-app browser compatibility -->
+<style id="instagram-browser-compatibility">
+  /* Keep the CAPTCHA, but reduce expensive effects inside Instagram's browser. */
+  html.instagram-inapp body{
+    scroll-behavior:auto !important;
+  }
+  html.instagram-inapp #particles-canvas,
+  html.instagram-inapp .cyber-grid-overlay,
+  html.instagram-inapp .ambient-glow{
+    display:none !important;
+  }
+  html.instagram-inapp *{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+  }
+  html.instagram-inapp #visitor-captcha-gate{
+    background:#03070f !important;
+  }
+  .instagram-browser-help{
+    display:none;
+    margin:0 0 16px;
+    padding:12px 13px;
+    border-radius:11px;
+    background:rgba(0,229,255,.07);
+    border:1px solid rgba(0,229,255,.22);
+  }
+  html.instagram-inapp .instagram-browser-help{display:block;}
+  .instagram-browser-help-title{
+    margin:0 0 5px;
+    color:#fff;
+    font-size:13px;
+    font-weight:800;
+  }
+  .instagram-browser-help-text{
+    margin:0 0 10px;
+    color:rgba(255,255,255,.62);
+    font-size:11px;
+    line-height:1.5;
+  }
+  .instagram-open-browser-btn{
+    width:100%;
+    padding:10px 12px;
+    border:1px solid rgba(0,229,255,.38);
+    border-radius:9px;
+    background:linear-gradient(135deg,#00e5ff,#00b8d4);
+    color:#041018;
+    font-size:12px;
+    font-weight:900;
+    cursor:pointer;
+  }
+  .instagram-open-browser-btn:active{transform:scale(.98);}
+  @media(max-width:520px){
+    .instagram-browser-help{padding:11px;}
+    .instagram-browser-help-title{font-size:12px;}
+  }
+</style>
+<script id="instagram-browser-compatibility-script">
+(function(){
+  'use strict';
+  var ua=navigator.userAgent||'';
+  var isInstagram=/Instagram/i.test(ua);
+  if(!isInstagram) return;
+
+  document.documentElement.classList.add('instagram-inapp');
+
+  function setup(){
+    var gate=document.getElementById('visitor-captcha-gate');
+    var card=gate && gate.querySelector('.visitor-captcha-card');
+    if(!card || document.getElementById('instagram-browser-help')) return;
+
+    var box=document.createElement('div');
+    box.id='instagram-browser-help';
+    box.className='instagram-browser-help';
+    box.innerHTML=''+
+      '<p class="instagram-browser-help-title">Open in Chrome for a smoother experience</p>'+
+      '<p class="instagram-browser-help-text">Instagram's built-in browser can be slower with CAPTCHA and animations. Your CAPTCHA will remain enabled in Chrome.</p>'+
+      '<button type="button" class="instagram-open-browser-btn" id="instagram-open-browser-btn">↗ Open in Chrome</button>';
+
+    card.insertBefore(box, card.firstChild);
+
+    var btn=document.getElementById('instagram-open-browser-btn');
+    if(!btn) return;
+    btn.addEventListener('click',function(){
+      var url=window.location.href;
+      var isAndroid=/Android/i.test(ua);
+      var isIOS=/iPhone|iPad|iPod/i.test(ua);
+
+      if(isAndroid){
+        try{
+          var u=new URL(url);
+          var intent='intent://'+u.host+u.pathname+u.search+u.hash+'#Intent;scheme=https;package=com.android.chrome;end';
+          window.location.href=intent;
+          setTimeout(function(){
+            window.open(url,'_blank','noopener,noreferrer');
+          },900);
+          return;
+        }catch(e){}
+      }
+
+      if(isIOS){
+        try{
+          window.location.href='googlechrome://navigate?url='+encodeURIComponent(url);
+          setTimeout(function(){window.open(url,'_blank','noopener,noreferrer');},900);
+          return;
+        }catch(e){}
+      }
+
+      window.open(url,'_blank','noopener,noreferrer');
+    },false);
+  }
+
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',setup);
+  else setup();
+})();
+</script>
+
 </body>
 </html>
