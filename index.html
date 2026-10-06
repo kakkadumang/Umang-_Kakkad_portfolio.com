@@ -2386,100 +2386,90 @@ footer h4{
 </style>
 
 
-<style id="mobile-browser-prompt-style">
+<style id="universal-mobile-browser-prompt-style">
 .mobile-browser-prompt{
-  display:none;
-  position:fixed;
-  inset:0;
-  z-index:2147483647;
-  background:rgba(3,7,12,.96);
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  box-sizing:border-box;
-  font-family:Arial,sans-serif;
+  display:none;position:fixed;inset:0;z-index:2147483647;
+  background:rgba(2,6,12,.97);align-items:center;justify-content:center;
+  padding:18px;box-sizing:border-box;font-family:Arial,sans-serif;
 }
 .mobile-browser-prompt.show{display:flex}
 .mobile-browser-card{
-  width:min(420px,100%);
-  box-sizing:border-box;
-  padding:28px 22px;
-  border:1px solid rgba(0,220,255,.45);
-  border-radius:22px;
-  background:#0a1018;
-  color:#fff;
-  text-align:center;
-  box-shadow:0 20px 60px rgba(0,0,0,.65);
+  width:min(420px,100%);box-sizing:border-box;padding:28px 22px;
+  border:1px solid rgba(0,229,255,.45);border-radius:22px;
+  background:#0a1018;color:#fff;text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,.7);
 }
-.mobile-browser-icon{
-  width:54px;height:54px;line-height:54px;margin:0 auto 14px;
-  border-radius:50%;background:#111d2a;color:#00e5ff;font-size:28px;
-}
+.mobile-browser-icon{font-size:34px;margin-bottom:12px}
 .mobile-browser-card h2{margin:0 0 10px;font-size:22px}
-.mobile-browser-card p{margin:0 auto 20px;color:#b8c4d0;line-height:1.55;font-size:15px}
-.mobile-browser-actions{display:flex;gap:10px;flex-direction:column}
-.mobile-browser-actions button{
-  border:0;border-radius:12px;padding:13px 16px;font-size:15px;font-weight:700;
-  cursor:pointer;background:#00d9ff;color:#031018;
+.mobile-browser-card p{margin:0 auto 20px;color:#b9c6d3;line-height:1.55;font-size:15px}
+.mobile-browser-card button{
+  width:100%;border:0;border-radius:12px;padding:13px 16px;
+  margin-top:9px;font-size:15px;font-weight:700;cursor:pointer;
+  background:#00d9ff;color:#031018;
 }
-.mobile-browser-actions .mobile-continue{
+.mobile-browser-card .mobile-continue{
   background:#172330;color:#dbe8f2;border:1px solid #334556;
 }
 .mobile-browser-card small{display:block;margin-top:14px;color:#718091}
-@media (min-width:769px){.mobile-browser-prompt{display:none!important}}
+@media(min-width:769px){.mobile-browser-prompt{display:none!important}}
 </style>
 
 
-<script id="mobile-browser-prompt-script">
+<script id="universal-mobile-browser-prompt-script">
 (function(){
-  function isMobile(){
-    return window.matchMedia('(max-width: 768px)').matches ||
-           /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+  function mobile(){
+    return window.matchMedia('(max-width:768px)').matches ||
+      /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent||'');
   }
-  function isInAppBrowser(){
+
+  function inApp(){
     var ua=navigator.userAgent||'';
-    return /Instagram|FBAN|FBAV|Facebook|Messenger|Twitter|LinkedInApp|Line\//i.test(ua);
+    return /Instagram|FBAN|FBAV|Facebook|Messenger|WhatsApp|WhatsAppBusiness|Twitter|LinkedInApp|Line\//i.test(ua);
   }
-  function showPrompt(){
+
+  function show(){
     var box=document.getElementById('mobile-browser-prompt');
-    if(!box || !isMobile() || !isInAppBrowser()) return;
+    if(!box || !mobile() || !inApp()) return;
     box.classList.add('show');
     box.setAttribute('aria-hidden','false');
-    document.documentElement.style.overflow='hidden';
-    document.body.style.overflow='hidden';
+    document.documentElement.classList.add('browser-prompt-open');
+    document.body.classList.add('browser-prompt-open');
   }
-  function closePrompt(){
+
+  function close(){
     var box=document.getElementById('mobile-browser-prompt');
     if(!box) return;
     box.classList.remove('show');
     box.setAttribute('aria-hidden','true');
-    document.documentElement.style.overflow='';
-    document.body.style.overflow='';
-    try{sessionStorage.setItem('mobileBrowserPromptSeen','1')}catch(e){}
+    document.documentElement.classList.remove('browser-prompt-open');
+    document.body.classList.remove('browser-prompt-open');
   }
-  function openExternal(){
+
+  function openBrowser(){
     var url=window.location.href;
-    // Android intent URL: asks Android to open the current page in an external browser.
-    if(/Android/i.test(navigator.userAgent)){
+
+    // Android: request an external browser rather than continuing inside WhatsApp/Instagram.
+    if(/Android/i.test(navigator.userAgent||'')){
       try{
         var u=new URL(url);
         var intent='intent://'+u.host+u.pathname+u.search+u.hash+
-          '#Intent;scheme='+u.protocol.replace(':','')+
-          ';action=android.intent.action.VIEW;end';
+          '#Intent;scheme=https;action=android.intent.action.VIEW;end';
         window.location.href=intent;
         return;
       }catch(e){}
     }
-    // iOS/in-app browsers cannot be forced reliably; copy/open instructions are safer.
-    closePrompt();
-    alert('Tap the browser menu (⋯/⋮) and choose “Open in Browser” or “Open in Chrome/Safari”.');
+
+    // iPhone/iPad: an in-app browser cannot reliably be forced to launch Chrome.
+    close();
+    alert('Please tap the browser menu (⋯) and choose “Open in Browser” / “Open in Safari or Chrome”.');
   }
+
   document.addEventListener('DOMContentLoaded',function(){
     var open=document.getElementById('mobile-open-browser');
     var cont=document.getElementById('mobile-continue');
-    if(open) open.addEventListener('click',openExternal);
-    if(cont) cont.addEventListener('click',closePrompt);
-    setTimeout(showPrompt,250);
+    if(open) open.addEventListener('click',openBrowser);
+    if(cont) cont.addEventListener('click',close);
+    setTimeout(show,300);
   });
 })();
 </script>
@@ -2487,17 +2477,15 @@ footer h4{
 </head>
 <body>
 
-<!-- Mobile Browser Prompt -->
+<!-- Universal Mobile Browser Prompt -->
 <div id="mobile-browser-prompt" class="mobile-browser-prompt" aria-hidden="true">
   <div class="mobile-browser-card">
-    <div class="mobile-browser-icon">↗</div>
+    <div class="mobile-browser-icon">🌐</div>
     <h2>Open in Chrome / Browser</h2>
-    <p>For the best experience on mobile, please open this portfolio in Chrome or another browser.</p>
-    <div class="mobile-browser-actions">
-      <button id="mobile-open-browser" type="button">Open in Browser</button>
-      <button id="mobile-continue" type="button" class="mobile-continue">Continue Here</button>
-    </div>
-    <small>Recommended for smooth scrolling and full animations.</small>
+    <p>For the best experience, please open this portfolio in Chrome, Safari, or another browser.</p>
+    <button id="mobile-open-browser" type="button">Open in Browser</button>
+    <button id="mobile-continue" type="button" class="mobile-continue">Continue Here</button>
+    <small>Recommended for smooth scrolling and full website experience.</small>
   </div>
 </div>
 
