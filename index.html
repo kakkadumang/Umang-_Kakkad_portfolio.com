@@ -11,7 +11,7 @@
   </script>
 
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=1200, initial-scale=0.75, minimum-scale=0.25, maximum-scale=3.0, user-scalable=yes, viewport-fit=cover">
+  <meta name="viewport" content="width=1200, initial-scale=0.75, minimum-scale=0.25, maximum-scale=4.0, user-scalable=yes, viewport-fit=cover">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Umang Kakkad | Software Developer &amp; MCA Student</title>
   <meta name="description" content="Personal portfolio of Umang Kakkad - Software Developer &amp; MCA Student at GLS University, Ahmedabad. Explore projects, technical skills, and experience.">
@@ -2375,6 +2375,99 @@ a,button,input,select,textarea{
   }
 }
 </style>
+
+<style id="owner-update-delete-style">
+.owner-delete-update,
+.owner-list-delete{
+  margin-top:12px;
+  border:1px solid rgba(255,82,105,.65);
+  background:rgba(255,50,80,.08);
+  color:#ff8293;
+  border-radius:8px;
+  padding:7px 11px;
+  cursor:pointer;
+  font:inherit;
+  font-size:12px;
+  font-weight:700;
+}
+.owner-delete-update:hover,
+.owner-list-delete:hover{background:rgba(255,50,80,.18)}
+</style>
+
+<style id="android-laptop-fast-final">
+/* Android: keep a laptop-like 1200px canvas, but allow normal touch/pinch gestures. */
+html, body{
+  scroll-behavior:smooth;
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+}
+body{
+  overflow-x:auto !important;
+  overflow-y:auto !important;
+  -webkit-overflow-scrolling:touch !important;
+  touch-action:pan-x pan-y pinch-zoom !important;
+}
+@media (max-width:700px){
+  html{
+    width:1200px !important;
+    min-width:1200px !important;
+    max-width:none !important;
+    overflow-x:auto !important;
+    overflow-y:auto !important;
+    touch-action:pan-x pan-y pinch-zoom !important;
+  }
+  body{
+    width:1200px !important;
+    min-width:1200px !important;
+    max-width:none !important;
+    overflow-x:auto !important;
+    overflow-y:auto !important;
+    touch-action:pan-x pan-y pinch-zoom !important;
+    -webkit-overflow-scrolling:touch !important;
+  }
+
+  /* Faster Android rendering: decorative effects do not block scrolling. */
+  #particles-canvas{
+    display:none !important;
+    pointer-events:none !important;
+  }
+  .ambient-glow,
+  .cyber-grid-overlay{
+    opacity:.12 !important;
+    pointer-events:none !important;
+  }
+  .cursor,.custom-cursor,.cursor-dot,.cursor-ring{
+    display:none !important;
+    pointer-events:none !important;
+  }
+  .navbar{
+    min-width:1200px !important;
+    width:1200px !important;
+  }
+  .update-card,
+  .glass-card,
+  .project-card,
+  .certificate-card{
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+  }
+  img{
+    content-visibility:auto;
+  }
+  button,a,input,select,textarea{
+    touch-action:manipulation;
+  }
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+    scroll-behavior:auto !important;
+  }
+}
+</style>
+
 </head>
 <body>
 
@@ -4322,33 +4415,38 @@ a,button,input,select,textarea{
 
 <script>
 /* ==========================================================
-   DARK / LIGHT THEME
+   DARK / LIGHT THEME + PORTFOLIO UPDATES
    ========================================================== */
 (function(){
   const body=document.body;
   const btn=document.getElementById('theme-toggle-btn');
   const icon=document.getElementById('theme-toggle-icon');
-  if(!btn)return;
 
   function applyTheme(theme){
     body.classList.toggle('theme-light', theme==='light');
     body.classList.toggle('theme-dark', theme!=='light');
-    icon.textContent = theme==='light' ? '☾' : '☀';
-    btn.title = theme==='light' ? 'Switch to dark theme' : 'Switch to light theme';
-    btn.setAttribute('aria-label', btn.title);
-    localStorage.setItem('portfolio-theme', theme);
+    if(icon) icon.textContent = theme==='light' ? '☾' : '☀';
+    if(btn){
+      btn.title = theme==='light' ? 'Switch to dark theme' : 'Switch to light theme';
+      btn.setAttribute('aria-label', btn.title);
+    }
+    try{ localStorage.setItem('portfolio-theme', theme); }catch(e){}
   }
 
-  const saved=localStorage.getItem('portfolio-theme') || 'dark';
+  const saved = (()=>{ try{return localStorage.getItem('portfolio-theme') || 'dark';}catch(e){return 'dark';} })();
   applyTheme(saved);
-  btn.addEventListener('click',()=>applyTheme(body.classList.contains('theme-light')?'dark':'light'));
+
+  if(btn){
+    btn.addEventListener('click',()=>{
+      applyTheme(body.classList.contains('theme-light') ? 'dark' : 'light');
+    });
+  }
 })();
 
-/* Published date/time formatter */
 function formatPublishedAt(value, fallbackDate){
   if(!value) return fallbackDate || '';
   try{
-    const d = new Date(value);
+    const d=new Date(value);
     if(Number.isNaN(d.getTime())) return fallbackDate || value;
     return new Intl.DateTimeFormat('en-IN',{
       day:'2-digit', month:'short', year:'numeric',
@@ -4358,7 +4456,12 @@ function formatPublishedAt(value, fallbackDate){
 }
 
 /* ==========================================================
-   PORTFOLIO UPDATES
+   GITHUB-EDITABLE UPDATES
+   ----------------------------------------------------------
+   IMPORTANT:
+   Edit the CODE_UPDATES array below and upload this HTML to
+   GitHub Pages. These updates are built into the HTML itself,
+   so they appear on GitHub/live site without localStorage.
    ========================================================== */
 (function(){
   const grid=document.getElementById('updates-grid');
@@ -4369,9 +4472,19 @@ function formatPublishedAt(value, fallbackDate){
   const resetBtn=document.getElementById('clear-updates');
   const dateInput=document.getElementById('update-date');
   const status=document.getElementById('updates-status');
-  if(!grid||!manager||!form)return;
+  if(!grid || !status) return;
 
-  const defaultUpdates=[
+  /* ===== EDIT YOUR GITHUB/LIVE UPDATES HERE ===== */
+  const CODE_UPDATES = [
+    {
+      id:'android-performance-optimization',
+      title:'Android Performance Optimization',
+      category:'Portfolio',
+      date:'2026-10-06',
+      publishedAt:'2026-10-06T15:51:21+05:30',
+      text:'🚀 Android Performance Optimization is currently in progress. 📱 Improving the portfolio website for a faster and smoother experience on Android devices. ⚡ Working on faster loading, smoother scrolling, better touch interaction, and overall mobile performance. 🔧 More performance improvements and updates will be added soon.',
+      link:''
+    },
     {
       id:'isro-ai-ml-course',
       title:'ISRO AI/ML Course — In Progress',
@@ -4391,76 +4504,203 @@ function formatPublishedAt(value, fallbackDate){
       link:''
     }
   ];
+  /* ===== END GITHUB/LIVE UPDATES ===== */
 
-  const key='umang-portfolio-updates-v2';
+  const CUSTOM_KEY='umang-portfolio-custom-updates-v3';
+  const DELETED_KEY='umang-portfolio-deleted-updates-v3';
+  const OVERRIDE_KEY='umang-portfolio-update-overrides-v3';
+  const OWNER_PASSWORD='Umang@2026'; /* Change this in code if you want. */
 
-  function load(){
+  function safeParse(key,fallback){
     try{
-      const saved=JSON.parse(localStorage.getItem(key));
-      if(!Array.isArray(saved)) return [...defaultUpdates];
+      const value=JSON.parse(localStorage.getItem(key));
+      return value ?? fallback;
+    }catch(e){ return fallback; }
+  }
 
-      const byId=new Map(defaultUpdates.map(item=>[item.id,item]));
-      saved.forEach(item=>{
-        if(item && item.id) byId.set(item.id,item);
-      });
-      return Array.from(byId.values());
-    }catch(e){
-      return [...defaultUpdates];
-    }
+  function loadItems(){
+    const overrides=safeParse(OVERRIDE_KEY,{});
+    const deleted=safeParse(DELETED_KEY,[]);
+    const custom=safeParse(CUSTOM_KEY,[]);
+    const deletedSet=new Set(Array.isArray(deleted)?deleted:[]);
+    const base=CODE_UPDATES
+      .filter(item=>!deletedSet.has(item.id))
+      .map(item=>Object.assign({},item,overrides && overrides[item.id] ? overrides[item.id] : {}));
+    const customItems=Array.isArray(custom)?custom:[];
+    return [...base,...customItems].sort((a,b)=>{
+      const ad=String(a.publishedAt||a.date||'');
+      const bd=String(b.publishedAt||b.date||'');
+      return bd.localeCompare(ad);
+    });
   }
 
   function esc(value){
-    return String(value||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+    return String(value ?? '').replace(/[&<>"']/g,m=>({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'
+    })[m]);
+  }
+
+  function ownerMode(){
+    try{return sessionStorage.getItem('portfolio-owner-auth')==='1';}catch(e){return false;}
+  }
+
+  function saveJSON(key,value){
+    try{localStorage.setItem(key,JSON.stringify(value));}catch(e){}
   }
 
   function render(){
-    const items=load().sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+    const items=loadItems();
     status.textContent=items.length+' published update'+(items.length===1?'':'s');
+
     if(!items.length){
       grid.innerHTML='<div class="update-empty">No updates published yet.</div>';
       return;
     }
-    grid.innerHTML=items.map(item=>`
-      <article class="update-card reveal">
-        <div class="update-meta">
-          <span class="update-badge">${esc(item.category)}</span>
-          <span class="update-date">${esc(item.date || "")}</span>
-        </div>
-        <div class="update-published-at">Published: ${esc(formatPublishedAt(item.publishedAt, item.date))}</div>
-        <h3 class="update-title">${esc(item.title)}</h3>
-        <p class="update-text">${esc(item.text)}</p>
-        ${item.link ? `<a class="update-link" href="${esc(item.link)}" target="_blank" rel="noopener noreferrer">View update →</a>` : ''}
-      </article>
-    `).join('');
+
+    grid.innerHTML=items.map(item=>{
+      const isCustom=String(item.id).startsWith('u-');
+      const ownerButtons=ownerMode()
+        ? '<div class="owner-update-actions">' +
+          '<button type="button" class="owner-update-edit" data-edit-update="'+esc(item.id)+'">✏️ Edit</button>' +
+          '<button type="button" class="owner-update-delete" data-delete-update="'+esc(item.id)+'">🗑️ Delete</button>' +
+          '</div>'
+        : '';
+
+      return '<article class="update-card reveal" data-update-id="'+esc(item.id)+'">' +
+        '<div class="update-meta">' +
+          '<span class="update-badge">'+esc(item.category || 'Portfolio')+'</span>' +
+          '<span class="update-date">'+esc(item.date || '')+'</span>' +
+        '</div>' +
+        '<div class="update-published-at">Published: '+esc(formatPublishedAt(item.publishedAt,item.date))+'</div>' +
+        '<h3 class="update-title">'+esc(item.title || 'Untitled Update')+'</h3>' +
+        '<p class="update-text">'+esc(item.text || '')+'</p>' +
+        (item.link ? '<a class="update-link" href="'+esc(item.link)+'" target="_blank" rel="noopener noreferrer">View update →</a>' : '') +
+        ownerButtons +
+      '</article>';
+    }).join('');
+
+    if(ownerMode()){
+      grid.querySelectorAll('[data-edit-update]').forEach(btn=>{
+        btn.addEventListener('click',()=>editUpdate(btn.getAttribute('data-edit-update')));
+      });
+      grid.querySelectorAll('[data-delete-update]').forEach(btn=>{
+        btn.addEventListener('click',()=>deleteUpdate(btn.getAttribute('data-delete-update')));
+      });
+    }
   }
 
-  const OWNER_PASSWORD = '23SI002UG01998';
+  function editUpdate(id){
+    const item=loadItems().find(x=>String(x.id)===String(id));
+    if(!item) return;
 
-  function openManager(){
-    const entered = prompt('Owner access required. Enter your password:');
-    if(entered !== OWNER_PASSWORD){
-      if(entered !== null) alert('Access denied.');
+    const title=prompt('Update title:',item.title||'');
+    if(title===null) return;
+    const text=prompt('Update text:',item.text||'');
+    if(text===null) return;
+    const category=prompt('Category:',item.category||'Portfolio');
+    if(category===null) return;
+    const date=prompt('Date (YYYY-MM-DD):',item.date||'');
+    if(date===null) return;
+
+    const updated={
+      title:title.trim(),
+      text:text.trim(),
+      category:category.trim()||'Portfolio',
+      date:date.trim()
+    };
+
+    if(String(id).startsWith('u-')){
+      const custom=safeParse(CUSTOM_KEY,[]);
+      const next=(Array.isArray(custom)?custom:[]).map(x=>String(x.id)===String(id)?Object.assign({},x,updated):x);
+      saveJSON(CUSTOM_KEY,next);
+    }else{
+      const overrides=safeParse(OVERRIDE_KEY,{});
+      overrides[id]=Object.assign({},overrides[id]||{},updated);
+      saveJSON(OVERRIDE_KEY,overrides);
+    }
+    render();
+  }
+
+  function deleteUpdate(id){
+    const item=loadItems().find(x=>String(x.id)===String(id));
+    if(!item || !confirm('Delete "'+(item.title||'this update')+'"?')) return;
+
+    if(String(id).startsWith('u-')){
+      const custom=safeParse(CUSTOM_KEY,[]);
+      saveJSON(CUSTOM_KEY,(Array.isArray(custom)?custom:[]).filter(x=>String(x.id)!==String(id)));
+    }else{
+      const deleted=safeParse(DELETED_KEY,[]);
+      const arr=Array.isArray(deleted)?deleted:[];
+      if(!arr.includes(id)) arr.push(id);
+      saveJSON(DELETED_KEY,arr);
+    }
+    render();
+  }
+
+  function renderOwnerList(){
+    if(!form) return;
+    let panel=document.getElementById('owner-update-delete-list');
+    if(!panel){
+      panel=document.createElement('div');
+      panel.id='owner-update-delete-list';
+      panel.style.cssText='margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.12);';
+      form.appendChild(panel);
+    }
+    if(!ownerMode()){
+      panel.innerHTML='';
       return;
     }
+    const items=loadItems();
+    panel.innerHTML='<div style="font-weight:700;margin-bottom:9px;color:#fff">Owner Update Management</div>' +
+      (items.length ? items.map(item=>'<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.08)">' +
+        '<span style="font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(item.title)+'</span>' +
+        '<button type="button" class="owner-list-edit" data-edit-update="'+esc(item.id)+'">Edit</button>' +
+        '<button type="button" class="owner-list-delete" data-delete-update="'+esc(item.id)+'">Delete</button>' +
+      '</div>').join('') : '<div style="font-size:12px;opacity:.7">No updates.</div>');
 
-    openBtn.hidden=true;
-    openBtn.setAttribute('aria-hidden','true');
-    dateInput.value=new Date().toISOString().slice(0,10);
+    panel.querySelectorAll('[data-edit-update]').forEach(btn=>{
+      btn.addEventListener('click',()=>editUpdate(btn.getAttribute('data-edit-update')));
+    });
+    panel.querySelectorAll('[data-delete-update]').forEach(btn=>{
+      btn.addEventListener('click',()=>deleteUpdate(btn.getAttribute('data-delete-update')));
+    });
+  }
+
+  function openManager(){
+    if(!manager || !form) return;
+    let entered;
+    try{ entered=prompt('Owner access required. Enter your password:'); }catch(e){return;}
+    if(entered!==OWNER_PASSWORD){
+      if(entered!==null) alert('Access denied.');
+      return;
+    }
+    try{sessionStorage.setItem('portfolio-owner-auth','1');}catch(e){}
+    if(openBtn){openBtn.hidden=false;openBtn.setAttribute('aria-hidden','false');}
     manager.classList.add('open');
     manager.setAttribute('aria-hidden','false');
-    document.getElementById('update-title').focus();
+    if(dateInput) dateInput.value=new Date().toISOString().slice(0,10);
+    render();
+    renderOwnerList();
+    const title=document.getElementById('update-title');
+    if(title) title.focus();
   }
 
   function closeManager(){
+    if(!manager) return;
     manager.classList.remove('open');
     manager.setAttribute('aria-hidden','true');
   }
 
-  openBtn.addEventListener('click',openManager);
-  closeBtn.addEventListener('click',closeManager);
-  manager.addEventListener('click',e=>{if(e.target===manager)closeManager();});
+  if(openBtn){
+    openBtn.addEventListener('click',openManager);
+  }
+  if(closeBtn){
+    closeBtn.addEventListener('click',closeManager);
+  }
+  if(manager){
+    manager.addEventListener('click',e=>{if(e.target===manager)closeManager();});
+  }
 
-  // Owner-only shortcut: Ctrl+Shift+U
   document.addEventListener('keydown',e=>{
     if(e.ctrlKey && e.shiftKey && e.key.toLowerCase()==='u'){
       e.preventDefault();
@@ -4468,100 +4708,118 @@ function formatPublishedAt(value, fallbackDate){
     }
   });
 
-  form.addEventListener('submit',e=>{
-    e.preventDefault();
-    const item={
-      id:'u-'+Date.now(),
-      title:document.getElementById('update-title').value.trim(),
-      category:document.getElementById('update-category').value,
-      date:document.getElementById('update-date').value,
-      publishedAt:(()=>{const d=new Date();const p=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Kolkata',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).formatToParts(d).reduce((o,x)=>(o[x.type]=x.value,o),{});return `${p.year}-${p.month}-${p.day}T${p.hour}:${p.minute}:${p.second}+05:30`;})(),
-      text:document.getElementById('update-text').value.trim(),
-      link:document.getElementById('update-link').value.trim()
-    };
-    if(!item.title||!item.date||!item.text)return;
+  if(form){
+    form.addEventListener('submit',e=>{
+      e.preventDefault();
 
-    const items=load().filter(x=>x.id!=='welcome-update');
-    items.unshift(item);
-    localStorage.setItem(key,JSON.stringify(items));
-    form.reset();
-    dateInput.value=new Date().toISOString().slice(0,10);
-    render();
-    closeManager();
-    document.getElementById('updates').scrollIntoView({behavior:'smooth',block:'start'});
-  });
+      const item={
+        id:'u-'+Date.now(),
+        title:(document.getElementById('update-title')?.value||'').trim(),
+        category:document.getElementById('update-category')?.value||'Portfolio',
+        date:document.getElementById('update-date')?.value||'',
+        publishedAt:new Date().toISOString(),
+        text:(document.getElementById('update-text')?.value||'').trim(),
+        link:(document.getElementById('update-link')?.value||'').trim()
+      };
 
-  resetBtn.addEventListener('click',()=>{
-    if(confirm('Reset locally saved updates and restore the default update?')){
-      localStorage.removeItem(key);
+      if(!item.title || !item.date || !item.text){
+        alert('Please fill in title, date and update text.');
+        return;
+      }
+
+      const custom=safeParse(CUSTOM_KEY,[]);
+      const arr=Array.isArray(custom)?custom:[];
+      arr.unshift(item);
+      saveJSON(CUSTOM_KEY,arr);
+
+      form.reset();
+      if(dateInput) dateInput.value=new Date().toISOString().slice(0,10);
       render();
-    }
-  });
+      renderOwnerList();
+      closeManager();
+      document.getElementById('updates')?.scrollIntoView({behavior:'smooth',block:'start'});
+    });
+  }
+
+  if(resetBtn){
+    resetBtn.textContent='Reset My Local Update Changes';
+    resetBtn.addEventListener('click',()=>{
+      if(!confirm('Reset local update changes and restore the GitHub code updates?')) return;
+      try{
+        localStorage.removeItem(CUSTOM_KEY);
+        localStorage.removeItem(DELETED_KEY);
+        localStorage.removeItem(OVERRIDE_KEY);
+      }catch(e){}
+      render();
+      renderOwnerList();
+    });
+  }
 
   render();
+  window.renderAllPortfolioUpdates=render;
+  window.enableOwnerUpdateDelete=function(){
+    try{sessionStorage.setItem('portfolio-owner-auth','1');}catch(e){}
+    render();
+    renderOwnerList();
+  };
+  window.disableOwnerUpdateDelete=function(){
+    try{sessionStorage.removeItem('portfolio-owner-auth');}catch(e){}
+    render();
+    renderOwnerList();
+  };
 })();
 </script>
 
-  <script src="js/particles.js"></script>
-  <script src="js/animations.js"></script>
-  <script src="js/main.js"></script>
+<script src="js/particles.js"></script>
+<script src="js/animations.js"></script>
+<script src="js/main.js"></script>
 
-  <!-- Google Sheets Feedback Submission -->
-  <script>
-    const feedbackForm = document.getElementById('feedback-form');
+<script>
+/* Google Sheets Feedback Submission */
+(function(){
+  const feedbackForm=document.getElementById('feedback-form');
+  if(!feedbackForm) return;
 
-    if (feedbackForm) {
-      feedbackForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
+  feedbackForm.addEventListener('submit',async function(e){
+    e.preventDefault();
 
-        const name = document.getElementById('feedback-name').value.trim();
-        const email = document.getElementById('feedback-email').value.trim();
-        const rating =
-          document.querySelector('input[name="feedback-rating"]:checked')?.value || '5';
-        const message = document.getElementById('feedback-message').value.trim();
-
-        const submitButton = feedbackForm.querySelector('button[type="submit"]');
-        const originalText = submitButton.innerHTML;
-
-        if (!name || !email || !message) {
-          alert('Please fill in all required fields.');
-          return;
-        }
-
-        submitButton.disabled = true;
-        submitButton.innerHTML = '<span>Submitting...</span>';
-
-        try {
-          await fetch(
-            'https://script.google.com/macros/s/AKfycbx9_6BGSWhJdBYNyP2iCDW0XrAmfFdhS7vPFNUbZNxXjKpSY36KbRSaZ_WZkaCnip495Q/exec',
-            {
-              method: 'POST',
-              mode: 'no-cors',
-              headers: {
-                'Content-Type': 'text/plain;charset=utf-8'
-              },
-              body: JSON.stringify({
-                name: name,
-                email: email,
-                rating: rating,
-                message: message
-              })
-            }
-          );
-
-          alert('Thank you, ' + name + '! Your feedback has been submitted successfully.');
-          feedbackForm.reset();
-
-        } catch (error) {
-          console.error('Feedback submission error:', error);
-          alert('Unable to submit feedback. Please try again.');
-        } finally {
-          submitButton.disabled = false;
-          submitButton.innerHTML = originalText;
-        }
-      });
+    const name=document.getElementById('feedback-name')?.value.trim()||'';
+    const email=document.getElementById('feedback-email')?.value.trim()||'';
+    const rating=document.querySelector('input[name="feedback-rating"]:checked')?.value||'5';
+    const message=document.getElementById('feedback-message')?.value.trim()||'';
+    const submitButton=feedbackForm.querySelector('button[type="submit"]');
+    if(!name || !email || !message){
+      alert('Please fill in all required fields.');
+      return;
     }
-  </script>
+
+    const originalText=submitButton ? submitButton.innerHTML : '';
+    if(submitButton){
+      submitButton.disabled=true;
+      submitButton.innerHTML='<span>Submitting...</span>';
+    }
+
+    try{
+      await fetch('https://script.google.com/macros/s/AKfycbx9_6BGSWhJdBYNyP2iCDW0XrAmfFdhS7vPFNUbZNxXjKpSY36KbRSaZ_WZkaCnip495Q/exec',{
+        method:'POST',
+        mode:'no-cors',
+        headers:{'Content-Type':'text/plain;charset=utf-8'},
+        body:JSON.stringify({name,email,rating,message})
+      });
+      alert('Thank you, '+name+'! Your feedback has been submitted successfully.');
+      feedbackForm.reset();
+    }catch(error){
+      console.error('Feedback submission error:',error);
+      alert('Unable to submit feedback. Please try again.');
+    }finally{
+      if(submitButton){
+        submitButton.disabled=false;
+        submitButton.innerHTML=originalText;
+      }
+    }
+  });
+})();
+</script>
 
 <script id="premium-3d-footer-motion">
 (function(){
