@@ -11,7 +11,7 @@
   </script>
 
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=1200, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Umang Kakkad | Software Developer &amp; MCA Student</title>
   <meta name="description" content="Personal portfolio of Umang Kakkad - Software Developer &amp; MCA Student at GLS University, Ahmedabad. Explore projects, technical skills, and experience.">
@@ -1627,75 +1627,6 @@ body.theme-light .premium-nav-links{
   }
 }
 </style>
-
-
-<style id="visitor-captcha-style">
-#visitor-captcha-gate{
-  position:fixed;inset:0;z-index:2147483647;
-  display:flex;align-items:center;justify-content:center;
-  padding:20px;box-sizing:border-box;
-  background:rgba(3,7,15,.96);
-  font-family:inherit;
-}
-#visitor-captcha-gate[hidden]{display:none!important}
-.visitor-captcha-card{
-  width:min(430px,100%);box-sizing:border-box;
-  padding:26px;border-radius:16px;
-  background:linear-gradient(145deg,#111827,#07101d);
-  border:1px solid rgba(0,229,255,.35);
-  box-shadow:0 20px 70px rgba(0,0,0,.65),0 0 35px rgba(0,229,255,.10);
-  color:#fff;
-}
-.visitor-captcha-badge{
-  display:inline-block;padding:6px 10px;border-radius:999px;
-  font-size:11px;font-weight:800;letter-spacing:1.2px;
-  color:#00e5ff;background:rgba(0,229,255,.09);
-  border:1px solid rgba(0,229,255,.25);
-}
-.visitor-captcha-card h2{margin:14px 0 6px;font-size:26px}
-.visitor-captcha-note{margin:0 0 18px;color:rgba(255,255,255,.68)}
-.robot-row{
-  min-height:62px;display:flex;align-items:center;gap:12px;
-  padding:12px 14px;box-sizing:border-box;border-radius:7px;
-  background:#fff;color:#202124;cursor:pointer;user-select:none;
-}
-.robot-row input{position:absolute;opacity:0;pointer-events:none}
-.robot-box{
-  width:28px;height:28px;flex:0 0 28px;
-  border:2px solid #777;border-radius:3px;background:#fff;
-  display:grid;place-items:center;
-}
-.robot-row input:checked + .robot-box{background:#4285f4;border-color:#4285f4}
-.robot-row input:checked + .robot-box:after{content:"✓";color:#fff;font-size:20px;font-weight:900}
-.captcha-mini{margin-left:auto;color:#777;font-size:10px;font-weight:800}
-.visitor-captcha-panel{margin-top:14px}
-.visitor-captcha-panel[hidden]{display:none!important}
-.visitor-code-row{display:flex;gap:8px}
-.visitor-captcha-code{
-  flex:1;min-height:62px;display:flex;align-items:center;justify-content:center;
-  box-sizing:border-box;border:2px dashed rgba(0,229,255,.45);border-radius:8px;
-  background:#070d18;color:#fff;font:900 25px/1 Consolas,monospace;
-  letter-spacing:5px;text-shadow:2px 2px 0 rgba(0,229,255,.22);
-  user-select:none;
-}
-#visitor-captcha-refresh{
-  width:54px;border:0;border-radius:8px;background:#303744;color:#fff;
-  font-size:24px;cursor:pointer;
-}
-#visitor-captcha-input{
-  width:100%;box-sizing:border-box;margin-top:10px;padding:12px 14px;
-  border-radius:8px;border:1px solid rgba(255,255,255,.22);
-  background:#0d1625;color:#fff;font-size:17px;letter-spacing:3px;
-  outline:none;text-transform:none;
-}
-#visitor-captcha-input:focus{border-color:#00e5ff;box-shadow:0 0 0 2px rgba(0,229,255,.12)}
-.visitor-verify-btn{
-  width:100%;margin-top:10px;padding:12px;border:0;border-radius:8px;
-  background:#00e5ff;color:#061018;font-weight:900;cursor:pointer;
-}
-#visitor-captcha-status{min-height:22px;margin-top:9px;font-size:13px;text-align:center}
-</style>
-
 <style id="umang-cinematic-premium-12s">
 #cinematic-name-stage{position:fixed;inset:0;z-index:999999;display:none;overflow:hidden;background:#02040a;color:#fff;align-items:center;justify-content:center;opacity:0;pointer-events:none;perspective:1400px}
 #cinematic-name-stage.active{display:flex;animation:ukCineIn .8s ease forwards}
@@ -2385,38 +2316,60 @@ footer h4{
 }
 </style>
 
+
+<style id="universal-desktop-fast">
+/* Universal desktop layout: mobile devices use the desktop layout too. */
+html, body{
+  min-width:1200px !important;
+  width:100%;
+  scroll-behavior:smooth;
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+  overscroll-behavior-x:none;
+}
+body{
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+}
+img,video,canvas,svg{
+  max-width:100%;
+}
+*{
+  -webkit-tap-highlight-color:transparent;
+}
+@media (max-width:1199px){
+  /* Fallback for browsers that ignore the fixed layout viewport. */
+  html,body{min-width:1200px !important;}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    scroll-behavior:auto !important;
+  }
+}
+</style>
+<script id="universal-desktop-boot">
+(function(){
+  'use strict';
+  function forceDesktopViewport(){
+    var v=document.querySelector('meta[name="viewport"]');
+    if(!v){
+      v=document.createElement('meta');
+      v.name='viewport';
+      document.head.appendChild(v);
+    }
+    v.setAttribute('content','width=1200, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes');
+    document.documentElement.classList.add('desktop-layout');
+  }
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',forceDesktopViewport,{once:true});
+  }else{forceDesktopViewport();}
+  window.addEventListener('pageshow',forceDesktopViewport,{passive:true});
+})();
+</script>
+
 </head>
 <body>
-
-<!-- Visitor CAPTCHA gate -->
-  <div id="visitor-captcha-gate" aria-modal="true" role="dialog">
-    <div class="visitor-captcha-card">
-      <div class="visitor-captcha-badge">SECURITY VERIFICATION</div>
-      <h2>Verify you are human</h2>
-      <p class="visitor-captcha-note">Complete the CAPTCHA to open the portfolio.</p>
-
-      <label class="robot-row">
-        <input id="visitor-robot-check" type="checkbox">
-        <span class="robot-box"></span>
-        <span>I'm not a robot</span>
-        <span class="captcha-mini">CAPTCHA</span>
-      </label>
-
-      <div id="visitor-captcha-panel" class="visitor-captcha-panel" hidden>
-        <div class="visitor-code-row">
-          <div id="visitor-captcha-code" class="visitor-captcha-code"></div>
-          <button id="visitor-captcha-refresh" type="button" aria-label="Refresh CAPTCHA">↻</button>
-        </div>
-        <input id="visitor-captcha-input" type="text" maxlength="7"
-               autocomplete="off" spellcheck="false" placeholder="Enter CAPTCHA code">
-        <button id="visitor-captcha-verify" type="button" class="visitor-verify-btn">Verify</button>
-        <div id="visitor-captcha-status" aria-live="polite"></div>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- Dynamic Particle Canvas Background -->
+<!-- Dynamic Particle Canvas Background -->
   <canvas id="particles-canvas"></canvas>
 
   <!-- Ambient Neon Light Glows -->
@@ -4600,75 +4553,6 @@ function formatPublishedAt(value, fallbackDate){
       });
     }
   </script>
-
-<script id="visitor-captcha-script">
-(function(){
-  "use strict";
-  var gate=document.getElementById("visitor-captcha-gate");
-  var check=document.getElementById("visitor-robot-check");
-  var panel=document.getElementById("visitor-captcha-panel");
-  var codeBox=document.getElementById("visitor-captcha-code");
-  var input=document.getElementById("visitor-captcha-input");
-  var refresh=document.getElementById("visitor-captcha-refresh");
-  var verify=document.getElementById("visitor-captcha-verify");
-  var status=document.getElementById("visitor-captcha-status");
-
-  if(!gate||!check||!panel||!codeBox||!input||!refresh||!verify||!status){return;}
-
-  var current="";
-  var chars="ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789@#$%&*!?";
-  function newCaptcha(){
-    current="";
-    for(var i=0;i<6;i++){
-      current+=chars.charAt(Math.floor(Math.random()*chars.length));
-    }
-    codeBox.textContent=current;
-    input.value="";
-    status.textContent="";
-    status.style.color="";
-  }
-  function showCaptcha(){
-    panel.hidden=false;
-    newCaptcha();
-    setTimeout(function(){input.focus();},60);
-  }
-  function refreshCaptcha(e){
-    if(e){e.preventDefault();e.stopPropagation();}
-    showCaptcha();
-  }
-  function verifyCaptcha(e){
-    if(e){e.preventDefault();e.stopPropagation();}
-    if(input.value.trim().toLowerCase()!==current.toLowerCase()){
-      status.textContent="Incorrect CAPTCHA. A new code has been generated.";
-      status.style.color="#ff6b7a";
-      newCaptcha();
-      input.focus();
-      return;
-    }
-    status.textContent="Verified.";
-    status.style.color="#72ffad";
-    setTimeout(function(){
-      gate.hidden=true;
-      gate.setAttribute("aria-hidden","true");
-      
-    },120);
-  }
-
-  check.addEventListener("change",function(){
-    if(check.checked){showCaptcha();}
-    else{panel.hidden=true;input.value="";status.textContent="";}
-  });
-  refresh.addEventListener("click",refreshCaptcha,false);
-  verify.addEventListener("click",verifyCaptcha,false);
-  input.addEventListener("keydown",function(e){
-    if(e.key==="Enter"){verifyCaptcha(e);}
-  });
-})();
-</script>
-
-
-
-
 <script id="premium-3d-footer-motion">
 (function(){
   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
