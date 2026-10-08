@@ -37,6 +37,147 @@
         marquee { padding: 10px; font-weight: 500; color: #003399; font-size: 15px;}
         .section-title::after { content: ''; display: block; width: 60px; height: 4px; background-color: #FF9900; margin-top: 8px; }
         
+
+        /* Full-Width Transparent Hero Background Slideshow */
+        #home {
+            position: relative;
+            isolation: isolate;
+        }
+
+        .hero-bg-slideshow {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            background: #082a78;
+        }
+
+        .hero-bg-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity .7s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-bg-slide.active {
+            opacity: 1;
+        }
+
+        .hero-bg-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+            display: block;
+            max-width: 100%;
+            max-height: 100%;
+            filter: saturate(.92);
+        }
+
+        /* Blue transparent layer keeps text readable while the event photo stays visible */
+        .hero-bg-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background:
+                linear-gradient(90deg,
+                    rgba(0,51,153,.78) 0%,
+                    rgba(0,51,153,.58) 32%,
+                    rgba(0,38,110,.34) 65%,
+                    rgba(8,20,55,.45) 100%);
+        }
+
+        .hero-bg-overlay::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                180deg,
+                rgba(0,0,0,.04) 0%,
+                rgba(0,0,0,.10) 100%
+            );
+        }
+
+
+        /* Original profile card — fixed on the right, independent from slideshow */
+        .hero-profile-card {
+            position: absolute;
+            z-index: 4;
+            right: clamp(180px, 31%, 520px);
+            top: 50%;
+            transform: translateY(-50%) rotate(1deg);
+            width: 245px;
+            padding: 7px;
+            background: rgba(255,255,255,.98);
+            border-radius: 7px;
+            box-shadow: 0 18px 42px rgba(0,0,0,.32);
+        }
+
+        .hero-profile-inner {
+            position: relative;
+            border: 3px solid #003399;
+            border-radius: 5px;
+            overflow: hidden;
+            background: white;
+        }
+
+        .hero-profile-image {
+            display: block;
+            width: 100%;
+            height: 305px;
+            object-fit: cover;
+            object-position: center top;
+        }
+
+        .hero-profile-name {
+            background: #FF9900;
+            color: white;
+            text-align: center;
+            padding: 8px 6px;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            border-top: 2px solid white;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+        }
+
+        @media (max-width: 1023px) {
+            .hero-bg-overlay {
+                background:
+                    linear-gradient(90deg,
+                        rgba(0,51,153,.90),
+                        rgba(0,38,110,.70));
+            }
+
+            .hero-bg-info,
+        }
+
+        @media (max-width: 640px) {
+            .hero-bg-slide img {
+                object-fit: contain;
+            }
+
+            .hero-bg-overlay {
+                background:
+                    linear-gradient(90deg,
+                        rgba(0,51,153,.91),
+                        rgba(0,38,110,.74));
+            }
+
+            .hero-bg-title {
+                font-size: 13px;
+            }
+        }
+
         /* Custom Notice Modal */
         #notice-modal { display: none; background: rgba(0,0,0,0.6); }
         #notice-modal.active { display: flex; }
@@ -119,33 +260,89 @@
         </div>
     </nav>
 
-    <!-- Hero Banner -->
-    <section id="home" class="relative bg-suGray overflow-hidden border-b-4 border-suOrange">
-        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('assets/images/profile.jpg');"></div>
-        <div class="absolute inset-0 bg-gradient-to-r from-suBlue via-blue-900/90 to-black/70"></div>
-        
-        <div class="relative z-10 max-w-7xl mx-auto px-4 lg:px-8 py-20 lg:py-28 flex flex-col lg:flex-row items-center justify-between gap-12">
-            <div class="text-white max-w-2xl">
-                <h2 class="text-suOrange text-xl lg:text-2xl font-semibold mb-2 serif-heading">Welcome to the Official Portfolio of</h2>
-                <h1 class="text-4xl lg:text-5xl font-bold mb-6 uppercase tracking-tight shadow-sm">Umang Kakkad</h1>
-                <p class="text-lg text-gray-200 mb-8 leading-relaxed">
-                    Building reliable desktop and web applications with modern technologies. A passionate Software Developer currently pursuing MCA at GLS University. Focused on writing clean, scalable code and delivering seamless user experiences.
-                </p>
-                <div class="flex flex-wrap gap-4">
-                    <a href="#projects" class="bg-suOrange hover:bg-orange-600 text-white font-bold py-3 px-6 rounded uppercase tracking-wider text-sm transition shadow-lg">Academic Projects</a>
-                    <a href="#contact" class="bg-transparent border-2 border-white hover:bg-white hover:text-suBlue text-white font-bold py-3 px-6 rounded uppercase tracking-wider text-sm transition">Contact Me</a>
-                </div>
+    <!-- Hero Banner with Full-Width Transparent Academic/Event Slideshow -->
+    <section id="home" class="relative overflow-hidden border-b-4 border-suOrange min-h-[560px] lg:min-h-[590px]">
+
+        <!-- Full Hero Photo Slideshow — preserves every photo's original aspect ratio -->
+        <div class="hero-bg-slideshow" id="heroBgSlideshow">
+            <div class="hero-bg-slide active">
+                <img src="assets/images/profile.jpg" alt="Umang Kakkad Profile Photo">
             </div>
-            <div class="hidden lg:block">
-                <div class="bg-white p-2 rounded shadow-2xl transform rotate-1">
-                    <div class="border-4 border-suBlue rounded p-1 relative">
-                        <img src="assets/images/profile.jpg" alt="Umang Kakkad" class="w-56 h-72 object-cover" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'256\' height=\'320\'><rect width=\'100%\' height=\'100%\' fill=\'%23ccc\'/><text x=\'50%\' y=\'50%\' fill=\'%23666\' font-size=\'16\' text-anchor=\'middle\' dy=\'.3em\'>Official Portrait</text></svg>'">
-                        <div class="absolute bottom-0 left-0 w-full bg-suOrange text-white text-center text-xs font-bold py-2 uppercase tracking-widest border-t border-white">UMANG KAKKAD</div>
-                    </div>
+
+            <div class="hero-bg-slide">
+                <img src="assets/images/inflibnet-visit-1.jpeg" alt="INFLIBNET Academic Visit 1">
+            </div>
+
+            <div class="hero-bg-slide">
+                <img src="assets/images/inflibnet-visit-2.jpeg" alt="INFLIBNET Academic Visit 2">
+            </div>
+
+            <div class="hero-bg-slide">
+                <img src="assets/images/inflibnet-visit-3.jpeg" alt="INFLIBNET Academic Visit 3">
+            </div>
+
+            <div class="hero-bg-slide">
+                <img src="assets/images/satkar-samarambh-speech-1.jpg" alt="Saraswati Satkar Samarambh 1">
+            </div>
+
+            <div class="hero-bg-slide">
+                <img src="assets/images/satkar-samarambh-speech-2.jpg" alt="Saraswati Satkar Samarambh 2">
+            </div>
+
+            <div class="hero-bg-slide">
+                <img src="assets/images/wordpress-event-speech-1.jpg" alt="WordPress Event 1">
+            </div>
+
+            <div class="hero-bg-slide">
+                <img src="assets/images/wordpress-event-speech-2.jpg" alt="WordPress Event 2">
+            </div>
+        </div>
+
+        <!-- Transparent blue layer -->
+        <div class="hero-bg-overlay"></div>
+
+
+        <!-- Fixed Official Profile Card — remains visible while background photos change -->
+        <div class="hero-profile-card" aria-label="Umang Kakkad profile">
+            <div class="hero-profile-inner">
+                <img src="assets/images/profile.jpg"
+                     alt="Umang Kakkad"
+                     class="hero-profile-image"
+                     onerror="this.style.display='none'">
+                <div class="hero-profile-name">UMANG KAKKAD</div>
+            </div>
+        </div>
+
+        <!-- Main hero content -->
+        <div class="hero-content max-w-7xl mx-auto px-4 lg:px-8 py-24 lg:py-32 flex items-center min-h-[560px] lg:min-h-[590px]">
+            <div class="text-white max-w-3xl">
+                <h2 class="text-suOrange text-xl lg:text-2xl font-semibold mb-2 serif-heading">
+                    Welcome to the Official Portfolio of
+                </h2>
+
+                <h1 class="text-4xl lg:text-5xl font-bold mb-6 uppercase tracking-tight shadow-sm">
+                    Umang Kakkad
+                </h1>
+
+                <p class="text-lg text-gray-100 mb-8 leading-relaxed max-w-2xl">
+                    Building reliable desktop and web applications with modern technologies.
+                    A passionate Software Developer currently pursuing MCA at GLS University.
+                    Focused on writing clean, scalable code and delivering seamless user experiences.
+                </p>
+
+                <div class="flex flex-wrap gap-4">
+                    <a href="#projects"
+                       class="bg-suOrange hover:bg-orange-600 text-white font-bold py-3 px-6 rounded uppercase tracking-wider text-sm transition shadow-lg">
+                        Academic Projects
+                    </a>
+                    <a href="#contact"
+                       class="bg-transparent border-2 border-white hover:bg-white hover:text-suBlue text-white font-bold py-3 px-6 rounded uppercase tracking-wider text-sm transition">
+                        Contact Me
+                    </a>
                 </div>
             </div>
         </div>
-    </section>
+</section>
 
     <!-- Dynamic Notice Board Ticker -->
     <div class="ticker-wrap shadow-sm relative z-20">
@@ -650,6 +847,28 @@
 
         // Initialize notices on load
         renderNotices();
+
+
+        // Automatic background photo slideshow — profile photo is the first slide.
+        (function() {
+            const slides = Array.from(document.querySelectorAll('.hero-bg-slide'));
+            if (!slides.length) return;
+
+            let current = 0;
+
+            function showSlide(index) {
+                current = (index + slides.length) % slides.length;
+                slides.forEach((slide, i) => {
+                    slide.classList.toggle('active', i === current);
+                });
+            }
+
+            // Profile photo appears first, then every background photo changes automatically.
+            showSlide(0);
+            setInterval(() => {
+                showSlide(current + 1);
+            }, 3000);
+        })();
 
         function performSearch() {
             const query = document.getElementById('searchInput').value.toLowerCase().trim();
