@@ -2468,6 +2468,265 @@ body{
 }
 </style>
 
+
+<style id="industry-visit-photo-fix">
+/* ==========================================================
+   INDUSTRY / ACADEMIC VISIT PHOTO FIX
+   ========================================================== */
+
+.visit-photo-gallery{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+  width:100%;
+  margin:0 0 24px;
+}
+
+.visit-photo-card{
+  position:relative;
+  display:block;
+  min-width:0;
+  overflow:hidden;
+  text-decoration:none;
+  border-radius:16px;
+  border:1px solid rgba(0,229,255,.20);
+  background:linear-gradient(145deg,rgba(10,20,42,.96),rgba(5,10,24,.96));
+  box-shadow:0 12px 30px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.035);
+  transition:transform .28s ease,border-color .28s ease,box-shadow .28s ease;
+}
+
+.visit-photo-card:hover{
+  transform:translateY(-5px);
+  border-color:rgba(0,229,255,.48);
+  box-shadow:0 18px 40px rgba(0,0,0,.30),0 0 24px rgba(0,229,255,.10);
+}
+
+.visit-photo-media{
+  position:relative;
+  width:100%;
+  aspect-ratio:4 / 3;
+  overflow:hidden;
+  background:radial-gradient(circle at 50% 40%,rgba(0,229,255,.08),transparent 55%),#081022;
+}
+
+.visit-photo-media::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.35) 100%);
+}
+
+.visit-photo-media img{
+  width:100% !important;
+  height:100% !important;
+  display:block !important;
+  object-fit:contain !important;
+  object-position:center !important;
+  margin:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  border-radius:0 !important;
+  opacity:1 !important;
+  visibility:visible !important;
+  transition:transform .45s cubic-bezier(.2,.8,.2,1),filter .35s ease;
+}
+
+.visit-photo-card:hover .visit-photo-media img{
+  transform:scale(1.055);
+  filter:brightness(1.08) saturate(1.06);
+}
+
+.visit-photo-number{
+  position:absolute;
+  z-index:3;
+  left:10px;
+  top:10px;
+  width:30px;
+  height:24px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:8px;
+  color:#eaffff;
+  background:rgba(4,12,28,.72);
+  border:1px solid rgba(0,229,255,.28);
+  backdrop-filter:blur(8px);
+  font:700 10px/1 var(--font-mono,monospace);
+  letter-spacing:1px;
+}
+
+.visit-photo-expand{
+  position:absolute;
+  z-index:3;
+  right:10px;
+  top:10px;
+  width:30px;
+  height:30px;
+  display:grid;
+  place-items:center;
+  border-radius:9px;
+  color:#fff;
+  background:rgba(4,12,28,.68);
+  border:1px solid rgba(255,255,255,.15);
+  backdrop-filter:blur(8px);
+  font-size:16px;
+  transition:transform .25s ease,background .25s ease;
+}
+
+.visit-photo-card:hover .visit-photo-expand{
+  transform:translate(2px,-2px);
+  background:rgba(0,229,255,.14);
+}
+
+.visit-photo-card.image-missing .visit-photo-media{
+  display:grid;
+  place-items:center;
+}
+
+.visit-photo-card.image-missing .visit-photo-media::before{
+  content:"PHOTO NOT FOUND\A Check assets/images/\A inflibnet-visit-*.jpeg";
+  white-space:pre;
+  text-align:center;
+  color:rgba(255,255,255,.55);
+  font:600 10px/1.6 var(--font-mono,monospace);
+}
+
+.visit-photo-card.image-missing .visit-photo-media img{
+  display:none !important;
+}
+
+body.theme-light .visit-photo-card{
+  background:#fff;
+  border-color:rgba(15,23,42,.10);
+  box-shadow:0 12px 30px rgba(15,23,42,.08);
+}
+
+body.theme-light .visit-photo-media{
+  background:#eef4f8;
+}
+
+@media(max-width:1000px){
+  .visit-photo-gallery{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  .visit-photo-media{
+    aspect-ratio:16 / 10;
+  }
+}
+
+@media(max-width:560px){
+  .visit-photo-gallery{
+    grid-template-columns:1fr;
+    gap:12px;
+  }
+  .visit-photo-media{
+    aspect-ratio:16 / 10;
+  }
+}
+</style>
+
+
+<style id="industry-visit-full-image-fix">
+/* FULL IMAGE MODE — never crop the uploaded visit photographs */
+.visit-photo-media{
+  aspect-ratio:4 / 3 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  padding:0 !important;
+  background:
+    radial-gradient(circle at 50% 40%,rgba(0,229,255,.10),transparent 55%),
+    #07101f !important;
+}
+
+.visit-photo-media img{
+  width:100% !important;
+  height:100% !important;
+  object-fit:contain !important;
+  object-position:center center !important;
+  background:#07101f !important;
+}
+
+/* Keep the whole photo visible on every screen */
+@media(max-width:1000px){
+  .visit-photo-media{
+    aspect-ratio:4 / 3 !important;
+  }
+}
+
+@media(max-width:560px){
+  .visit-photo-media{
+    aspect-ratio:16 / 10 !important;
+  }
+}
+
+/* Do not apply generic image-cropping rules to this gallery */
+.visit-photo-gallery .visit-photo-media img{
+  object-fit:contain !important;
+}
+</style>
+
+
+<style id="large-clean-visit-gallery">
+/* ==========================================================
+   LARGE + CLEAN INDUSTRY VISIT PHOTO GALLERY
+   No 01/02/03/04 labels, no arrow overlay.
+   Two large cards on desktop for better visibility.
+   ========================================================== */
+
+.visit-photo-gallery{
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  gap:18px !important;
+  margin-top:8px !important;
+  margin-bottom:26px !important;
+}
+
+.visit-photo-card{
+  border-radius:18px !important;
+}
+
+.visit-photo-media{
+  aspect-ratio:16 / 10 !important;
+  min-height:250px !important;
+  padding:0 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+}
+
+.visit-photo-media img{
+  width:100% !important;
+  height:100% !important;
+  object-fit:contain !important;
+  object-position:center !important;
+  background:#07101f !important;
+  image-rendering:auto !important;
+}
+
+.visit-photo-card:hover{
+  transform:translateY(-4px) !important;
+}
+
+/* Completely remove the old overlay elements if any remain */
+.visit-photo-number,
+.visit-photo-expand{
+  display:none !important;
+}
+
+@media(max-width:700px){
+  .visit-photo-gallery{
+    grid-template-columns:1fr !important;
+    gap:14px !important;
+  }
+
+  .visit-photo-media{
+    aspect-ratio:16 / 10 !important;
+    min-height:220px !important;
+  }
+}
+</style>
+
 </head>
 <body>
 
@@ -3469,40 +3728,61 @@ body{
               technology infrastructure, and professional technology-driven environments.
             </p>
 
-            <!-- INFLIBNET Visit Photo Gallery: add 3-4 photos -->
-            <div style="
-              display:grid;
-              grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
-              gap:14px;
-              margin:0 0 22px;
-            ">
-              <a href="assets/images/inflibnet-visit-1.jpeg"
-                 target="_blank"
-                 rel="noopener noreferrer"
-                 style="display:block; overflow:hidden; border-radius:14px; border:1px solid rgba(0,229,255,0.22); background:rgba(8,15,35,0.55);">
-                
+            <!-- ==========================================================
+     INFLIBNET / ACADEMIC VISIT — PREMIUM PHOTO GALLERY
+     The original code had empty <a> elements, so no image
+     could render. This version contains real <img> tags.
+     ========================================================== -->
+            <div class="visit-photo-gallery" aria-label="INFLIBNET Centre visit photos">
+
+              <a class="visit-photo-card"
+                 href="assets/images/inflibnet-visit-1.jpeg"
+                 target="_blank" rel="noopener noreferrer">
+                <div class="visit-photo-media">
+                  <img src="assets/images/inflibnet-visit-1.jpeg"
+                       alt="INFLIBNET Centre Visit Photo 1"
+                       loading="lazy" decoding="async"
+                       onerror="this.closest('.visit-photo-card').classList.add('image-missing');">
+                  
+                </div>
               </a>
 
-              <a href="assets/images/inflibnet-visit-2.jpeg"
-                 target="_blank"
-                 rel="noopener noreferrer"
-                 style="display:block; overflow:hidden; border-radius:14px; border:1px solid rgba(0,229,255,0.22); background:rgba(8,15,35,0.55);">
-                
+              <a class="visit-photo-card"
+                 href="assets/images/inflibnet-visit-2.jpeg"
+                 target="_blank" rel="noopener noreferrer">
+                <div class="visit-photo-media">
+                  <img src="assets/images/inflibnet-visit-2.jpeg"
+                       alt="INFLIBNET Centre Visit Photo 2"
+                       loading="lazy" decoding="async"
+                       onerror="this.closest('.visit-photo-card').classList.add('image-missing');">
+                  
+                </div>
               </a>
 
-              <a href="assets/images/inflibnet-visit-3.jpeg"
-                 target="_blank"
-                 rel="noopener noreferrer"
-                 style="display:block; overflow:hidden; border-radius:14px; border:1px solid rgba(0,229,255,0.22); background:rgba(8,15,35,0.55);">
-                
+              <a class="visit-photo-card"
+                 href="assets/images/inflibnet-visit-3.jpeg"
+                 target="_blank" rel="noopener noreferrer">
+                <div class="visit-photo-media">
+                  <img src="assets/images/inflibnet-visit-3.jpeg"
+                       alt="INFLIBNET Centre Visit Photo 3"
+                       loading="lazy" decoding="async"
+                       onerror="this.closest('.visit-photo-card').classList.add('image-missing');">
+                  
+                </div>
               </a>
 
-              <a href="assets/images/inflibnet-visit-4.jpeg"
-                 target="_blank"
-                 rel="noopener noreferrer"
-                 style="display:block; overflow:hidden; border-radius:14px; border:1px solid rgba(0,229,255,0.22); background:rgba(8,15,35,0.55);">
-                
+              <a class="visit-photo-card"
+                 href="assets/images/inflibnet-visit-4.jpeg"
+                 target="_blank" rel="noopener noreferrer">
+                <div class="visit-photo-media">
+                  <img src="assets/images/inflibnet-visit-4.jpeg"
+                       alt="INFLIBNET Centre Visit Photo 4"
+                       loading="lazy" decoding="async"
+                       onerror="this.closest('.visit-photo-card').classList.add('image-missing');">
+                  
+                </div>
               </a>
+
             </div>
 
             <div class="exp-tech-chips">
