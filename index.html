@@ -136,6 +136,137 @@
             }
         }
 
+
+        /* Responsive header fix: Search + profile remain visible on mobile/tablet */
+        .header-main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+
+        .header-identity {
+            min-width: 0;
+            flex: 1 1 auto;
+        }
+
+        .header-tools {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 1rem;
+            flex: 0 0 auto;
+        }
+
+        .header-search {
+            display: flex;
+            width: 100%;
+            max-width: 320px;
+            min-width: 220px;
+            border: 2px solid #003399;
+            border-radius: 5px;
+            overflow: hidden;
+            background: #fff;
+            box-shadow: 0 1px 3px rgba(0,0,0,.08);
+        }
+
+        .header-search input {
+            min-width: 0;
+            flex: 1 1 auto;
+            width: 100%;
+        }
+
+        .header-profile {
+            width: 64px;
+            height: 64px;
+            flex: 0 0 64px;
+            border-radius: 9999px;
+            object-fit: cover;
+            display: block !important;
+        }
+
+        @media (max-width: 1023px) {
+            .header-main {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 1rem;
+            }
+
+            .header-identity {
+                width: 100%;
+            }
+
+            .header-tools {
+                width: 100%;
+                justify-content: stretch;
+            }
+
+            .header-search {
+                max-width: none;
+                flex: 1 1 auto;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .header-main {
+                gap: .8rem;
+            }
+
+            .header-identity {
+                gap: .75rem !important;
+            }
+
+            .header-identity > div:first-child {
+                width: 58px;
+                height: 58px;
+                min-width: 58px;
+                border-width: 3px;
+                font-size: 1.35rem;
+            }
+
+            .header-identity h1 {
+                font-size: 1.35rem !important;
+                line-height: 1.2;
+                letter-spacing: .02em;
+            }
+
+            .header-identity p {
+                font-size: .72rem !important;
+                line-height: 1.35;
+            }
+
+            .header-identity p:last-child {
+                font-size: .65rem !important;
+                margin-top: .15rem !important;
+            }
+
+            .header-tools {
+                gap: .65rem;
+            }
+
+            .header-search {
+                min-width: 0;
+                height: 42px;
+            }
+
+            .header-search input {
+                padding: .55rem .7rem !important;
+                font-size: .78rem !important;
+            }
+
+            .header-search button {
+                padding-left: .8rem !important;
+                padding-right: .8rem !important;
+            }
+
+            .header-profile {
+                width: 48px;
+                height: 48px;
+                flex-basis: 48px;
+                border-width: 2px;
+            }
+        }
+
         /* Custom Notice Modal */
         #notice-modal { display: none; background: rgba(0,0,0,0.6); }
         #notice-modal.active { display: flex; }
@@ -165,32 +296,54 @@
 
     <!-- Main Header -->
     <header class="bg-white py-4 shadow-sm relative z-40 border-b-[3px] border-suOrange">
-        <div class="max-w-7xl mx-auto px-4 lg:px-8 flex justify-between items-center">
-            <div class="flex items-center gap-4 lg:gap-6">
+        <div class="max-w-7xl mx-auto px-4 lg:px-8 header-main">
+
+            <!-- Identity -->
+            <div class="header-identity flex items-center gap-4 lg:gap-6">
                 <div class="w-16 h-16 lg:w-20 lg:h-20 bg-suBlue text-white rounded-full flex items-center justify-center text-2xl lg:text-3xl font-bold border-4 border-suOrange shadow-md serif-heading">
                     UK
                 </div>
-                <div>
+                <div class="min-w-0">
                     <h1 class="text-2xl lg:text-3xl font-bold text-suBlue uppercase tracking-wide">Umang Kakkad</h1>
                     <p class="text-sm lg:text-base font-semibold text-gray-600 tracking-wider">Software Developer & MCA Student</p>
                     <p class="text-xs text-gray-500 mt-1">GLS University, Ahmedabad (Gujarat)</p>
                 </div>
             </div>
-            
-            <!-- Search & Right Section -->
-            <div class="hidden lg:flex items-center gap-6">
-                <div class="flex border-2 border-suBlue rounded overflow-hidden shadow-sm">
-                    <input type="text" id="searchInput" placeholder="Search portfolio..." class="px-4 py-2 outline-none text-sm w-48 text-gray-700" onkeypress="if(event.key === 'Enter') performSearch()">
-                    <button class="bg-suBlue text-white px-4 py-2 hover:bg-blue-800 transition" onclick="performSearch()">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+
+            <!-- Search + Profile: visible on desktop, tablet and mobile -->
+            <div class="header-tools">
+                <div class="header-search">
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search portfolio..."
+                        aria-label="Search portfolio"
+                        class="px-4 py-2 outline-none text-sm text-gray-700"
+                        onkeypress="if(event.key === 'Enter') performSearch()"
+                    >
+                    <button
+                        type="button"
+                        class="bg-suBlue text-white px-4 py-2 hover:bg-blue-800 transition flex items-center justify-center"
+                        onclick="performSearch()"
+                        aria-label="Search"
+                    >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
                     </button>
                 </div>
-                <img src="assets/images/profile.jpg" alt="Profile Image" class="w-16 h-16 rounded-full border-2 border-gray-300 object-cover shadow-sm" onerror="this.style.display='none'">
+
+                <img
+                    src="assets/images/profile.jpg"
+                    alt="Umang Kakkad Profile Image"
+                    class="header-profile border-2 border-gray-300 shadow-sm"
+                    onerror="this.style.display='none'"
+                >
             </div>
         </div>
     </header>
 
-    <!-- Navigation (Now Sticky to prevent disappearing) -->
+<!-- Navigation (Now Sticky to prevent disappearing) -->
     <nav class="bg-suBlue sticky top-0 w-full z-50 shadow-md border-t border-blue-800">
         <div class="max-w-7xl mx-auto px-4 lg:px-8 relative">
             <!-- Mobile menu button -->
