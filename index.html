@@ -440,11 +440,8 @@
 
     <!-- Dynamic Notice Board Ticker -->
     <div class="ticker-wrap shadow-sm relative z-20">
-        <div class="ticker-label flex items-center gap-4">
+        <div class="ticker-label flex items-center">
             LATEST UPDATES
-            <button onclick="toggleNoticeModal()" class="bg-white text-suOrange px-2 py-0.5 rounded text-[10px] hover:bg-gray-100 transition shadow cursor-pointer border border-suOrange">
-                ⚙️ Manage
-            </button>
         </div>
         <marquee id="notice-marquee" behavior="scroll" direction="left" scrollamount="6" onmouseover="this.stop();" onmouseout="this.start();" class="flex items-center w-full">
             <!-- Notices rendered by JS -->
