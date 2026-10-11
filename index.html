@@ -267,11 +267,6 @@
             }
         }
 
-        .language-selector { max-width: 120px; min-height: 40px; }
-        @media (max-width: 640px) {
-            .language-selector { max-width: 105px; font-size: .75rem; padding: .55rem .35rem; }
-        }
-
         /* Custom Notice Modal */
         #notice-modal { display: none; background: rgba(0,0,0,0.6); }
         #notice-modal.active { display: flex; }
@@ -317,14 +312,6 @@
 
             <!-- Search + Profile: visible on desktop, tablet and mobile -->
             <div class="header-tools">
-                <!-- Language selector inspired by the GTU website -->
-                <label for="siteLanguage" class="sr-only">Choose language</label>
-                <select id="siteLanguage" aria-label="Choose website language"
-                    class="language-selector border border-blue-200 rounded-md bg-white text-suBlue text-sm font-semibold px-2 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300">
-                    <option value="en">English</option>
-                    <option value="gu">ગુજરાતી</option>
-                    <option value="hi">हिन्दी</option>
-                </select>
                 <div class="header-search">
                     <input
                         type="text"
@@ -1321,137 +1308,5 @@
     }
 })();
 </script>
-
-
-<script>
-/* Lightweight portfolio language switcher: English, Gujarati and Hindi.
-   This translates common navigation/UI labels locally; no API key is required. */
-(function () {
-    const selector = document.getElementById('siteLanguage');
-    if (!selector) return;
-
-    const translations = {
-        gu: {
-            'Welcome to Official Portfolio': 'સત્તાવાર પોર્ટફોલિયોમાં આપનું સ્વાગત છે',
-            'Software Developer & MCA Student': 'સોફ્ટવેર ડેવલપર અને MCA વિદ્યાર્થી',
-            'GLS University, Ahmedabad (Gujarat)': 'GLS યુનિવર્સિટી, અમદાવાદ (ગુજરાત)',
-            'Search portfolio...': 'પોર્ટફોલિયો શોધો...',
-            'Home': 'હોમ',
-            'About': 'પરિચય',
-            'Academics': 'શૈક્ષણિક માહિતી',
-            'Skills': 'કૌશલ્યો',
-            'Experience': 'અનુભવ',
-            'Projects': 'પ્રોજેક્ટ્સ',
-            'Certificates': 'પ્રમાણપત્રો',
-            'Events': 'કાર્યક્રમો',
-            'Feedback': 'પ્રતિસાદ',
-            'Contact': 'સંપર્ક',
-            'Menu': 'મેનુ',
-            'Welcome to the Official Portfolio of': 'સત્તાવાર પોર્ટફોલિયોમાં આપનું સ્વાગત છે',
-            'Building reliable desktop and web applications with modern technologies.': 'આધુનિક ટેક્નોલોજીથી વિશ્વસનીય ડેસ્કટોપ અને વેબ એપ્લિકેશન્સ બનાવું છું.',
-            'Academic Projects': 'શૈક્ષણિક પ્રોજેક્ટ્સ',
-            'Contact Me': 'મારો સંપર્ક કરો',
-            'LATEST UPDATES': 'નવીનતમ અપડેટ્સ',
-            'Portfolio Key Highlights': 'પોર્ટફોલિયોની મુખ્ય વિશેષતાઓ',
-            'Developer & Academic Highlights': 'ડેવલપર અને શૈક્ષણિક વિશેષતાઓ',
-            'Years Academic Journey': 'શૈક્ષણિક સફરનાં વર્ષો',
-            'Software & Web Projects': 'સોફ્ટવેર અને વેબ પ્રોજેક્ટ્સ',
-            'Technical Competencies': 'ટેક્નિકલ કૌશલ્યો',
-            'Verified Certifications': 'પ્રમાણિત સર્ટિફિકેટ્સ',
-            'Industry Internship': 'ઔદ્યોગિક ઇન્ટર્નશિપ',
-            'Academic Industrial Visit': 'શૈક્ષણિક ઔદ્યોગિક મુલાકાત',
-            'Events & Public Speeches': 'કાર્યક્રમો અને જાહેર ભાષણો',
-            'Academic Honour Rank': 'શૈક્ષણિક સન્માન રેન્ક',
-            'Programming Programs': 'પ્રોગ્રામિંગ પ્રોગ્રામ્સ',
-            'Click to request code by email': 'ઈમેલ દ્વારા કોડની વિનંતી કરો',
-            'About the Developer': 'ડેવલપર વિશે',
-            'Academic Journey': 'શૈક્ષણિક સફર',
-            'Technical Competencies': 'ટેક્નિકલ કૌશલ્યો',
-            'Professional & Academic Exposure': 'વ્યાવસાયિક અને શૈક્ષણિક અનુભવ',
-            'Events & Gallery': 'કાર્યક્રમો અને ગેલેરી',
-            'Contact Me': 'મારો સંપર્ક કરો'
-        },
-        hi: {
-            'Welcome to Official Portfolio': 'आधिकारिक पोर्टफोलियो में आपका स्वागत है',
-            'Software Developer & MCA Student': 'सॉफ्टवेयर डेवलपर और MCA विद्यार्थी',
-            'GLS University, Ahmedabad (Gujarat)': 'GLS यूनिवर्सिटी, अहमदाबाद (गुजरात)',
-            'Search portfolio...': 'पोर्टफोलियो खोजें...',
-            'Home': 'होम',
-            'About': 'परिचय',
-            'Academics': 'शिक्षा',
-            'Skills': 'कौशल',
-            'Experience': 'अनुभव',
-            'Projects': 'प्रोजेक्ट्स',
-            'Certificates': 'प्रमाणपत्र',
-            'Events': 'कार्यक्रम',
-            'Feedback': 'प्रतिक्रिया',
-            'Contact': 'संपर्क',
-            'Menu': 'मेन्यू',
-            'Welcome to the Official Portfolio of': 'आधिकारिक पोर्टफोलियो में आपका स्वागत है',
-            'Building reliable desktop and web applications with modern technologies.': 'आधुनिक तकनीकों के साथ विश्वसनीय डेस्कटॉप और वेब एप्लिकेशन बनाता हूँ।',
-            'Academic Projects': 'शैक्षणिक प्रोजेक्ट्स',
-            'Contact Me': 'संपर्क करें',
-            'LATEST UPDATES': 'नवीनतम अपडेट',
-            'Portfolio Key Highlights': 'पोर्टफोलियो की मुख्य विशेषताएँ',
-            'Developer & Academic Highlights': 'डेवलपर और शैक्षणिक उपलब्धियाँ',
-            'Years Academic Journey': 'शैक्षणिक यात्रा के वर्ष',
-            'Software & Web Projects': 'सॉफ्टवेयर और वेब प्रोजेक्ट्स',
-            'Technical Competencies': 'तकनीकी कौशल',
-            'Verified Certifications': 'सत्यापित प्रमाणपत्र',
-            'Industry Internship': 'इंडस्ट्री इंटर्नशिप',
-            'Academic Industrial Visit': 'शैक्षणिक औद्योगिक भ्रमण',
-            'Events & Public Speeches': 'कार्यक्रम और सार्वजनिक भाषण',
-            'Academic Honour Rank': 'शैक्षणिक सम्मान रैंक',
-            'Programming Programs': 'प्रोग्रामिंग प्रोग्राम',
-            'Click to request code by email': 'ईमेल से कोड का अनुरोध करें',
-            'About the Developer': 'डेवलपर के बारे में',
-            'Academic Journey': 'शैक्षणिक यात्रा',
-            'Professional & Academic Exposure': 'व्यावसायिक और शैक्षणिक अनुभव',
-            'Events & Gallery': 'कार्यक्रम और गैलरी'
-        }
-    };
-
-    const originalText = new WeakMap();
-    function translateTextNodes(root) {
-        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
-            acceptNode(node) {
-                if (!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
-                const parent = node.parentElement;
-                if (!parent || parent.closest('script, style, select, option, textarea, input')) return NodeFilter.FILTER_REJECT;
-                return NodeFilter.FILTER_ACCEPT;
-            }
-        });
-        const nodes = [];
-        while (walker.nextNode()) nodes.push(walker.currentNode);
-        const lang = selector.value;
-        nodes.forEach(node => {
-            if (!originalText.has(node)) originalText.set(node, node.nodeValue);
-            const original = originalText.get(node);
-            const trimmed = original.trim();
-            const translated = lang === 'en' ? trimmed : ((translations[lang] || {})[trimmed] || trimmed);
-            node.nodeValue = original.replace(trimmed, translated);
-        });
-
-        document.querySelectorAll('[placeholder]').forEach(el => {
-            if (!el.dataset.originalPlaceholder) el.dataset.originalPlaceholder = el.getAttribute('placeholder');
-            const original = el.dataset.originalPlaceholder;
-            el.setAttribute('placeholder', lang === 'en' ? original : ((translations[lang] || {})[original] || original));
-        });
-        document.documentElement.lang = lang === 'gu' ? 'gu' : lang;
-    }
-
-    selector.addEventListener('change', () => translateTextNodes(document.body));
-    // Translate labels rendered dynamically by existing page scripts too.
-    const observer = new MutationObserver(records => {
-        if (selector.value === 'en') return;
-        records.forEach(record => record.addedNodes.forEach(node => {
-            if (node.nodeType === Node.ELEMENT_NODE) translateTextNodes(node);
-            else if (node.nodeType === Node.TEXT_NODE && node.parentElement) translateTextNodes(node.parentElement);
-        }));
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
-})();
-</script>
-
 </body>
 </html>
