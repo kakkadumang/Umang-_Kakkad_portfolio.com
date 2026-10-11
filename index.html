@@ -462,11 +462,11 @@
                 </h2>
                 <div class="w-16 h-1 bg-suOrange mx-auto mt-3 mb-4 rounded-full"></div>
                 <p class="text-gray-600 text-sm lg:text-base leading-relaxed">
-                    A verified snapshot of software projects, technical proficiencies, certifications, professional internship, and academic achievements.
+                    A snapshot of software projects, programming practice, technical skills, certifications, professional internship, and academic achievements.
                 </p>
             </div>
 
-            <!-- Stats Grid (8 Verified Highlights linked to portfolio sections) -->
+            <!-- Stats Grid: academic, professional, and programming highlights -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 
                 <!-- Stat 1: Academic Journey (Link: #education) -->
@@ -598,9 +598,30 @@
                     </div>
                 </a>
 
+                <!-- Stat 9: BCA Programming Practice — click to request code by email -->
+                <a href="mailto:kakkadumang08@gmail.com?subject=Request%20for%20BCA%20Programming%20Code%20Collection&body=Dear%20Umang%2C%0A%0AI%20am%20interested%20in%20your%20BCA%20programming%20collection%20for%20learning%20and%20academic%20reference.%20Could%20you%20please%20let%20me%20know%20whether%20the%20relevant%20programs%20are%20available%20to%20share%3F%0A%0AThank%20you%20for%20your%20time.%0A%0AKind%20regards%2C%0A[Your%20Name]"
+                   onclick="return confirm('Interested in my programming collection?\n\nI have worked on 1,070+ programming exercises across 12 technologies during my BCA studies. If you would like to request relevant code for learning or academic reference, please contact me at kakkadumang08@gmail.com.\n\nSelect OK to open an email draft. You can review and send the request from your email application.');"
+                   title="Click to request programming code by email"
+                   class="bg-white border border-gray-200/90 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-suOrange/50 transition-all duration-300 academic-card group flex items-start gap-4 cursor-pointer block">
+                    <div class="w-12 h-12 p-2.5 rounded-xl bg-blue-50 text-suBlue group-hover:bg-suBlue group-hover:text-white transition-colors flex-shrink-0 border border-blue-100 flex items-center justify-center">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M4 5h16a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2z"></path>
+                        </svg>
+                    </div>
+                    <div class="min-w-0 flex-1">
+                        <div class="text-3xl lg:text-4xl font-extrabold text-suBlue tracking-tight">1,070<span class="text-suOrange">+</span></div>
+                        <h3 class="text-sm font-bold text-gray-800 leading-snug mt-1 group-hover:text-suBlue transition-colors">Programming Programs</h3>
+                        <p class="text-xs text-gray-500 mt-1">12 technologies · 3 years of BCA practical work</p>
+                        <p class="text-xs text-suBlue font-semibold mt-2">✉ Click to request code by email</p>
+                    </div>
+                </a>
+
             </div>
         </div>
+    
+
     </section>
+
 
     <!-- About Section -->
     <section id="about" class="py-16 bg-white">
@@ -1188,6 +1209,11 @@
                 'skill': 'skills', 'language': 'skills', 'database': 'skills', 'technology': 'skills',
                 'experience': 'experience', 'internship': 'experience', 'inflibnet': 'experience',
                 'project': 'projects', 'weather': 'projects', 'atm': 'projects',
+                'programming': 'programming-lab', 'program': 'programming-lab', 'code library': 'programming-lab',
+                'java': 'programming-lab', 'python': 'programming-lab', 'html': 'programming-lab',
+                'javascript': 'programming-lab', 'kotlin': 'programming-lab', 'pandas': 'programming-lab',
+                'c#': 'programming-lab', 'css': 'programming-lab', 'php': 'programming-lab',
+                'oracle': 'programming-lab', 'j2ee': 'programming-lab', 'c++': 'programming-lab',
                 'certificate': 'certificates', 'achievement': 'certificates',
                 'event': 'events', 'gallery': 'events', 'saraswati': 'events', 'wordpress': 'events',
                 'feedback': 'feedback', 'contact': 'contact', 'email': 'contact', 'phone': 'contact'
@@ -1209,5 +1235,79 @@
             alert("No matching section found. Try searching for 'projects', 'skills', 'education', 'highlights', or 'contact'.");
         }
     </script>
+
+<script>
+(function () {
+    const categories = [
+        { name: "HTML", count: 61, type: "Web Technology" },
+        { name: "J2EE & Eclipse", count: 17, type: "Enterprise Java" },
+        { name: "Java", count: 182, type: "Programming Language" },
+        { name: "JavaScript", count: 73, type: "Web Technology" },
+        { name: "Kotlin", count: 29, type: "Programming Language" },
+        { name: "ML & Pandas", count: 32, type: "Data & Machine Learning" },
+        { name: "C#", count: 93, type: "Programming Language" },
+        { name: "CSS", count: 67, type: "Web Technology" },
+        { name: "Python", count: 149, type: "Programming Language" },
+        { name: "C, C++ & Data Structures", count: 226, type: "Core Programming & DSA" },
+        { name: "PHP", count: 91, type: "Web Programming" },
+        { name: "Oracle SQL", count: 50, displayCount: "50+", type: "Database" }
+    ];
+    const root = document.getElementById("bca-category-list");
+    if (!root) return;
+
+    categories.forEach((category) => {
+        const details = document.createElement("details");
+        details.className = "border border-gray-200 rounded-lg overflow-hidden bg-white";
+        const summary = document.createElement("summary");
+        summary.className = "cursor-pointer list-none p-4 flex items-center justify-between gap-3 hover:bg-blue-50 transition";
+        summary.innerHTML = '<div><span class="text-[10px] uppercase tracking-wider font-bold text-suOrange">' +
+            category.type + '</span><div class="font-bold text-suBlue mt-1">' + category.name +
+            '</div></div><div class="flex items-center gap-2"><span class="text-lg font-extrabold text-suBlue">' +
+            (category.displayCount || category.count) +
+            '</span><svg class="w-4 h-4 text-suBlue transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></div>';
+        const listWrap = document.createElement("div");
+        listWrap.className = "px-4 pb-4 border-t border-gray-100 hidden";
+        let rendered = false;
+        details.appendChild(summary);
+        details.appendChild(listWrap);
+        root.appendChild(details);
+
+        details.addEventListener("toggle", function () {
+            const icon = summary.querySelector("svg");
+            if (icon) icon.style.transform = details.open ? "rotate(180deg)" : "rotate(0deg)";
+            if (details.open && !rendered) {
+                if (category.displayCount) {
+                    const note = document.createElement("p");
+                    note.className = "text-xs text-gray-500 mt-3";
+                    note.textContent = "50+ programs reported; exact total will be confirmed when the original files are counted.";
+                    listWrap.appendChild(note);
+                }
+                const list = document.createElement("ol");
+                list.className = "grid grid-cols-1 sm:grid-cols-2 gap-x-4 text-xs text-gray-600 mt-3";
+                for (let i = 1; i <= category.count; i++) {
+                    const li = document.createElement("li");
+                    li.className = "py-1 border-b border-gray-100";
+                    li.textContent = "Program " + String(i).padStart(2, "0");
+                    list.appendChild(li);
+                }
+                listWrap.appendChild(list);
+                listWrap.classList.remove("hidden");
+                rendered = true;
+            } else if (!details.open) {
+                listWrap.classList.add("hidden");
+            }
+        });
+    });
+
+    const parent = document.querySelector("#programming-collection > details");
+    if (parent) {
+        const label = parent.querySelector(".collection-toggle-label");
+        parent.addEventListener("toggle", () => {
+            if (label) label.textContent = parent.open ? "Hide Categories" : "View Categories";
+        });
+    }
+})();
+</script>
+
 </body>
 </html>
