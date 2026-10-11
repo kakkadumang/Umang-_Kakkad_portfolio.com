@@ -150,11 +150,35 @@
             flex: 1 1 auto;
         }
 
+        /* Clearly visible UK monogram logo beside Umang Kakkad's name */
+        .umang-main-logo {
+            width: 88px !important;
+            height: 88px !important;
+            min-width: 88px !important;
+            flex: 0 0 88px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            border-radius: 50% !important;
+            background: #003399 !important;
+            color: #ffffff !important;
+            border: 4px solid #ff9900 !important;
+            box-shadow: 0 3px 9px rgba(0,0,0,.22) !important;
+            font-family: Georgia, 'Times New Roman', serif !important;
+            font-size: 35px !important;
+            font-weight: 700 !important;
+            line-height: 1 !important;
+            letter-spacing: -1px !important;
+        }
+        @media (max-width: 640px) {
+            .umang-main-logo { width: 58px !important; height: 58px !important; min-width: 58px !important; flex-basis: 58px !important; border-width: 3px !important; font-size: 24px !important; }
+        }
+
         .header-tools {
             display: flex;
             align-items: center;
             justify-content: flex-end;
-            gap: 1rem;
+            gap: .75rem;
             flex: 0 0 auto;
         }
 
@@ -199,7 +223,11 @@
             .header-tools {
                 width: 100%;
                 justify-content: stretch;
+                flex-wrap: wrap;
             }
+            #umang-ai-launcher { order: 0; }
+            .header-search { order: 1; }
+            .header-profile { order: 2; }
 
             .header-search {
                 max-width: none;
@@ -267,6 +295,11 @@
             }
         }
 
+        .language-selector { max-width: 120px; min-height: 40px; }
+        @media (max-width: 640px) {
+            .language-selector { max-width: 105px; font-size: .75rem; padding: .55rem .35rem; }
+        }
+
         /* Custom Notice Modal */
         #notice-modal { display: none; background: rgba(0,0,0,0.6); }
         #notice-modal.active { display: flex; }
@@ -276,22 +309,81 @@
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #003399; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #002266; }
-    </style>
+
+        .portfolio-topbar { min-height: 34px; }
+        .language-link { color: #d1d5db; background: transparent; border: 0; padding: 2px 0; cursor: pointer; font-weight: 500; transition: color .2s ease; }
+        .language-link:hover, .language-link.active { color: #fff; }
+        .language-link.active { font-weight: 700; text-decoration: underline; text-decoration-color: #FF9900; text-underline-offset: 4px; }
+        @media (max-width: 480px) { .portfolio-topbar { font-size: 11px; padding-left: 10px; padding-right: 10px; } }
+    
+
+/* GTU-inspired Ask AI button placed in the TOP header beside search */
+#umang-ai-launcher{position:relative;right:auto;bottom:auto;z-index:9998;display:flex;align-items:center;justify-content:center;gap:8px;flex:0 0 auto;border:1px solid #d5e2fb;border-radius:999px;padding:7px 12px 7px 8px;background:#fff;color:#102b70;box-shadow:0 3px 12px rgba(10,30,80,.12);font:700 12px Inter,sans-serif;cursor:pointer;transition:transform .2s,box-shadow .2s;white-space:nowrap}
+#umang-ai-launcher:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(10,30,80,.28)}
+#umang-ai-launcher .ai-launcher-icon{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#003399;color:#fff;border:2px solid #ff9900;font-size:20px}
+#umang-ai-launcher .ai-status-dot{position:absolute;right:5px;top:4px;width:10px;height:10px;background:#16a34a;border:2px solid white;border-radius:50%}
+#umang-ai-panel{position:fixed;right:24px;top:125px;bottom:auto;z-index:9999;width:min(420px,calc(100vw - 28px));height:min(650px,calc(100dvh - 120px));background:#fff;border:1px solid #dbe2ee;border-radius:22px;box-shadow:0 22px 70px rgba(12,25,55,.28);display:none;overflow:hidden;color:#1b2234;font-family:Inter,sans-serif}
+#umang-ai-panel.open{display:flex;flex-direction:column;animation:umangAiIn .18s ease-out}
+@keyframes umangAiIn{from{opacity:0;transform:translateY(8px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+.umang-ai-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;background:#fff;border-bottom:1px solid #edf0f5}
+.umang-ai-brand{display:flex;align-items:center;gap:10px;font-weight:750;color:#153675;font-size:17px}
+.uk-ai-mark{background:#003399!important;color:#fff!important;border:2px solid #ff9800!important;font-family:Georgia,serif;font-weight:700;font-size:17px!important;box-shadow:0 1px 4px #0002}
+.umang-ai-logo{width:38px!important;height:38px!important;min-width:38px;border-radius:50%!important;display:grid;place-items:center;background:#003399!important;color:#fff!important;border:3px solid #ff9800!important;font-family:Georgia,serif;font-weight:700;font-size:16px!important;box-shadow:0 2px 6px #00339930}
+.umang-ai-head-actions{display:flex;gap:6px}
+.umang-ai-icon-btn{border:0;background:transparent;color:#4b5563;width:34px;height:34px;border-radius:8px;font-size:21px;cursor:pointer}
+.umang-ai-icon-btn:hover{background:#f1f5f9}
+.umang-ai-welcome{padding:22px 20px 12px;overflow:auto}
+.umang-ai-welcome-badge{width:68px!important;height:68px!important;border-radius:50%!important;display:grid;place-items:center;background:#003399!important;color:#fff!important;border:4px solid #ff9800!important;box-shadow:0 3px 10px #00339930;font-family:Georgia,serif;font-weight:700;font-size:29px!important;margin-bottom:18px}
+.umang-ai-welcome h3{font-size:22px;line-height:1.3;font-weight:750;color:#171d31;margin:0 0 10px}
+.umang-ai-welcome p{font-size:14px;line-height:1.65;color:#667085;margin:0}
+.umang-ai-prompts{display:flex;flex-wrap:wrap;gap:8px;margin-top:17px}
+.umang-ai-prompt{border:1px solid #dbe5f5;background:#fff;color:#23427e;border-radius:999px;padding:8px 11px;font-size:12px;font-weight:600;cursor:pointer}
+.umang-ai-prompt:hover{background:#eff5ff;border-color:#9eb9ee}
+#umang-ai-messages{display:none;flex:1;overflow-y:auto;padding:16px;background:#f8faff}
+.umang-ai-message{max-width:90%;white-space:pre-wrap;overflow-wrap:anywhere;padding:11px 13px;border-radius:14px;margin:0 0 11px;font-size:13px;line-height:1.55}
+.umang-ai-message.bot{background:#fff;border:1px solid #e5eaf2;color:#30394d;border-top-left-radius:5px}
+.umang-ai-message.user{background:#003399;color:#fff;margin-left:auto;border-top-right-radius:5px}
+.umang-ai-input-wrap{padding:12px 14px 8px;border-top:1px solid #edf0f5;background:#fff}
+.umang-ai-input-box{display:flex;align-items:center;gap:8px;border:2px solid #d4d8e4;border-radius:18px;padding:7px 8px 7px 13px;transition:border-color .2s}
+.umang-ai-input-box:focus-within{border-color:#003399}
+#umang-ai-input{flex:1;min-width:0;resize:none;border:0;outline:0;font:14px Inter,sans-serif;color:#20283b;background:transparent;max-height:100px;padding:7px 0}
+#umang-ai-send{width:38px;height:38px;border:0;border-radius:50%;background:#003399;color:#fff;font-size:19px;cursor:pointer;flex-shrink:0}
+#umang-ai-send:hover{background:#002266}
+#umang-ai-send:disabled{opacity:.45;cursor:not-allowed}
+.umang-ai-footnote{text-align:center;font-size:10px;line-height:1.5;color:#8991a2;padding:6px 12px 10px;background:#fff}
+.umang-ai-back{display:none;border:0;background:#f0f4fb;color:#24427c;border-radius:999px;padding:7px 11px;font-size:12px;cursor:pointer;margin-top:12px}
+@media(max-width:600px){.header-tools{gap:.4rem!important} #umang-ai-launcher{padding:6px 9px 6px 6px;font-size:11px;max-width:100%;}#umang-ai-launcher .ai-launcher-icon{width:28px;height:28px}#umang-ai-panel{right:8px;top:112px;bottom:auto;width:calc(100vw - 16px);height:min(76dvh,650px);border-radius:18px}.umang-ai-welcome{padding:18px 16px 10px}.umang-ai-welcome h3{font-size:20px}}
+
+</style>
 </head>
 <body class="text-gray-800 antialiased relative">
 
-    <!-- Top Bar -->
-    <div class="bg-gray-900 text-gray-300 text-xs py-2 px-4 relative z-50 hidden md:block">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="space-x-4">
-                <span class="font-medium tracking-wide">Welcome to Official Portfolio</span>
+    <!-- GTU-inspired top utility bar with language links -->
+    <div class="portfolio-topbar bg-gray-900 text-gray-300 text-xs py-2 px-4 relative z-50">
+        <div class="max-w-7xl mx-auto flex justify-between items-center gap-3">
+            <div class="portfolio-live-datetime flex items-center gap-2 whitespace-nowrap" aria-label="Current date and time">
+                <span aria-hidden="true">📅</span><span id="portfolio-current-date">11 Oct 2026</span>
+                <span class="text-blue-300">|</span>
+                <span aria-hidden="true">🕒</span><span id="portfolio-current-time">--:--:--</span><span>IST</span>
             </div>
-            <div class="space-x-6 flex items-center">
-                <a href="mailto:kakkadumang08@gmail.com" class="flex items-center gap-1 hover:text-white transition"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> kakkadumang08@gmail.com</a>
-                <a href="tel:+919428879100" class="flex items-center gap-1 hover:text-white transition"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg> +91 9428879100</a>
-                
+            <div class="flex items-center justify-end gap-3 sm:gap-5">
+                <div class="flex items-center gap-2 sm:gap-3 whitespace-nowrap" aria-label="Choose website language">
+                    <button type="button" class="language-link active" data-lang="en">English</button>
+                    <span class="text-gray-500">|</span>
+                    <button type="button" class="language-link" data-lang="gu">ગુજરાતી</button>
+                    <span class="text-gray-500">|</span>
+                    <button type="button" class="language-link" data-lang="hi">हिन्दी</button>
+                </div>
+                <div class="hidden lg:flex items-center gap-5">
+                    <a href="mailto:kakkadumang08@gmail.com" class="flex items-center gap-1 hover:text-white transition">✉ kakkadumang08@gmail.com</a>
+                    <a href="tel:+919428879100" class="flex items-center gap-1 hover:text-white transition">☎ +91 9428879100</a>
+                </div>
             </div>
         </div>
+        <label for="siteLanguage" class="sr-only">Choose language</label>
+        <select id="siteLanguage" class="sr-only" aria-hidden="true" tabindex="-1">
+            <option value="en">English</option><option value="gu">ગુજરાતી</option><option value="hi">हिन्दी</option>
+        </select>
     </div>
 
     <!-- Main Header -->
@@ -300,9 +392,7 @@
 
             <!-- Identity -->
             <div class="header-identity flex items-center gap-4 lg:gap-6">
-                <div class="w-16 h-16 lg:w-20 lg:h-20 bg-suBlue text-white rounded-full flex items-center justify-center text-2xl lg:text-3xl font-bold border-4 border-suOrange shadow-md serif-heading">
-                    UK
-                </div>
+                <div class="umang-main-logo" role="img" aria-label="Umang Kakkad UK logo">UK</div>
                 <div class="min-w-0">
                     <h1 class="text-2xl lg:text-3xl font-bold text-suBlue uppercase tracking-wide">Umang Kakkad</h1>
                     <p class="text-sm lg:text-base font-semibold text-gray-600 tracking-wider">Software Developer & MCA Student</p>
@@ -310,8 +400,11 @@
                 </div>
             </div>
 
-            <!-- Search + Profile: visible on desktop, tablet and mobile -->
+            <!-- Ask AI + Search + Profile: Ask AI is visible in the TOP header -->
             <div class="header-tools">
+                <button id="umang-ai-launcher" type="button" aria-label="Open Ask AI assistant" aria-controls="umang-ai-panel" aria-expanded="false">
+                    <span class="ai-launcher-icon uk-ai-mark" aria-hidden="true">UK</span><span>Ask AI About Umang</span><span class="ai-status-dot" aria-hidden="true"></span>
+                </button>
                 <div class="header-search">
                     <input
                         type="text"
@@ -1309,5 +1402,308 @@
 })();
 </script>
 
+
+<script>
+/* Lightweight portfolio language switcher: English, Gujarati and Hindi.
+   This translates common navigation/UI labels locally; no API key is required. */
+(function () {
+    const selector = document.getElementById('siteLanguage');
+    const visibleSelector = document.getElementById('siteLanguageVisible');
+    const languageButtons = document.querySelectorAll('.language-link');
+    if (!selector) return;
+
+    const translations = {
+        gu: {
+            'Welcome to Official Portfolio': 'સત્તાવાર પોર્ટફોલિયોમાં આપનું સ્વાગત છે',
+            'Software Developer & MCA Student': 'સોફ્ટવેર ડેવલપર અને MCA વિદ્યાર્થી',
+            'GLS University, Ahmedabad (Gujarat)': 'GLS યુનિવર્સિટી, અમદાવાદ (ગુજરાત)',
+            'Search portfolio...': 'પોર્ટફોલિયો શોધો...',
+            'Home': 'હોમ',
+            'About': 'પરિચય',
+            'Academics': 'શૈક્ષણિક માહિતી',
+            'Skills': 'કૌશલ્યો',
+            'Experience': 'અનુભવ',
+            'Projects': 'પ્રોજેક્ટ્સ',
+            'Certificates': 'પ્રમાણપત્રો',
+            'Events': 'કાર્યક્રમો',
+            'Feedback': 'પ્રતિસાદ',
+            'Contact': 'સંપર્ક',
+            'Menu': 'મેનુ',
+            'Welcome to the Official Portfolio of': 'સત્તાવાર પોર્ટફોલિયોમાં આપનું સ્વાગત છે',
+            'Building reliable desktop and web applications with modern technologies.': 'આધુનિક ટેક્નોલોજીથી વિશ્વસનીય ડેસ્કટોપ અને વેબ એપ્લિકેશન્સ બનાવું છું.',
+            'Academic Projects': 'શૈક્ષણિક પ્રોજેક્ટ્સ',
+            'Contact Me': 'મારો સંપર્ક કરો',
+            'LATEST UPDATES': 'નવીનતમ અપડેટ્સ',
+            'Portfolio Key Highlights': 'પોર્ટફોલિયોની મુખ્ય વિશેષતાઓ',
+            'Developer & Academic Highlights': 'ડેવલપર અને શૈક્ષણિક વિશેષતાઓ',
+            'Years Academic Journey': 'શૈક્ષણિક સફરનાં વર્ષો',
+            'Software & Web Projects': 'સોફ્ટવેર અને વેબ પ્રોજેક્ટ્સ',
+            'Technical Competencies': 'ટેક્નિકલ કૌશલ્યો',
+            'Verified Certifications': 'પ્રમાણિત સર્ટિફિકેટ્સ',
+            'Industry Internship': 'ઔદ્યોગિક ઇન્ટર્નશિપ',
+            'Academic Industrial Visit': 'શૈક્ષણિક ઔદ્યોગિક મુલાકાત',
+            'Events & Public Speeches': 'કાર્યક્રમો અને જાહેર ભાષણો',
+            'Academic Honour Rank': 'શૈક્ષણિક સન્માન રેન્ક',
+            'Programming Programs': 'પ્રોગ્રામિંગ પ્રોગ્રામ્સ',
+            'Click to request code by email': 'ઈમેલ દ્વારા કોડની વિનંતી કરો',
+            'About the Developer': 'ડેવલપર વિશે',
+            'Academic Journey': 'શૈક્ષણિક સફર',
+            'Technical Competencies': 'ટેક્નિકલ કૌશલ્યો',
+            'Professional & Academic Exposure': 'વ્યાવસાયિક અને શૈક્ષણિક અનુભવ',
+            'Events & Gallery': 'કાર્યક્રમો અને ગેલેરી',
+            'Contact Me': 'મારો સંપર્ક કરો'
+        },
+        hi: {
+            'Welcome to Official Portfolio': 'आधिकारिक पोर्टफोलियो में आपका स्वागत है',
+            'Software Developer & MCA Student': 'सॉफ्टवेयर डेवलपर और MCA विद्यार्थी',
+            'GLS University, Ahmedabad (Gujarat)': 'GLS यूनिवर्सिटी, अहमदाबाद (गुजरात)',
+            'Search portfolio...': 'पोर्टफोलियो खोजें...',
+            'Home': 'होम',
+            'About': 'परिचय',
+            'Academics': 'शिक्षा',
+            'Skills': 'कौशल',
+            'Experience': 'अनुभव',
+            'Projects': 'प्रोजेक्ट्स',
+            'Certificates': 'प्रमाणपत्र',
+            'Events': 'कार्यक्रम',
+            'Feedback': 'प्रतिक्रिया',
+            'Contact': 'संपर्क',
+            'Menu': 'मेन्यू',
+            'Welcome to the Official Portfolio of': 'आधिकारिक पोर्टफोलियो में आपका स्वागत है',
+            'Building reliable desktop and web applications with modern technologies.': 'आधुनिक तकनीकों के साथ विश्वसनीय डेस्कटॉप और वेब एप्लिकेशन बनाता हूँ।',
+            'Academic Projects': 'शैक्षणिक प्रोजेक्ट्स',
+            'Contact Me': 'संपर्क करें',
+            'LATEST UPDATES': 'नवीनतम अपडेट',
+            'Portfolio Key Highlights': 'पोर्टफोलियो की मुख्य विशेषताएँ',
+            'Developer & Academic Highlights': 'डेवलपर और शैक्षणिक उपलब्धियाँ',
+            'Years Academic Journey': 'शैक्षणिक यात्रा के वर्ष',
+            'Software & Web Projects': 'सॉफ्टवेयर और वेब प्रोजेक्ट्स',
+            'Technical Competencies': 'तकनीकी कौशल',
+            'Verified Certifications': 'सत्यापित प्रमाणपत्र',
+            'Industry Internship': 'इंडस्ट्री इंटर्नशिप',
+            'Academic Industrial Visit': 'शैक्षणिक औद्योगिक भ्रमण',
+            'Events & Public Speeches': 'कार्यक्रम और सार्वजनिक भाषण',
+            'Academic Honour Rank': 'शैक्षणिक सम्मान रैंक',
+            'Programming Programs': 'प्रोग्रामिंग प्रोग्राम',
+            'Click to request code by email': 'ईमेल से कोड का अनुरोध करें',
+            'About the Developer': 'डेवलपर के बारे में',
+            'Academic Journey': 'शैक्षणिक यात्रा',
+            'Professional & Academic Exposure': 'व्यावसायिक और शैक्षणिक अनुभव',
+            'Events & Gallery': 'कार्यक्रम और गैलरी'
+        }
+    };
+
+    const originalText = new WeakMap();
+    function translateTextNodes(root) {
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+            acceptNode(node) {
+                if (!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+                const parent = node.parentElement;
+                if (!parent || parent.closest('script, style, select, option, textarea, input')) return NodeFilter.FILTER_REJECT;
+                return NodeFilter.FILTER_ACCEPT;
+            }
+        });
+        const nodes = [];
+        while (walker.nextNode()) nodes.push(walker.currentNode);
+        const lang = selector.value;
+        nodes.forEach(node => {
+            if (!originalText.has(node)) originalText.set(node, node.nodeValue);
+            const original = originalText.get(node);
+            const trimmed = original.trim();
+            const translated = lang === 'en' ? trimmed : ((translations[lang] || {})[trimmed] || trimmed);
+            node.nodeValue = original.replace(trimmed, translated);
+        });
+
+        document.querySelectorAll('[placeholder]').forEach(el => {
+            if (!el.dataset.originalPlaceholder) el.dataset.originalPlaceholder = el.getAttribute('placeholder');
+            const original = el.dataset.originalPlaceholder;
+            el.setAttribute('placeholder', lang === 'en' ? original : ((translations[lang] || {})[original] || original));
+        });
+        document.documentElement.lang = lang === 'gu' ? 'gu' : lang;
+    }
+
+    function setLanguage(lang) {
+        selector.value = lang;
+        if (visibleSelector) visibleSelector.value = lang;
+        languageButtons.forEach(button => {
+            const active = button.dataset.lang === lang;
+            button.classList.toggle('active', active);
+            button.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
+        translateTextNodes(document.body);
+        try { localStorage.setItem('umangPortfolioLanguage', lang); } catch (e) {}
+    }
+    languageButtons.forEach(button => button.addEventListener('click', () => setLanguage(button.dataset.lang)));
+    selector.addEventListener('change', () => setLanguage(selector.value));
+    if (visibleSelector) visibleSelector.addEventListener('change', () => setLanguage(visibleSelector.value));
+    try {
+        const savedLanguage = localStorage.getItem('umangPortfolioLanguage');
+        if (savedLanguage && ['en', 'gu', 'hi'].includes(savedLanguage)) setLanguage(savedLanguage);
+    } catch (e) {}
+    // Translate labels rendered dynamically by existing page scripts too.
+    const observer = new MutationObserver(records => {
+        if (selector.value === 'en') return;
+        records.forEach(record => record.addedNodes.forEach(node => {
+            if (node.nodeType === Node.ELEMENT_NODE) translateTextNodes(node);
+            else if (node.nodeType === Node.TEXT_NODE && node.parentElement) translateTextNodes(node.parentElement);
+        }));
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+})();
+</script>
+
+
+
+<section id="umang-ai-panel" role="dialog" aria-modal="false" aria-label="Ask AI About Umang">
+  <header class="umang-ai-head">
+    <div class="umang-ai-brand"><span class="umang-ai-logo" aria-hidden="true">UK</span><span>Umang AI Assistant</span></div>
+    <div class="umang-ai-head-actions"><button class="umang-ai-icon-btn" id="umang-ai-minimize" type="button" aria-label="Minimize assistant">−</button><button class="umang-ai-icon-btn" id="umang-ai-close" type="button" aria-label="Close assistant">×</button></div>
+  </header>
+  <div class="umang-ai-welcome" id="umang-ai-welcome">
+    <div class="umang-ai-welcome-badge" aria-label="Umang Kakkad logo">UK</div>
+    <h3>How can I help you today?</h3>
+    <p>Ask questions about Umang Kakkad and any information published on this portfolio, including education, skills, projects, certificates, internship, events, programming practice and contact details. I answer only portfolio-related questions.</p>
+    <div class="umang-ai-prompts">
+      <button class="umang-ai-prompt" type="button">Summarize Umang’s complete portfolio</button>
+      <button class="umang-ai-prompt" type="button">What projects and technologies are listed?</button>
+      <button class="umang-ai-prompt" type="button">Tell me about his education and experience</button>
+      <button class="umang-ai-prompt" type="button">How can I contact Umang?</button>
+    </div>
+    <button class="umang-ai-back" id="umang-ai-back" type="button">← Back to suggestions</button>
+  </div>
+  <div id="umang-ai-messages" aria-live="polite" aria-label="Chat messages"></div>
+  <div class="umang-ai-input-wrap">
+    <div class="flex items-center justify-between gap-2 mb-2">
+      <label for="umang-ai-voice-language" class="text-xs font-semibold text-gray-600">Voice language</label>
+      <select id="umang-ai-voice-language" class="border border-gray-200 rounded-lg px-2 py-1 text-xs bg-white text-gray-700" aria-label="Choose voice language">
+        <option value="en-IN">English</option><option value="hi-IN">हिन्दी</option><option value="gu-IN">ગુજરાતી</option>
+      </select>
+    </div>
+    <div class="umang-ai-input-box"><textarea id="umang-ai-input" rows="1" placeholder="Ask about Umang or any portfolio section…" aria-label="Ask a question"></textarea><button id="umang-ai-mic" type="button" title="Speak your question" aria-label="Speak your question" style="width:38px;height:38px;border:1px solid #dbe2ee;border-radius:50%;background:#f3f6fc;color:#003399;font-size:17px;cursor:pointer;flex-shrink:0">🎙</button><button id="umang-ai-send" type="button" aria-label="Send message">↑</button></div>
+    <div class="flex justify-end mt-2"><button id="umang-ai-read-last" type="button" class="text-xs font-semibold text-blue-800 hover:underline">🔊 Read last answer aloud</button></div>
+  </div>
+  <div class="umang-ai-footnote">Answers are limited to Umang Kakkad and information available on this portfolio.</div>
+</section>
+<script>
+(function(){
+  const launcher=document.getElementById('umang-ai-launcher');
+  const panel=document.getElementById('umang-ai-panel');
+  const closeBtn=document.getElementById('umang-ai-close');
+  const minimizeBtn=document.getElementById('umang-ai-minimize');
+  const welcome=document.getElementById('umang-ai-welcome');
+  const messages=document.getElementById('umang-ai-messages');
+  const input=document.getElementById('umang-ai-input');
+  const send=document.getElementById('umang-ai-send');
+  const mic=document.getElementById('umang-ai-mic');
+  const readLast=document.getElementById('umang-ai-read-last');
+  const voiceLanguage=document.getElementById('umang-ai-voice-language');
+  let lastBotAnswer='';
+  const back=document.getElementById('umang-ai-back');
+  if(!launcher||!panel)return;
+
+  // Set this to your deployed backend endpoint to enable real generative AI.
+  // Example: https://your-backend.example.com/api/chat
+  // Never put an AI provider API key in this HTML file.
+  const AI_API_URL = '';
+
+  function openChat(){panel.classList.add('open');launcher.setAttribute('aria-expanded','true');setTimeout(()=>input.focus(),100)}
+  function closeChat(){panel.classList.remove('open');launcher.setAttribute('aria-expanded','false');launcher.focus()}
+  launcher.addEventListener('click',()=>panel.classList.contains('open')?closeChat():openChat());
+  closeBtn.addEventListener('click',closeChat);minimizeBtn.addEventListener('click',closeChat);
+  function showConversation(){welcome.style.display='none';messages.style.display='block';back.style.display='inline-block'}
+  function addMessage(text,who){showConversation();const el=document.createElement('div');el.className='umang-ai-message '+who;el.textContent=text;messages.appendChild(el);messages.scrollTop=messages.scrollHeight;if(who==='bot')lastBotAnswer=text;return el}
+  back.addEventListener('click',()=>{messages.style.display='none';welcome.style.display='block';back.style.display='none';input.focus()});
+
+  // Read the rendered page dynamically so new sections/content are included automatically.
+  function getPortfolioText(){
+    const clone=document.body.cloneNode(true);
+    clone.querySelectorAll('script,style,button,textarea,input,select,nav,footer,#umang-ai-panel,#umang-ai-launcher').forEach(el=>el.remove());
+    return (clone.innerText||clone.textContent||'').replace(/\s+/g,' ').trim().slice(0,24000);
+  }
+  const portfolioText=getPortfolioText();
+  const stopWords=new Set(['what','where','when','which','who','whom','does','have','has','tell','about','from','with','that','this','your','you','his','her','are','the','and','for','can','could','would','please','into','some','more','much','many','how','why','was','were','will','than','then','them','they','their','there','show','give','know','want','need','does','website','portfolio']);
+  function localPortfolioAnswer(q){
+    const normalized=q.toLowerCase();
+    if(/\b(hi|hello|hey|good morning|good afternoon|good evening)\b/.test(normalized)) return 'Hello! I can help you explore Umang Kakkad’s portfolio. Ask about his education, skills, projects, certificates, internship, events, programming practice, or contact details.';
+    if(/\b(thank you|thanks)\b/.test(normalized)) return 'You’re welcome! Feel free to ask another question about Umang’s portfolio.';
+    // Keep this assistant strictly focused on Umang and content published on this portfolio.
+    const portfolioIntent=/\b(umang|kakkad|portfolio|his|him|he|your|you|education|academic|degree|college|university|skill|technology|technologies|project|projects|certificate|certification|internship|experience|event|events|speech|achievement|rank|programming programs|programs completed|contact|email|phone|resume|profile|about|website|programming practice|weather app|atm module|ai workspace|inflibnet|anantax|gls|bca|mca|python skills|java skills|c sharp|c#|c\+\+|javascript skills|sql skills)\b/.test(normalized);
+    const generalOnly=/^(what is|what are|explain|define|teach me|how do i learn|how to learn|tell me a joke|weather|latest news|who won|capital of)\b/.test(normalized.trim());
+    if(generalOnly || !portfolioIntent) return 'I’m Umang Kakkad’s portfolio assistant. I can answer only questions about Umang and information published on this website. Please ask about his education, skills, projects, certificates, internship, events, programming practice, achievements, or contact details.';
+    const terms=normalized.replace(/[^a-z0-9+#. ]/g,' ').split(/\s+/).filter(w=>w.length>2&&!stopWords.has(w));
+    const blocks=[...document.querySelectorAll('main section, body > section, section[id], article, .academic-card')]
+      .filter(el=>!el.closest('#umang-ai-panel'))
+      .map(el=>({title:(el.querySelector('h1,h2,h3,h4')?.innerText||el.id||'Portfolio information').trim(),text:(el.innerText||'').replace(/\s+/g,' ').trim()}))
+      .filter(x=>x.text.length>35);
+    const scored=blocks.map(b=>{const hay=(b.title+' '+b.text).toLowerCase();let score=0;for(const t of terms){if(hay.includes(t))score+=hay.split(t).length-1;}return {...b,score}}).filter(b=>b.score>0).sort((a,b)=>b.score-a.score).slice(0,3);
+    if(scored.length){
+      const unique=[]; for(const b of scored){const excerpt=b.text.length>750?b.text.slice(0,750)+'…':b.text;if(!unique.includes(excerpt))unique.push(excerpt)}
+      return 'Here is the most relevant information I found on Umang’s portfolio:\n\n'+unique.join('\n\n')+'\n\nFor anything not shown on the website, you can contact Umang at kakkadumang08@gmail.com.';
+    }
+    if(/\b(weather|news|cricket|football|recipe|joke|translate this|general knowledge|capital of|stock price|today's date)\b/.test(normalized) || !terms.length){
+      return 'I’m Umang’s portfolio assistant, so I can answer only questions about Umang Kakkad and information published on this website. Please ask about his education, skills, projects, certificates, internship, events, programming practice, or contact details.';
+    }
+    return 'I couldn’t find that detail in Umang’s portfolio. I only answer questions supported by the information on this website. Try asking about his education, skills, projects, certificates, internship, events, programming programs, or contact details.';
+  }
+  async function getAnswer(q){
+    if(AI_API_URL){
+      const response=await fetch(AI_API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:q,portfolio:getPortfolioText(),page:location.href})});
+      if(!response.ok)throw new Error('AI service returned '+response.status);
+      const data=await response.json();
+      if(data.answer)return data.answer;
+      throw new Error('AI response did not include an answer');
+    }
+    return localPortfolioAnswer(q);
+  }
+  async function ask(q){
+    q=(q||'').trim();if(!q)return;
+    addMessage(q,'user');input.value='';input.style.height='auto';send.disabled=true;
+    const typing=addMessage(AI_API_URL?'Thinking…':'Checking Umang’s portfolio…','bot');
+    try{typing.textContent=await getAnswer(q);lastBotAnswer=typing.textContent}
+    catch(error){typing.textContent='Sorry, I could not reach the AI service. Please check the backend configuration or try again. Portfolio contact: kakkadumang08@gmail.com.';lastBotAnswer=typing.textContent}
+    messages.scrollTop=messages.scrollHeight;send.disabled=false;input.focus();
+  }
+  send.addEventListener('click',()=>ask(input.value));
+  if(mic){
+    const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+    if(!SpeechRecognition){mic.title='Voice input is not supported in this browser. Try Chrome or Edge.';mic.addEventListener('click',()=>addMessage('Voice input is not supported in this browser. Please use Chrome or Edge, or type your question.','bot'));}
+    else mic.addEventListener('click',()=>{const recognition=new SpeechRecognition();recognition.lang=voiceLanguage?.value||'en-IN';recognition.interimResults=false;recognition.maxAlternatives=1;mic.textContent='🔴';try{recognition.start()}catch(e){mic.textContent='🎙'}recognition.onresult=e=>{input.value=e.results[0][0].transcript;ask(input.value)};recognition.onerror=()=>{mic.textContent='🎙';addMessage('I could not hear that clearly. Please try again or type your question.','bot')};recognition.onend=()=>{mic.textContent='🎙'};});
+  }
+  function speakLastAnswer(){if(!lastBotAnswer)return; if(!('speechSynthesis' in window)){addMessage('Voice playback is not supported in this browser.','bot');return;}window.speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(lastBotAnswer);utterance.lang=voiceLanguage?.value||'en-IN';window.speechSynthesis.speak(utterance)}
+  if(readLast)readLast.addEventListener('click',speakLastAnswer);
+  input.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();ask(input.value)}});
+  input.addEventListener('input',()=>{input.style.height='auto';input.style.height=Math.min(input.scrollHeight,100)+'px'});
+  document.querySelectorAll('.umang-ai-prompt').forEach(btn=>btn.addEventListener('click',()=>ask(btn.textContent)));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&panel.classList.contains('open'))closeChat()});
+})();
+</script>
+
+
+<script>
+(function () {
+  const dateEl = document.getElementById('portfolio-current-date');
+  const timeEl = document.getElementById('portfolio-current-time');
+  if (!dateEl || !timeEl) return;
+  function updatePortfolioClock() {
+    const now = new Date();
+    dateEl.textContent = new Intl.DateTimeFormat('en-IN', {
+      timeZone: 'Asia/Kolkata', day: '2-digit', month: 'short', year: 'numeric'
+    }).format(now);
+    timeEl.textContent = new Intl.DateTimeFormat('en-IN', {
+      timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true
+    }).format(now);
+  }
+  updatePortfolioClock();
+  setInterval(updatePortfolioClock, 1000);
+})();
+</script>
 </body>
 </html>
+<style>/* Final AI assistant logo refresh: match the main UK brand mark */
+.umang-ai-panel .umang-ai-logo,.umang-ai-brand .umang-ai-logo{background:#003399!important;color:#fff!important;border:3px solid #ff9800!important;border-radius:50%!important;font-family:Georgia,serif!important;font-weight:700!important;}
+.umang-ai-panel .umang-ai-welcome-badge{background:#003399!important;color:#fff!important;border:4px solid #ff9800!important;border-radius:50%!important;font-family:Georgia,serif!important;font-weight:700!important;}
+
+        .portfolio-live-datetime { color:#f8fafc; font-size:11px; font-weight:500; }
+        @media(max-width:700px) { .portfolio-live-datetime { font-size:10px; gap:4px; } }
+        @media(max-width:480px) { .portfolio-live-datetime { font-size:9px; gap:3px; } .portfolio-topbar { padding-left:7px; padding-right:7px; } }
+</style>
