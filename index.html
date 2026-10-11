@@ -310,11 +310,22 @@
         ::-webkit-scrollbar-thumb { background: #003399; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #002266; }
 
-        .portfolio-topbar { min-height: 34px; }
-        .language-link { color: #d1d5db; background: transparent; border: 0; padding: 2px 0; cursor: pointer; font-weight: 500; transition: color .2s ease; }
-        .language-link:hover, .language-link.active { color: #fff; }
-        .language-link.active { font-weight: 700; text-decoration: underline; text-decoration-color: #FF9900; text-underline-offset: 4px; }
-        @media (max-width: 480px) { .portfolio-topbar { font-size: 11px; padding-left: 10px; padding-right: 10px; } }
+        .portfolio-topbar { min-height: 42px; }
+        .topbar-ai-slot { flex: 0 1 auto; min-width: 0; }
+        .portfolio-topbar .topbar-ai-slot #umang-ai-launcher { background:#fff; color:#102b70; }
+        .topbar-ai-slot #umang-ai-launcher { padding: 4px 10px 4px 5px; font-size: 11px; }
+        .topbar-ai-slot #umang-ai-launcher .ai-launcher-icon { width: 27px; height: 27px; font-size: 17px; }
+        .language-dropdown-wrap { flex: 0 0 auto; }
+        .language-dropdown { min-height: 30px; max-width: 145px; padding: 5px 25px 5px 9px; border: 1px solid #526174; border-radius: 7px; background: #1f2937; color: #fff; font: 600 12px Inter, sans-serif; cursor: pointer; outline: none; }
+        .language-dropdown:focus { border-color: #60a5fa; box-shadow: 0 0 0 2px rgba(96,165,250,.2); }
+        .language-dropdown option { background: #fff; color: #111827; }
+        @media (max-width: 480px) {
+            .portfolio-topbar { font-size: 11px; padding-left: 10px; padding-right: 10px; }
+            .language-dropdown { max-width: 118px; font-size: 11px; padding-left: 6px; padding-right: 18px; }
+            .portfolio-topbar > .max-w-7xl { gap: 6px; }
+            .topbar-ai-slot #umang-ai-launcher { gap: 5px; padding: 3px 7px 3px 4px; font-size: 10px; }
+            .topbar-ai-slot #umang-ai-launcher .ai-launcher-icon { width: 24px; height: 24px; font-size: 15px; }
+        }
     
 
 /* GTU-inspired Ask AI button placed in the TOP header beside search */
@@ -361,8 +372,8 @@
   .portfolio-topbar > .max-w-7xl { flex-wrap:wrap; align-items:flex-start; row-gap:8px; }
   .portfolio-live-datetime { min-width:0; }
   .portfolio-topbar > .max-w-7xl > div:last-child { flex-wrap:wrap; }
-  .mobile-topbar-contact { display:flex; flex-wrap:wrap; justify-content:center; gap:8px 18px; width:100%; margin:7px auto 0; padding-top:7px; border-top:1px solid rgba(255,255,255,.15); }
-  .mobile-topbar-contact a { display:inline-flex; align-items:center; gap:5px; min-width:0; color:#e5e7eb; font-size:12px; line-height:1.5; text-decoration:none; overflow-wrap:anywhere; }
+  .mobile-topbar-contact { display:flex; flex-direction:row; flex-wrap:nowrap !important; justify-content:flex-start; align-items:center; gap:8px; width:100%; margin:7px auto 0; padding-top:7px; border-top:1px solid rgba(255,255,255,.15); white-space:nowrap; overflow:hidden; }
+  .mobile-topbar-contact a { display:inline-flex; align-items:center; gap:4px; min-width:0; flex:0 1 auto; color:#e5e7eb; font-size:11px; line-height:1.5; text-decoration:none; white-space:nowrap; }
   .mobile-topbar-contact a:hover { color:#fff; }
 }
 @media (max-width: 480px) {
@@ -370,9 +381,37 @@
   .portfolio-topbar > .max-w-7xl { gap:7px; }
   .portfolio-live-datetime { font-size:10px!important; gap:3px!important; }
   .portfolio-topbar > .max-w-7xl > div:last-child { gap:8px!important; }
-  .mobile-topbar-contact { gap:5px 12px; }
-  .mobile-topbar-contact a { font-size:11px; }
-  .mobile-topbar-contact a span { overflow-wrap:anywhere; }
+  .mobile-topbar-contact {
+    display:flex !important;
+    flex-direction:row !important;
+    flex-wrap:nowrap !important;
+    align-items:center;
+    justify-content:flex-start;
+    gap:8px;
+    width:100%;
+    overflow:hidden;
+    white-space:nowrap;
+  }
+  .mobile-topbar-contact a {
+    display:inline-flex !important;
+    flex:1 1 0 !important;
+    min-width:0 !important;
+    max-width:50%;
+    align-items:center;
+    gap:3px;
+    font-size:clamp(7px, 2.35vw, 10px) !important;
+    line-height:1.25;
+    white-space:nowrap !important;
+    overflow:hidden;
+  }
+  .mobile-topbar-contact a span {
+    display:inline-block;
+    min-width:0;
+    overflow:hidden;
+    text-overflow:clip;
+    white-space:nowrap !important;
+    overflow-wrap:normal !important;
+  }
 }
 
 </style>
@@ -382,18 +421,19 @@
     <!-- GTU-inspired top utility bar with language links -->
     <div class="portfolio-topbar bg-gray-900 text-gray-300 text-xs py-2 px-4 relative z-50">
         <div class="max-w-7xl mx-auto flex justify-between items-center gap-3">
-            <div class="portfolio-live-datetime flex items-center gap-2 whitespace-nowrap" aria-label="Current date and time">
-                <span aria-hidden="true">📅</span><span id="portfolio-current-date">11 Oct 2026</span>
-                <span class="text-blue-300">|</span>
-                <span aria-hidden="true">🕒</span><span id="portfolio-current-time">--:--:--</span><span>IST</span>
+            <div class="topbar-ai-slot flex items-center" aria-label="Umang AI Assistant">
+                <button id="umang-ai-launcher" type="button" aria-label="Open Ask AI assistant" aria-controls="umang-ai-panel" aria-expanded="false">
+                    <span class="ai-launcher-icon uk-ai-mark" aria-hidden="true">UK</span><span>Ask AI About Umang</span><span class="ai-status-dot" aria-hidden="true"></span>
+                </button>
             </div>
             <div class="flex items-center justify-end gap-3 sm:gap-5">
-                <div class="flex items-center gap-2 sm:gap-3 whitespace-nowrap" aria-label="Choose website language">
-                    <button type="button" class="language-link active" data-lang="en">English</button>
-                    <span class="text-gray-500">|</span>
-                    <button type="button" class="language-link" data-lang="gu">ગુજરાતી</button>
-                    <span class="text-gray-500">|</span>
-                    <button type="button" class="language-link" data-lang="hi">हिन्दी</button>
+                <div class="language-dropdown-wrap" aria-label="Choose website language">
+                    <label for="siteLanguageVisible" class="sr-only">Choose website language</label>
+                    <select id="siteLanguageVisible" class="language-dropdown" aria-label="Choose website language">
+                        <option value="en">🌐 English</option>
+                        <option value="gu">🌐 ગુજરાતી</option>
+                        <option value="hi">🌐 हिन्दी</option>
+                    </select>
                 </div>
                 <div class="hidden lg:flex items-center gap-5">
                     <a href="mailto:kakkadumang08@gmail.com" class="flex items-center gap-1 hover:text-white transition">✉ kakkadumang08@gmail.com</a>
@@ -427,9 +467,6 @@
 
             <!-- Ask AI + Search + Profile: Ask AI is visible in the TOP header -->
             <div class="header-tools">
-                <button id="umang-ai-launcher" type="button" aria-label="Open Ask AI assistant" aria-controls="umang-ai-panel" aria-expanded="false">
-                    <span class="ai-launcher-icon uk-ai-mark" aria-hidden="true">UK</span><span>Ask AI About Umang</span><span class="ai-status-dot" aria-hidden="true"></span>
-                </button>
                 <div class="header-search">
                     <input
                         type="text"
@@ -1704,31 +1741,11 @@
 </script>
 
 
-<script>
-(function () {
-  const dateEl = document.getElementById('portfolio-current-date');
-  const timeEl = document.getElementById('portfolio-current-time');
-  if (!dateEl || !timeEl) return;
-  function updatePortfolioClock() {
-    const now = new Date();
-    dateEl.textContent = new Intl.DateTimeFormat('en-IN', {
-      timeZone: 'Asia/Kolkata', day: '2-digit', month: 'short', year: 'numeric'
-    }).format(now);
-    timeEl.textContent = new Intl.DateTimeFormat('en-IN', {
-      timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true
-    }).format(now);
-  }
-  updatePortfolioClock();
-  setInterval(updatePortfolioClock, 1000);
-})();
-</script>
 </body>
 </html>
 <style>/* Final AI assistant logo refresh: match the main UK brand mark */
 .umang-ai-panel .umang-ai-logo,.umang-ai-brand .umang-ai-logo{background:#003399!important;color:#fff!important;border:3px solid #ff9800!important;border-radius:50%!important;font-family:Georgia,serif!important;font-weight:700!important;}
 .umang-ai-panel .umang-ai-welcome-badge{background:#003399!important;color:#fff!important;border:4px solid #ff9800!important;border-radius:50%!important;font-family:Georgia,serif!important;font-weight:700!important;}
 
-        .portfolio-live-datetime { color:#f8fafc; font-size:11px; font-weight:500; }
-        @media(max-width:700px) { .portfolio-live-datetime { font-size:10px; gap:4px; } }
-        @media(max-width:480px) { .portfolio-live-datetime { font-size:9px; gap:3px; } .portfolio-topbar { padding-left:7px; padding-right:7px; } }
+        @media(max-width:480px) { .portfolio-topbar { padding-left:7px; padding-right:7px; } }
 </style>
