@@ -354,6 +354,27 @@
 .umang-ai-back{display:none;border:0;background:#f0f4fb;color:#24427c;border-radius:999px;padding:7px 11px;font-size:12px;cursor:pointer;margin-top:12px}
 @media(max-width:600px){.header-tools{gap:.4rem!important} #umang-ai-launcher{padding:6px 9px 6px 6px;font-size:11px;max-width:100%;}#umang-ai-launcher .ai-launcher-icon{width:28px;height:28px}#umang-ai-panel{right:8px;top:112px;bottom:auto;width:calc(100vw - 16px);height:min(76dvh,650px);border-radius:18px}.umang-ai-welcome{padding:18px 16px 10px}.umang-ai-welcome h3{font-size:20px}}
 
+
+/* Mobile responsive contact visibility: keep email and phone readable and tappable */
+.mobile-topbar-contact { display:none; }
+@media (max-width: 1023px) {
+  .portfolio-topbar > .max-w-7xl { flex-wrap:wrap; align-items:flex-start; row-gap:8px; }
+  .portfolio-live-datetime { min-width:0; }
+  .portfolio-topbar > .max-w-7xl > div:last-child { flex-wrap:wrap; }
+  .mobile-topbar-contact { display:flex; flex-wrap:wrap; justify-content:center; gap:8px 18px; width:100%; margin:7px auto 0; padding-top:7px; border-top:1px solid rgba(255,255,255,.15); }
+  .mobile-topbar-contact a { display:inline-flex; align-items:center; gap:5px; min-width:0; color:#e5e7eb; font-size:12px; line-height:1.5; text-decoration:none; overflow-wrap:anywhere; }
+  .mobile-topbar-contact a:hover { color:#fff; }
+}
+@media (max-width: 480px) {
+  .portfolio-topbar { padding-left:8px!important; padding-right:8px!important; }
+  .portfolio-topbar > .max-w-7xl { gap:7px; }
+  .portfolio-live-datetime { font-size:10px!important; gap:3px!important; }
+  .portfolio-topbar > .max-w-7xl > div:last-child { gap:8px!important; }
+  .mobile-topbar-contact { gap:5px 12px; }
+  .mobile-topbar-contact a { font-size:11px; }
+  .mobile-topbar-contact a span { overflow-wrap:anywhere; }
+}
+
 </style>
 </head>
 <body class="text-gray-800 antialiased relative">
@@ -379,6 +400,10 @@
                     <a href="tel:+919428879100" class="flex items-center gap-1 hover:text-white transition">☎ +91 9428879100</a>
                 </div>
             </div>
+        </div>
+        <div class="mobile-topbar-contact" aria-label="Contact Umang">
+            <a href="mailto:kakkadumang08@gmail.com" aria-label="Email Umang">✉ <span>kakkadumang08@gmail.com</span></a>
+            <a href="tel:+919428879100" aria-label="Call Umang">☎ <span>+91 9428879100</span></a>
         </div>
         <label for="siteLanguage" class="sr-only">Choose language</label>
         <select id="siteLanguage" class="sr-only" aria-hidden="true" tabindex="-1">
