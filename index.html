@@ -276,6 +276,49 @@
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #003399; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #002266; }
+    
+
+        /* Ask AI assistant widget — responsive desktop and mobile */
+        /* GTU Sarthi-inspired floating portfolio assistant */
+#umang-ai-launcher{position:fixed;right:24px;bottom:24px;z-index:9998;display:flex;align-items:center;gap:10px;border:0;border-radius:999px;padding:10px 14px 10px 10px;background:#fff;color:#102b70;box-shadow:0 8px 28px rgba(10,30,80,.22);font:600 14px Inter,sans-serif;cursor:pointer;transition:transform .2s,box-shadow .2s}
+#umang-ai-launcher:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(10,30,80,.28)}
+#umang-ai-launcher .ai-launcher-icon{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#003399;color:#fff;border:2px solid #ff9900;font-size:20px}
+#umang-ai-launcher .ai-status-dot{position:absolute;right:8px;top:7px;width:10px;height:10px;background:#16a34a;border:2px solid white;border-radius:50%}
+#umang-ai-panel{position:fixed;right:24px;bottom:88px;z-index:9999;width:min(420px,calc(100vw - 28px));height:min(650px,calc(100dvh - 120px));background:#fff;border:1px solid #dbe2ee;border-radius:22px;box-shadow:0 22px 70px rgba(12,25,55,.28);display:none;overflow:hidden;color:#1b2234;font-family:Inter,sans-serif}
+#umang-ai-panel.open{display:flex;flex-direction:column;animation:umangAiIn .18s ease-out}
+@keyframes umangAiIn{from{opacity:0;transform:translateY(8px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+.umang-ai-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;background:#fff;border-bottom:1px solid #edf0f5}
+.umang-ai-brand{display:flex;align-items:center;gap:10px;font-weight:750;color:#153675;font-size:17px}
+.umang-ai-logo{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#eef4ff;color:#003399;border:1px solid #d4e2ff;font-size:19px}
+.umang-ai-head-actions{display:flex;gap:6px}
+.umang-ai-icon-btn{border:0;background:transparent;color:#4b5563;width:34px;height:34px;border-radius:8px;font-size:21px;cursor:pointer}
+.umang-ai-icon-btn:hover{background:#f1f5f9}
+.umang-ai-welcome{padding:22px 20px 12px;overflow:auto}
+.umang-ai-welcome-badge{width:68px;height:68px;border-radius:20px;display:grid;place-items:center;background:#eff5ff;color:#003399;font-size:34px;margin-bottom:18px}
+.umang-ai-welcome h3{font-size:22px;line-height:1.3;font-weight:750;color:#171d31;margin:0 0 10px}
+.umang-ai-welcome p{font-size:14px;line-height:1.65;color:#667085;margin:0}
+.umang-ai-prompts{display:flex;flex-wrap:wrap;gap:8px;margin-top:17px}
+.umang-ai-prompt{border:1px solid #dbe5f5;background:#fff;color:#23427e;border-radius:999px;padding:8px 11px;font-size:12px;font-weight:600;cursor:pointer}
+.umang-ai-prompt:hover{background:#eff5ff;border-color:#9eb9ee}
+#umang-ai-messages{display:none;flex:1;overflow-y:auto;padding:16px;background:#f8faff}
+.umang-ai-message{max-width:90%;white-space:pre-wrap;overflow-wrap:anywhere;padding:11px 13px;border-radius:14px;margin:0 0 11px;font-size:13px;line-height:1.55}
+.umang-ai-message.bot{background:#fff;border:1px solid #e5eaf2;color:#30394d;border-top-left-radius:5px}
+.umang-ai-message.user{background:#003399;color:#fff;margin-left:auto;border-top-right-radius:5px}
+.umang-ai-input-wrap{padding:12px 14px 8px;border-top:1px solid #edf0f5;background:#fff}
+.umang-ai-input-box{display:flex;align-items:center;gap:8px;border:2px solid #d4d8e4;border-radius:18px;padding:7px 8px 7px 13px;transition:border-color .2s}
+.umang-ai-input-box:focus-within{border-color:#003399}
+#umang-ai-input{flex:1;min-width:0;resize:none;border:0;outline:0;font:14px Inter,sans-serif;color:#20283b;background:transparent;max-height:100px;padding:7px 0}
+#umang-ai-send{width:38px;height:38px;border:0;border-radius:50%;background:#003399;color:#fff;font-size:19px;cursor:pointer;flex-shrink:0}
+#umang-ai-send:hover{background:#002266}
+#umang-ai-send:disabled{opacity:.45;cursor:not-allowed}
+#umang-ai-mic,#umang-ai-stopvoice{width:38px;height:38px;border:1px solid #d9e2f2;border-radius:50%;background:#f5f8ff;color:#123b91;font-size:17px;cursor:pointer;flex-shrink:0}
+#umang-ai-mic.listening{background:#fee2e2;color:#b91c1c;border-color:#fca5a5;animation:umangMicPulse 1s infinite}
+#umang-ai-mic:disabled{opacity:.5;cursor:not-allowed}
+@keyframes umangMicPulse{50%{box-shadow:0 0 0 5px rgba(220,38,38,.12)}}
+.umang-ai-voice-status{font-size:11px;color:#64748b;padding:0 4px 5px;min-height:15px}
+.umang-ai-footnote{text-align:center;font-size:10px;line-height:1.5;color:#8991a2;padding:6px 12px 10px;background:#fff}
+.umang-ai-back{display:none;border:0;background:#f0f4fb;color:#24427c;border-radius:999px;padding:7px 11px;font-size:12px;cursor:pointer;margin-top:12px}
+@media(max-width:600px){#umang-ai-mic,#umang-ai-stopvoice,#umang-ai-send{width:34px;height:34px}#umang-ai-launcher{right:12px;bottom:14px;padding:8px 12px 8px 8px;font-size:13px}#umang-ai-launcher .ai-launcher-icon{width:38px;height:38px}#umang-ai-panel{right:8px;bottom:72px;width:calc(100vw - 16px);height:min(76dvh,650px);border-radius:18px}.umang-ai-welcome{padding:18px 16px 10px}.umang-ai-welcome h3{font-size:20px}}
     </style>
 </head>
 <body class="text-gray-800 antialiased relative">
@@ -1308,5 +1351,163 @@
     }
 })();
 </script>
+
+
+<!-- Floating Umang AI Assistant voice assistant -->
+<button id="umang-ai-launcher" type="button" aria-label="Open Umang AI Assistant assistant" aria-controls="umang-ai-panel" aria-expanded="false">
+  <span class="ai-launcher-icon" aria-hidden="true">✦</span><span>Umang AI Assistant</span><span class="ai-status-dot" aria-hidden="true"></span>
+</button>
+<section id="umang-ai-panel" role="dialog" aria-modal="false" aria-label="Umang AI Assistant">
+  <header class="umang-ai-head">
+    <div class="umang-ai-brand"><span class="umang-ai-logo" aria-hidden="true">✦</span><span>Umang AI Assistant</span></div>
+    <div class="umang-ai-head-actions"><button class="umang-ai-icon-btn" id="umang-ai-minimize" type="button" aria-label="Minimize assistant">−</button><button class="umang-ai-icon-btn" id="umang-ai-close" type="button" aria-label="Close assistant">×</button></div>
+  </header>
+  <div class="umang-ai-welcome" id="umang-ai-welcome">
+    <div class="umang-ai-welcome-badge" aria-hidden="true">✦</div>
+    <h3>How can I help you today?</h3>
+    <p>Explore Umang Kakkad’s complete portfolio or ask a general question. With the secure AI service connected, I can generate answers beyond the website too.</p>
+    <div class="umang-ai-prompts">
+      <button class="umang-ai-prompt" type="button">Summarize Umang’s complete portfolio</button>
+      <button class="umang-ai-prompt" type="button">What projects and technologies are listed?</button>
+      <button class="umang-ai-prompt" type="button">Tell me about his education and experience</button>
+      <button class="umang-ai-prompt" type="button">Explain artificial intelligence in simple words</button>
+    </div>
+    <button class="umang-ai-back" id="umang-ai-back" type="button">← Back to suggestions</button>
+  </div>
+  <div id="umang-ai-messages" aria-live="polite" aria-label="Chat messages"></div>
+  <div class="umang-ai-input-wrap">
+    <div class="umang-ai-input-box"><textarea id="umang-ai-input" rows="1" placeholder="Umang AI Assistant about the portfolio…" aria-label="Ask a question"></textarea><button id="umang-ai-mic" type="button" aria-label="Speak your question" title="Speak your question">🎙</button><button id="umang-ai-stopvoice" type="button" aria-label="Stop voice playback" title="Stop speaking">◼</button><button id="umang-ai-send" type="button" aria-label="Send message">↑</button></div><div class="umang-ai-voice-status" id="umang-ai-voice-status" aria-live="polite">Tap 🎙 to ask by voice. Replies can be read aloud.</div>
+  </div>
+  <div class="umang-ai-footnote">Portfolio search is available now. General AI-generated answers need the secure AI service to be connected.</div>
+</section>
+
+<script>
+(function(){
+  const launcher=document.getElementById('umang-ai-launcher');
+  const panel=document.getElementById('umang-ai-panel');
+  const closeBtn=document.getElementById('umang-ai-close');
+  const minimizeBtn=document.getElementById('umang-ai-minimize');
+  const welcome=document.getElementById('umang-ai-welcome');
+  const messages=document.getElementById('umang-ai-messages');
+  const input=document.getElementById('umang-ai-input');
+  const send=document.getElementById('umang-ai-send');
+  const mic=document.getElementById('umang-ai-mic');
+  const stopVoice=document.getElementById('umang-ai-stopvoice');
+  const voiceStatus=document.getElementById('umang-ai-voice-status');
+  const back=document.getElementById('umang-ai-back');
+  if(!launcher||!panel)return;
+
+  // Set this to your deployed backend endpoint to enable real generative AI.
+  // Example: https://your-backend.example.com/api/chat
+  // Never put an AI provider API key in this HTML file.
+  const AI_API_URL = '';
+
+  // Voice input uses the browser Speech Recognition API (best supported in Chrome/Edge).
+  const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+  let recognition=null, listening=false;
+  if(!SpeechRecognition){
+    mic.title='Voice input is not supported by this browser. Try Chrome or Edge.';
+    mic.setAttribute('aria-label','Voice input unavailable');
+  } else {
+    recognition=new SpeechRecognition();
+    recognition.continuous=false;
+    recognition.interimResults=true;
+    recognition.lang='en-IN';
+    recognition.onstart=()=>{listening=true;mic.classList.add('listening');mic.textContent='■';voiceStatus.textContent='Listening… speak now.'};
+    recognition.onresult=(event)=>{
+      let finalText='';
+      for(let i=event.resultIndex;i<event.results.length;i++) finalText+=event.results[i][0].transcript;
+      input.value=finalText;
+      if(event.results[event.results.length-1].isFinal){voiceStatus.textContent='Voice captured. Sending…';setTimeout(()=>{if(input.value.trim())send.click()},250)}
+    };
+    recognition.onerror=(event)=>{voiceStatus.textContent=event.error==='not-allowed'?'Microphone permission denied. Allow microphone access and try again.':'Could not hear that clearly. Tap the microphone and try again.'};
+    recognition.onend=()=>{listening=false;mic.classList.remove('listening');mic.textContent='🎙';if(voiceStatus.textContent==='Listening… speak now.')voiceStatus.textContent='Tap 🎙 to ask by voice.'};
+  }
+  mic.addEventListener('click',()=>{
+    if(!recognition){voiceStatus.textContent='Voice input needs a supported browser such as Chrome or Edge.';return}
+    if(listening){recognition.stop();return}
+    try{recognition.lang=/[ગુજરાતી]/.test(input.value)?'gu-IN':'en-IN';recognition.start()}catch(e){voiceStatus.textContent='Voice input is busy. Please try again.'}
+  });
+  function speakReply(text){
+    if(!('speechSynthesis' in window)||!text)return;
+    window.speechSynthesis.cancel();
+    const utterance=new SpeechSynthesisUtterance(text);
+    utterance.lang=/[અ-૿]/.test(text)?'gu-IN':(/[ऀ-ॿ]/.test(text)?'hi-IN':'en-IN');
+    const voices=window.speechSynthesis.getVoices();
+    const prefix=utterance.lang.split('-')[0];
+    const chosen=voices.find(v=>v.lang.toLowerCase().startsWith(prefix));
+    if(chosen)utterance.voice=chosen;
+    utterance.rate=1;utterance.pitch=1;
+    utterance.onstart=()=>{voiceStatus.textContent='Reading the reply aloud…'};
+    utterance.onend=()=>{voiceStatus.textContent='Tap 🎙 to ask by voice. Tap ◼ to stop playback.'};
+    window.speechSynthesis.speak(utterance);
+  }
+  stopVoice.addEventListener('click',()=>{if('speechSynthesis' in window)window.speechSynthesis.cancel();if(recognition&&listening)recognition.stop();voiceStatus.textContent='Voice playback stopped.'});
+    function openChat(){panel.classList.add('open');launcher.setAttribute('aria-expanded','true');setTimeout(()=>input.focus(),100)}
+  function closeChat(){panel.classList.remove('open');launcher.setAttribute('aria-expanded','false');launcher.focus()}
+  launcher.addEventListener('click',()=>panel.classList.contains('open')?closeChat():openChat());
+  closeBtn.addEventListener('click',closeChat);minimizeBtn.addEventListener('click',closeChat);
+  function showConversation(){welcome.style.display='none';messages.style.display='block';back.style.display='inline-block'}
+  function addMessage(text,who){showConversation();const el=document.createElement('div');el.className='umang-ai-message '+who;el.textContent=text;messages.appendChild(el);messages.scrollTop=messages.scrollHeight;return el}
+  back.addEventListener('click',()=>{messages.style.display='none';welcome.style.display='block';back.style.display='none';input.focus()});
+
+  // Read the rendered page dynamically so new sections/content are included automatically.
+  function getPortfolioText(){
+    const clone=document.body.cloneNode(true);
+    clone.querySelectorAll('script,style,button,textarea,input,select,nav,footer,#umang-ai-panel,#umang-ai-launcher').forEach(el=>el.remove());
+    return (clone.innerText||clone.textContent||'').replace(/\s+/g,' ').trim().slice(0,24000);
+  }
+  const portfolioText=getPortfolioText();
+  const stopWords=new Set(['what','where','when','which','who','whom','does','have','has','tell','about','from','with','that','this','your','you','his','her','are','the','and','for','can','could','would','please','into','some','more','much','many','how','why','was','were','will','than','then','them','they','their','there','show','give','know','want','need','does','website','portfolio']);
+  function localPortfolioAnswer(q){
+    const normalized=q.toLowerCase();
+    if(/\b(hi|hello|hey|good morning|good afternoon|good evening)\b/.test(normalized)) return 'Hello! I can help you explore Umang Kakkad’s portfolio. Ask about any section, project, skill, certificate, education, internship, event, or contact detail.';
+    if(/\b(thank you|thanks)\b/.test(normalized)) return 'You’re welcome! Feel free to ask another question about Umang’s portfolio.';
+    const terms=normalized.replace(/[^a-z0-9+#. ]/g,' ').split(/\s+/).filter(w=>w.length>2&&!stopWords.has(w));
+    const blocks=[...document.querySelectorAll('main section, body > section, section[id], article, .academic-card')]
+      .filter(el=>!el.closest('#umang-ai-panel'))
+      .map(el=>({title:(el.querySelector('h1,h2,h3,h4')?.innerText||el.id||'Portfolio information').trim(),text:(el.innerText||'').replace(/\s+/g,' ').trim()}))
+      .filter(x=>x.text.length>35);
+    const scored=blocks.map(b=>{const hay=(b.title+' '+b.text).toLowerCase();let score=0;for(const t of terms){if(hay.includes(t))score+=hay.split(t).length-1;}return {...b,score}}).filter(b=>b.score>0).sort((a,b)=>b.score-a.score).slice(0,3);
+    if(scored.length){
+      const unique=[]; for(const b of scored){const excerpt=b.text.length>750?b.text.slice(0,750)+'…':b.text;if(!unique.includes(excerpt))unique.push(excerpt)}
+      return 'Here is the most relevant information I found on Umang’s portfolio:\n\n'+unique.join('\n\n')+'\n\nFor anything not shown on the website, you can contact Umang at kakkadumang08@gmail.com.';
+    }
+    if(/\b(ai|artificial intelligence|machine learning|python|html|css|javascript|programming|coding|resume|cv|interview|career|study|learn)\b/.test(normalized)){
+      return 'I can search Umang’s portfolio, but I can’t generate a reliable general answer until the secure AI service is connected. Please connect the backend endpoint to enable answers to other questions. Never put an AI API key directly in this HTML file.';
+    }
+    return 'I couldn’t find a confident match in Umang’s portfolio. Try a keyword such as projects, skills, education, certificates, events, or contact. For questions outside the portfolio, connect the secure AI service so I can generate a broader answer.';
+  }
+  async function getAnswer(q){
+    if(AI_API_URL){
+      const response=await fetch(AI_API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:q,portfolio:getPortfolioText(),page:location.href})});
+      if(!response.ok)throw new Error('AI service returned '+response.status);
+      const data=await response.json();
+      if(data.answer)return data.answer;
+      throw new Error('AI response did not include an answer');
+    }
+    return localPortfolioAnswer(q);
+  }
+  async function ask(q){
+    q=(q||'').trim();if(!q)return;
+    addMessage(q,'user');input.value='';input.style.height='auto';send.disabled=true;
+    const statusText=AI_API_URL?'Generating an answer…':'Searching Umang’s complete portfolio…';
+    const typing=addMessage(statusText,'bot');
+    speakReply(statusText);
+    try{typing.textContent=await getAnswer(q)}
+    catch(error){typing.textContent='Sorry, I could not reach the AI service. Please check the backend configuration or try again. Portfolio contact: kakkadumang08@gmail.com.'}
+    messages.scrollTop=messages.scrollHeight;
+    // Speak the actual answer after the search completes, not just the loading message.
+    speakReply(typing.textContent);
+    send.disabled=false;input.focus();
+  }
+  send.addEventListener('click',()=>ask(input.value));
+  input.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();ask(input.value)}});
+  input.addEventListener('input',()=>{input.style.height='auto';input.style.height=Math.min(input.scrollHeight,100)+'px'});
+  document.querySelectorAll('.umang-ai-prompt').forEach(btn=>btn.addEventListener('click',()=>ask(btn.textContent)));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&panel.classList.contains('open'))closeChat()});
+})();
+</script>
+
 </body>
 </html>
