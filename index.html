@@ -557,15 +557,15 @@
             <button type="button" class="browser-notice-close" id="mobile-browser-notice-close" aria-label="Close browser options">×</button>
             <div aria-hidden="true" style="font-size:32px;margin-bottom:5px">🌐</div>
             <h2 class="browser-notice-title" id="browser-notice-title">Choose Your Browser</h2>
-            <p class="browser-notice-text" id="mobile-browser-notice-text">For the best experience, open Umang Kakkad’s portfolio in a browser installed on your phone. Choose your preferred browser below.</p>
+            <p class="browser-notice-text" id="mobile-browser-notice-text">Choose a browser for the best experience. If the browser is not installed, tap “Continue on this page”. For a desktop-style view, open your browser menu and enable “Desktop site”.</p>
             <div class="browser-choice-list">
                 <button type="button" class="browser-choice primary" id="open-chrome">🌐 Google Chrome</button>
                 <button type="button" class="browser-choice" id="open-safari">🧭 Safari</button>
                 <button type="button" class="browser-choice" id="open-edge">🌊 Microsoft Edge</button>
                 <button type="button" class="browser-choice" id="open-other">🌍 Firefox / Other</button>
             </div>
-            <p class="browser-notice-foot" id="browser-notice-foot">If a browser button cannot open the app, use this page’s menu and choose “Open in browser”, or copy the page address into your installed browser.</p>
-            <button type="button" class="browser-continue" id="continue-current-browser">Continue in this browser</button>
+            <p class="browser-notice-foot" id="browser-notice-foot">If your chosen browser is not installed or does not open, select “Continue on this page”. For a desktop-style layout, open the browser menu (⋮ on Android or aA / page menu on iPhone, where available) and choose “Desktop site” or “Request Desktop Website”.</p>
+            <button type="button" class="browser-continue" id="continue-current-browser">Continue on this page</button>
         </div>
     </aside>
 
@@ -1875,17 +1875,15 @@
     const isIOS = /iPhone|iPad|iPod/i.test(ua);
     const isAndroid = /Android/i.test(ua);
     const isInAppBrowser = /Instagram|FBAN|FBAV|FB_IAB|Messenger|LinkedInApp|WhatsApp|Telegram|Twitter|TikTok|Snapchat/i.test(ua);
-    if (!isMobile || sessionStorage.getItem('browserChooserDismissed') === 'yes') { modal.remove(); return; }
+    if (!isMobile) { modal.remove(); return; }
     modal.classList.add('is-visible');
     document.body.style.overflow = 'hidden';
-    const close = () => { modal.classList.remove('is-visible'); document.body.style.overflow = ''; sessionStorage.setItem('browserChooserDismissed','yes'); };
+    const close = () => { modal.classList.remove('is-visible'); document.body.style.overflow = ''; };
     document.getElementById('mobile-browser-notice-close').addEventListener('click', close);
     document.getElementById('continue-current-browser').addEventListener('click', close);
     modal.addEventListener('click', e => { if (e.target === modal) close(); });
     const help = (browser) => {
-      const msg = isIOS
-        ? 'To use ' + browser + ', tap the Share button or the ••• menu in this app and choose “Open in Safari” / “Open in Browser” if available. Otherwise copy this page address and paste it into ' + browser + '.'
-        : 'To use ' + browser + ', open this app’s ••• menu and choose “Open in browser” or “Open in ' + browser + '” if available. Otherwise copy this page address and paste it into ' + browser + '.';
+      const msg = 'If ' + browser + ' is not installed or did not open, tap “Continue on this page” to keep using this website here. For a desktop-style view, open your current browser menu and enable “Desktop site” (Android) or “Request Desktop Website” (iPhone, if available). You can also copy this page address and open it in any browser installed on your phone.';
       alert(msg);
     };
     const openAndroidPackage = (packageName, label) => {
@@ -1904,7 +1902,7 @@
     });
     document.getElementById('open-other').addEventListener('click', () => help('Firefox or your preferred browser'));
     if (isInAppBrowser) {
-      document.getElementById('mobile-browser-notice-text').textContent = 'You opened this page inside another app. Choose Chrome, Safari, Edge, Firefox, or another browser installed on your phone for a smoother experience.';
+      document.getElementById('mobile-browser-notice-text').textContent = 'You opened this page inside another app. Choose an installed browser for the best experience. If it is not installed or will not open, tap “Continue on this page”. For a desktop-style view, enable “Desktop site” from your browser menu.';
     }
 })();
 </script>
