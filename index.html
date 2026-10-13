@@ -2,7 +2,7 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=1024, initial-scale=0.38, minimum-scale=0.25, maximum-scale=3.0, user-scalable=yes">
     <title>Umang Kakkad | Official Academic Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet">
@@ -319,11 +319,221 @@
 .umang-ai-footnote{text-align:center;font-size:10px;line-height:1.5;color:#8991a2;padding:6px 12px 10px;background:#fff}
 .umang-ai-back{display:none;border:0;background:#f0f4fb;color:#24427c;border-radius:999px;padding:7px 11px;font-size:12px;cursor:pointer;margin-top:12px}
 @media(max-width:600px){#umang-ai-mic,#umang-ai-stopvoice,#umang-ai-send{width:34px;height:34px}#umang-ai-launcher{right:12px;bottom:14px;padding:8px 12px 8px 8px;font-size:13px}#umang-ai-launcher .ai-launcher-icon{width:38px;height:38px}#umang-ai-panel{right:8px;bottom:72px;width:calc(100vw - 16px);height:min(76dvh,650px);border-radius:18px}.umang-ai-welcome{padding:18px 16px 10px}.umang-ai-welcome h3{font-size:20px}}
+
+        /* Clickable header profile + responsive profile popup */
+        .profile-trigger {
+            display: block;
+            flex: 0 0 auto;
+            padding: 0;
+            border: 0;
+            border-radius: 9999px;
+            background: transparent;
+            cursor: pointer;
+            line-height: 0;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+        .profile-trigger:hover,
+        .profile-trigger:focus-visible {
+            transform: translateY(-2px);
+            box-shadow: 0 0 0 4px rgba(0, 51, 153, .14);
+            outline: none;
+        }
+        #profile-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 10050;
+            align-items: center;
+            justify-content: center;
+            padding: 18px;
+            background: rgba(10, 20, 45, .62);
+            backdrop-filter: blur(5px);
+        }
+        #profile-modal.is-open { display: flex; }
+        .profile-dialog {
+            position: relative;
+            width: min(100%, 440px);
+            max-height: min(90vh, 760px);
+            overflow-y: auto;
+            background: #fff;
+            border: 1px solid #e3e9f4;
+            border-top: 5px solid #FF9900;
+            border-radius: 20px;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, .28);
+            padding: 30px;
+            text-align: center;
+            animation: profileModalIn .2s ease-out;
+        }
+        @keyframes profileModalIn {
+            from { opacity: 0; transform: translateY(10px) scale(.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .profile-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            display: grid;
+            place-items: center;
+            width: 38px;
+            height: 38px;
+            border: 0;
+            border-radius: 50%;
+            background: #f1f5f9;
+            color: #24324b;
+            font-size: 25px;
+            cursor: pointer;
+        }
+        .profile-close:hover { background: #e2e8f0; }
+        .profile-large-photo {
+            width: 112px;
+            height: 112px;
+            margin: 0 auto 16px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid #fff;
+            outline: 3px solid #003399;
+            box-shadow: 0 8px 24px rgba(0, 51, 153, .18);
+        }
+        .profile-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            margin-top: 12px;
+            padding: 7px 12px;
+            border: 1px solid #dbeafe;
+            border-radius: 999px;
+            background: #eff6ff;
+            color: #003399;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .profile-detail {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 13px 14px;
+            border: 1px solid #e7ebf2;
+            border-radius: 12px;
+            background: #f8fafc;
+            text-align: left;
+        }
+        .profile-detail-icon {
+            display: grid;
+            place-items: center;
+            flex: 0 0 34px;
+            height: 34px;
+            border-radius: 10px;
+            background: #eaf1ff;
+            color: #003399;
+            font-size: 16px;
+        }
+        .profile-detail-label {
+            display: block;
+            margin-bottom: 3px;
+            color: #64748b;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: .09em;
+            text-transform: uppercase;
+        }
+        .profile-detail-value {
+            color: #1e293b;
+            font-size: 13px;
+            line-height: 1.5;
+            overflow-wrap: anywhere;
+        }
+        .profile-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 44px;
+            padding: 11px 16px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+            transition: background .2s ease, transform .2s ease;
+        }
+        .profile-action:hover { transform: translateY(-1px); }
+        .profile-action-primary { background: #003399; color: #fff; }
+        .profile-action-primary:hover { background: #002266; }
+        .profile-action-secondary { border: 1px solid #cbd5e1; color: #003399; background: #fff; }
+        .profile-action-secondary:hover { background: #eff6ff; }
+        @media (max-width: 480px) {
+            #profile-modal { padding: 12px; }
+            .profile-dialog { padding: 26px 18px 20px; border-radius: 16px; }
+            .profile-large-photo { width: 96px; height: 96px; }
+            .profile-action { flex: 1 1 100%; }
+        }
+
+        .profile-social-link {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            min-width: 0;
+            padding: 12px 10px;
+            border: 1px solid #dbe2ee;
+            border-radius: 12px;
+            background: #fff;
+            color: #1e293b;
+            text-align: left;
+            transition: border-color .2s ease, background .2s ease, transform .2s ease;
+        }
+        .profile-social-link:hover {
+            border-color: #9bb8ef;
+            background: #f5f8ff;
+            transform: translateY(-2px);
+        }
+        .profile-social-icon {
+            display: grid;
+            place-items: center;
+            flex: 0 0 34px;
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+            background: #111827;
+            color: #fff;
+            font-size: 20px;
+            font-weight: 800;
+        }
+        .profile-social-icon.linkedin-icon {
+            background: #0a66c2;
+            font-family: Arial, sans-serif;
+            font-size: 17px;
+        }
+        .profile-social-link strong { display: block; font-size: 12px; }
+        .profile-social-link small {
+            display: block;
+            margin-top: 2px;
+            color: #64748b;
+            font-size: 10px;
+            line-height: 1.35;
+        }
+        .profile-social-arrow {
+            margin-left: auto;
+            color: #64748b;
+            font-size: 15px;
+        }
+        @media (max-width: 380px) {
+            .profile-social-link { gap: 6px; padding: 9px 7px; }
+            .profile-social-icon { flex-basis: 29px; width: 29px; height: 29px; }
+            .profile-social-link small { font-size: 9px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .profile-trigger, .profile-action { transition: none; }
+            .profile-dialog { animation: none; }
+        }
+
+
+        /* Mobile browser guidance: compact, dismissible and non-blocking */
+
     </style>
 </head>
 <body class="text-gray-800 antialiased relative">
-
-    <!-- Top Bar -->
+<!-- Top Bar -->
     <div class="bg-gray-900 text-gray-300 text-xs py-2 px-4 relative z-50 hidden md:block">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="space-x-4">
@@ -376,12 +586,22 @@
                     </button>
                 </div>
 
-                <img
-                    src="assets/images/profile.jpg"
-                    alt="Umang Kakkad Profile Image"
-                    class="header-profile border-2 border-gray-300 shadow-sm"
-                    onerror="this.style.display='none'"
+                <button
+                    type="button"
+                    id="profile-open-btn"
+                    class="profile-trigger"
+                    aria-label="Open Umang Kakkad's profile"
+                    aria-haspopup="dialog"
+                    aria-controls="profile-modal"
+                    title="View profile"
                 >
+                    <img
+                        src="assets/images/profile.jpg"
+                        alt="Umang Kakkad Profile Image"
+                        class="header-profile border-2 border-gray-300 shadow-sm"
+                        onerror="this.style.display='none'"
+                    >
+                </button>
             </div>
         </div>
     </header>
@@ -1509,5 +1729,103 @@
 })();
 </script>
 
+
+    <!-- Profile popup: opens when the circular header photo is clicked -->
+    <div id="profile-modal" role="presentation" aria-hidden="true">
+        <section class="profile-dialog" role="dialog" aria-modal="true"
+                 aria-labelledby="profile-modal-name" aria-describedby="profile-modal-intro">
+            <button type="button" class="profile-close" id="profile-close-btn"
+                    aria-label="Close profile popup">&times;</button>
+
+            <img src="assets/images/profile.jpg" alt="Umang Kakkad"
+                 class="profile-large-photo" onerror="this.style.display='none'">
+
+            <p class="text-xs font-extrabold tracking-widest text-gray-500 uppercase">Personal Profile</p>
+            <h2 id="profile-modal-name" class="text-2xl font-extrabold text-suBlue mt-2">Umang Kakkad</h2>
+            <p id="profile-modal-intro" class="text-sm text-gray-600 mt-2 leading-relaxed">
+                Software Developer &amp; MCA Student at GLS University, Ahmedabad.
+            </p>
+            <span class="profile-pill"><span aria-hidden="true">●</span> Academic &amp; Professional Portfolio</span>
+
+            <div class="grid gap-3 text-left mt-6">
+                <div class="profile-detail">
+                    <span class="profile-detail-icon" aria-hidden="true">✉</span>
+                    <div>
+                        <span class="profile-detail-label">Email</span>
+                        <a class="profile-detail-value text-suBlue font-semibold hover:underline"
+                           href="mailto:kakkadumang08@gmail.com">kakkadumang08@gmail.com</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6">
+                <a href="#about" id="profile-full-link" class="profile-action profile-action-primary">View Full Profile <span aria-hidden="true">→</span></a>
+                <a href="mailto:kakkadumang08@gmail.com?subject=Portfolio%20Enquiry" class="profile-action profile-action-secondary">✉ Contact Me</a>
+            </div>
+
+            <div class="mt-6 pt-5 border-t border-gray-200">
+                <p class="text-xs font-extrabold tracking-widest text-gray-500 uppercase mb-3">Connect with Umang</p>
+                <div class="grid grid-cols-2 gap-3">
+                    <a href="https://github.com/kakkadumang" target="_blank" rel="noopener noreferrer"
+                       class="profile-social-link" aria-label="Visit Umang Kakkad on GitHub">
+                        <span class="profile-social-icon" aria-hidden="true">⌘</span>
+                        <span><strong>GitHub</strong><small>View projects &amp; code</small></span>
+                        <span class="profile-social-arrow" aria-hidden="true">↗</span>
+                    </a>
+                    <a href="https://www.linkedin.com/in/umangkakkad/" target="_blank" rel="noopener noreferrer"
+                       class="profile-social-link" aria-label="Visit Umang Kakkad on LinkedIn">
+                        <span class="profile-social-icon linkedin-icon" aria-hidden="true">in</span>
+                        <span><strong>LinkedIn</strong><small>Professional profile</small></span>
+                        <span class="profile-social-arrow" aria-hidden="true">↗</span>
+                    </a>
+                </div>
+            </div>
+            <p class="text-xs text-gray-400 mt-4">Press Esc or click outside this card to close.</p>
+        </section>
+    </div>
+
+    <script>
+    /* Profile popup interactions */
+    (function () {
+        const modal = document.getElementById('profile-modal');
+        const openBtn = document.getElementById('profile-open-btn');
+        const closeBtn = document.getElementById('profile-close-btn');
+        const fullProfileLink = document.getElementById('profile-full-link');
+        if (!modal || !openBtn || !closeBtn) return;
+
+        let lastFocusedElement = null;
+
+        function openProfile() {
+            lastFocusedElement = document.activeElement;
+            modal.classList.add('is-open');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            closeBtn.focus();
+        }
+
+        function closeProfile() {
+            modal.classList.remove('is-open');
+            modal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+            if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+                lastFocusedElement.focus();
+            }
+        }
+
+        openBtn.addEventListener('click', openProfile);
+        closeBtn.addEventListener('click', closeProfile);
+        modal.addEventListener('click', function (event) {
+            if (event.target === modal) closeProfile();
+        });
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape' && modal.classList.contains('is-open')) closeProfile();
+        });
+        if (fullProfileLink) {
+            fullProfileLink.addEventListener('click', function () {
+                closeProfile();
+            });
+        }
+    })();
+    </script>
 </body>
 </html>
