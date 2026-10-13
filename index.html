@@ -2,7 +2,7 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Umang Kakkad | Official Academic Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet">
@@ -322,6 +322,10 @@
 
         /* Clickable header profile + responsive profile popup */
         .profile-trigger {
+            position: relative;
+            z-index: 2;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: rgba(0, 51, 153, .18);
             display: block;
             flex: 0 0 auto;
             padding: 0;
@@ -529,83 +533,20 @@
 
 
         /* Mobile browser guidance: compact, dismissible and non-blocking */
-        #mobile-browser-notice {
-            display: none;
-            position: fixed;
-            left: 12px;
-            right: 12px;
-            top: 12px;
-            z-index: 11000;
-            padding: 13px 14px;
-            border: 1px solid #dbe5f5;
-            border-left: 4px solid #FF9900;
-            border-radius: 14px;
-            background: rgba(255,255,255,.98);
-            color: #1e293b;
-            box-shadow: 0 12px 35px rgba(15, 23, 42, .18);
-            font-family: Inter, sans-serif;
-        }
-        #mobile-browser-notice .browser-notice-title {
-            font-size: 13px;
-            font-weight: 800;
-            color: #003399;
-            margin: 0 28px 4px 0;
-        }
-        #mobile-browser-notice .browser-notice-text {
-            font-size: 12px;
-            line-height: 1.5;
-            margin: 0;
-            color: #475569;
-        }
-        #mobile-browser-notice .browser-notice-close {
-            position: absolute;
-            top: 7px;
-            right: 8px;
-            width: 30px;
-            height: 30px;
-            border: 0;
-            border-radius: 50%;
-            background: #f1f5f9;
-            color: #334155;
-            font-size: 20px;
-            cursor: pointer;
-        }
-        #mobile-browser-notice .browser-notice-action {
-            display: inline-flex;
-            margin-top: 9px;
-            border: 0;
-            border-radius: 8px;
-            padding: 7px 10px;
-            background: #003399;
-            color: #fff;
-            font-size: 11px;
-            font-weight: 700;
-            cursor: pointer;
-        }
-        @media (max-width: 767px) {
-            #mobile-browser-notice { display: block; }
-            body.mobile-browser-notice-open { padding-top: 0; }
-        }
-        @media (prefers-reduced-motion: reduce) {
-            #mobile-browser-notice { scroll-behavior: auto; }
-        }
 
     </style>
 </head>
 <body class="text-gray-800 antialiased relative">
 
-    <!-- Mobile browser guidance: recommends the phone's browser without blocking the site -->
+    <!-- Mobile browser guidance; placed at the bottom so it does not block the profile photo -->
     <aside id="mobile-browser-notice" role="status" aria-live="polite">
         <button type="button" class="browser-notice-close" id="mobile-browser-notice-close" aria-label="Dismiss notice">×</button>
         <p class="browser-notice-title">Best experience on mobile</p>
-        <p class="browser-notice-text" id="mobile-browser-notice-text">
-            For smoother browsing, open this portfolio in your phone’s browser, such as Chrome or Safari.
-        </p>
+        <p class="browser-notice-text" id="mobile-browser-notice-text">For smoother browsing, open this portfolio in your phone’s browser, such as Chrome or Safari.</p>
         <button type="button" class="browser-notice-action" id="mobile-browser-notice-help">How to open in browser</button>
     </aside>
 
-
-    <!-- Top Bar -->
+<!-- Top Bar -->
     <div class="bg-gray-900 text-gray-300 text-xs py-2 px-4 relative z-50 hidden md:block">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="space-x-4">
@@ -1884,7 +1825,8 @@
             }
         }
 
-        openBtn.addEventListener('click', openProfile);
+        openBtn.addEventListener('click', function (event) { event.preventDefault(); openProfile(); });
+        openBtn.addEventListener('touchend', function (event) { event.preventDefault(); openProfile(); }, { passive: false });
         closeBtn.addEventListener('click', closeProfile);
         modal.addEventListener('click', function (event) {
             if (event.target === modal) closeProfile();
@@ -1900,37 +1842,32 @@
     })();
     </script>
 
-
-    <script>
-    (function () {
-        const notice = document.getElementById('mobile-browser-notice');
-        const closeBtn = document.getElementById('mobile-browser-notice-close');
-        const helpBtn = document.getElementById('mobile-browser-notice-help');
-        const noticeText = document.getElementById('mobile-browser-notice-text');
-        if (!notice || !closeBtn || !helpBtn) return;
-
-        const ua = navigator.userAgent || '';
-        const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(ua) || window.matchMedia('(max-width: 767px)').matches;
-        const isInAppBrowser = /Instagram|FBAN|FBAV|FB_IAB|Messenger|LinkedInApp|WhatsApp|Telegram|Twitter|TikTok|Snapchat/i.test(ua);
-
-        if (!isMobile) {
-            notice.remove();
-            return;
+<script>
+/* Mobile browser guidance: suggest an external browser without blocking site use. */
+(function () {
+    const notice = document.getElementById('mobile-browser-notice');
+    const closeBtn = document.getElementById('mobile-browser-notice-close');
+    const helpBtn = document.getElementById('mobile-browser-notice-help');
+    const noticeText = document.getElementById('mobile-browser-notice-text');
+    if (!notice || !closeBtn || !helpBtn) return;
+    const ua = navigator.userAgent || '';
+    const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(ua) || window.matchMedia('(max-width: 767px)').matches;
+    const isInAppBrowser = /Instagram|FBAN|FBAV|FB_IAB|Messenger|LinkedInApp|WhatsApp|Telegram|Twitter|TikTok|Snapchat/i.test(ua);
+    if (!isMobile) { notice.remove(); return; }
+    notice.style.display = 'block';
+    if (isInAppBrowser) {
+        noticeText.textContent = 'You’re viewing this in an app’s built-in browser. For the smoothest experience, open this page in Chrome (Android) or Safari (iPhone).';
+    }
+    closeBtn.addEventListener('click', () => notice.remove());
+    helpBtn.addEventListener('click', function () {
+        if (/iPhone|iPad|iPod/i.test(ua)) {
+            alert('To open in Safari: tap the Share button or the ••• menu in this app, then choose “Open in Safari” or “Open in Browser”. If unavailable, copy the page address and paste it into Safari.');
+        } else {
+            alert('To open in Chrome: tap the ••• menu in this app, then choose “Open in browser” or “Open in Chrome”. If unavailable, copy the page address and paste it into Chrome.');
         }
-        if (isInAppBrowser) {
-            noticeText.textContent = 'You’re viewing this in an app’s built-in browser. For the smoothest experience, open the page in Chrome (Android) or Safari (iPhone).';
-        }
-
-        closeBtn.addEventListener('click', function () { notice.remove(); });
-        helpBtn.addEventListener('click', function () {
-            if (/iPhone|iPad|iPod/i.test(ua)) {
-                alert('To open in Safari: tap the Share button or the ••• menu in this app, then choose “Open in Safari” or “Open in Browser”.');
-            } else {
-                alert('To open in Chrome: tap the ••• menu in this app, then choose “Open in browser” or “Open in Chrome”. If you do not see that option, copy the page address and paste it into Chrome.');
-            }
-        });
-    })();
-    </script>
+    });
+})();
+</script>
 
 </body>
 </html>
