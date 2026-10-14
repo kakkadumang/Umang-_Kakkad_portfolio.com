@@ -1890,14 +1890,14 @@
             <h2 id="android-browser-title">For the Best Experience</h2>
             <p id="android-browser-description">
                 You're viewing this portfolio on an Android mobile browser.
-                For better compatibility and performance, we recommend using Google Chrome.
+                For the best experience, you can continue here or try opening this portfolio in another browser, such as Chrome, Firefox, Edge, or Brave.
             </p>
             <div class="android-browser-actions">
                 <button type="button" class="android-browser-btn android-browser-btn-primary"
                         id="android-continue-btn">Continue This Site</button>
                 <a class="android-browser-btn android-browser-btn-secondary"
-                   id="android-chrome-btn" href="https://www.google.com/chrome/" rel="noopener">
-                    Open in Google Chrome
+                   id="android-chrome-btn" href="#" rel="noopener">
+                    Open in Another Browser
                 </a>
             </div>
             <p class="android-browser-footnote">Enjoy exploring my portfolio!</p>
@@ -1931,17 +1931,22 @@
                 modal.setAttribute('aria-hidden', 'true');
             });
 
-            chromeBtn.addEventListener('click', function (event) {
-                if (!isMobileAndroid) return;
+            // Use a real anchor navigation on Android so the browser launch happens
+            // directly from the user's tap (some browsers block JS-triggered intents).
+            // Do not specify a package: Android can route to the default browser or
+            // show an app chooser when the device permits it.
+            if (isMobileAndroid && /^https?:\/\//i.test(window.location.href)) {
                 const currentUrl = window.location.href;
-                if (currentUrl.startsWith('https://')) {
-                    event.preventDefault();
-                    const intentUrl = 'intent://' + currentUrl.replace(/^https?:\/\//i, '') +
-                        '#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=' +
-                        encodeURIComponent('https://www.google.com/chrome/') + ';end';
-                    window.location.href = intentUrl;
-                }
-            });
+                const scheme = currentUrl.startsWith('https://') ? 'https' : 'http';
+                const encodedFallback = encodeURIComponent(currentUrl);
+                chromeBtn.href = 'intent://' + currentUrl.replace(/^https?:\/\//i, '') +
+                    '#Intent;scheme=' + scheme +
+                    ';action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE' +
+                    ';S.browser_fallback_url=' + encodedFallback + ';end';
+                chromeBtn.target = '_self';
+            } else {
+                chromeBtn.href = window.location.href;
+            }
         }
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', setupAndroidBrowserPrompt);
