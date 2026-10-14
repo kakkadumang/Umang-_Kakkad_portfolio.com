@@ -2291,28 +2291,28 @@
             <div class="android-alert-icon">⚠️</div>
             <h3 id="android-not-installed-title">Browser Not Installed</h3>
             <p id="android-not-installed-desc">
-                Ye browser aapke phone me install nahi hai. Kripya Play Store se install karein ya koi dusra browser choose karein:
+                This browser is not installed on your Android device. Please install it from Google Play Store or choose another browser:
             </p>
             <div class="android-browser-actions">
                 <a class="android-btn android-btn-install" id="android-install-store-btn" href="#" target="_blank" rel="noopener">
                     <span class="android-btn-main-label">
                         📥 Install from Play Store
                     </span>
-                    <span class="android-btn-sub-label">Download &amp; install on your phone</span>
+                    <span class="android-btn-sub-label">Download directly from Google Play Store</span>
                 </a>
 
                 <button type="button" class="android-btn android-btn-primary" id="android-choose-other-btn">
                     <span class="android-btn-main-label">
                         🔄 Choose Another Browser
                     </span>
-                    <span class="android-btn-sub-label">Select from browsers on your phone</span>
+                    <span class="android-btn-sub-label">Choose an installed browser on your device</span>
                 </button>
 
                 <button type="button" class="android-btn android-btn-secondary" id="android-not-installed-cancel-btn">
                     <span class="android-btn-main-label">
                         ✓ Continue in Current Browser
                     </span>
-                    <span class="android-btn-sub-label">Stay in current browser</span>
+                    <span class="android-btn-sub-label">Continue without installing</span>
                 </button>
             </div>
         </section>
@@ -2337,6 +2337,19 @@
 
             if (!modal || !continueBtn || !openPickerBtn || !picker || !choiceList || !cancelPicker) return;
 
+            // Strictly check for Android: NEVER show on PC, Laptop, Mac, Windows, etc.
+            const ua = navigator.userAgent || navigator.vendor || '';
+            const isAndroid = /Android/i.test(ua);
+            const isTestParam = /[?&]test_android=1\b/i.test(window.location.search);
+
+            if (!isAndroid && !isTestParam) {
+                // If not Android device (e.g. PC / Laptop / Mac / Windows), do not run!
+                modal.style.display = 'none';
+                if (picker) picker.style.display = 'none';
+                if (notInstalledModal) notInstalledModal.style.display = 'none';
+                return;
+            }
+
             // Check if page was just launched from our browser chooser intent:
             // "wo browser me open ho to pop up phirse nahi aana chahiye, refresh karne par pop up aana chahiye"
             const urlParams = new URLSearchParams(window.location.search);
@@ -2354,18 +2367,9 @@
                 return; // Do NOT show popup on initial launch in chosen browser!
             }
 
-            const ua = navigator.userAgent || navigator.vendor || '';
-            const isAndroid = /Android/i.test(ua);
-            const isTestParam = /[?&]test_android=1\b/i.test(window.location.search);
-
-            // Show popup when on Android (or when testing via ?test_android=1)
-            if (isAndroid || isTestParam) {
-                modal.classList.add('is-visible');
-                modal.setAttribute('aria-hidden', 'false');
-            } else {
-                modal.classList.remove('is-visible');
-                modal.setAttribute('aria-hidden', 'true');
-            }
+            // Show popup on Android device
+            modal.classList.add('is-visible');
+            modal.setAttribute('aria-hidden', 'false');
 
             // "Continue in this browser": dismisses for current session, refresh will show it again!
             continueBtn.addEventListener('click', function () {
@@ -2401,7 +2405,7 @@
                 if (!notInstalledModal) return;
                 closePicker();
                 notInstalledTitle.textContent = browser.name + ' Not Installed';
-                notInstalledDesc.innerHTML = '<strong>' + browser.name + '</strong> aapke phone me install nahi hai.<br>Kripya Play Store se install karein ya koi dusra browser choose karein:';
+                notInstalledDesc.innerHTML = '<strong>' + browser.name + '</strong> is not installed on your Android device.<br>Please install it from Google Play Store or select another browser:';
                 installStoreBtn.href = 'https://play.google.com/store/apps/details?id=' + browser.packageName;
 
                 notInstalledModal.classList.add('is-visible');
