@@ -1905,8 +1905,8 @@
     </div>
 
     <script>
-    /* Android phone browser prompt. Continue closes it for this page view;
-       refreshing the page shows it again. */
+    /* Show the browser prompt on every page load/refresh in Android mobile browsers.
+       Tapping Continue hides it only for the current page view. */
     (function () {
         function setupAndroidBrowserPrompt() {
             const modal = document.getElementById('android-browser-modal');
@@ -1916,19 +1916,14 @@
 
             const ua = navigator.userAgent || navigator.vendor || '';
             const isAndroid = /Android/i.test(ua);
-            // Some Android browsers/webviews omit "Mobile" from their user-agent string.
             const screenWidth = window.screen.width || window.innerWidth;
             const viewportWidth = window.innerWidth || screenWidth;
-            const isMobileAndroid = isAndroid && (/Mobile/i.test(ua) || Math.min(screenWidth, viewportWidth) <= 900);
-            // Once the portfolio is opened in Chrome on Android, do not show the prompt.
-            // Exclude other Chromium-based browsers so they can still see the suggestion.
-            const isChromeBrowser = /Chrome\//i.test(ua) &&
-                !/EdgA?\//i.test(ua) &&
-                !/OPR\//i.test(ua) &&
-                !/SamsungBrowser\//i.test(ua) &&
-                !/Firefox\//i.test(ua);
+            const isMobileAndroid = isAndroid &&
+                (/Mobile/i.test(ua) || Math.min(screenWidth, viewportWidth) <= 900);
 
-            if (isMobileAndroid && !isChromeBrowser) {
+            // Show on every Android mobile browser, including Chrome.
+            // Desktop/laptop and non-Android devices will not see this prompt.
+            if (isMobileAndroid) {
                 modal.classList.add('is-visible');
                 modal.setAttribute('aria-hidden', 'false');
             } else {
@@ -1941,10 +1936,8 @@
                 modal.setAttribute('aria-hidden', 'true');
             });
 
-            // Use a real anchor navigation on Android so the browser launch happens
-            // directly from the user's tap (some browsers block JS-triggered intents).
-            // Do not specify a package: Android can route to the default browser or
-            // show an app chooser when the device permits it.
+            // Request Android to open the current page in another compatible browser.
+            // Browser chooser behavior depends on Android/device settings.
             if (isMobileAndroid && /^https?:\/\//i.test(window.location.href)) {
                 const currentUrl = window.location.href;
                 const scheme = currentUrl.startsWith('https://') ? 'https' : 'http';
@@ -1958,6 +1951,7 @@
                 chromeBtn.href = window.location.href;
             }
         }
+
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', setupAndroidBrowserPrompt);
         } else {
