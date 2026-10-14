@@ -527,6 +527,61 @@
             .profile-dialog { animation: none; }
         }
 
+
+        /* Android mobile browser recommendation modal */
+        #android-browser-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 20000;
+            align-items: center;
+            justify-content: center;
+            padding: 18px;
+            background: rgba(8, 20, 48, .68);
+            backdrop-filter: blur(5px);
+        }
+        #android-browser-modal.is-visible { display: flex; }
+        .android-browser-dialog {
+            width: min(100%, 410px);
+            padding: 28px 24px 22px;
+            border-radius: 20px;
+            border: 1px solid #dbe5f5;
+            border-top: 5px solid #FF9900;
+            background: #fff;
+            box-shadow: 0 24px 80px rgba(0,0,0,.3);
+            text-align: center;
+            font-family: Inter, sans-serif;
+        }
+        .android-browser-icon {
+            width: 58px; height: 58px; margin: 0 auto 16px;
+            display: grid; place-items: center; border-radius: 17px;
+            background: #eef4ff; color: #003399; font-size: 28px;
+        }
+        .android-browser-dialog h2 {
+            margin: 0 0 10px; color: #003399; font: 800 22px/1.3 Inter, sans-serif;
+        }
+        .android-browser-dialog p {
+            margin: 0; color: #5b6475; font: 400 14px/1.65 Inter, sans-serif;
+        }
+        .android-browser-actions { display: grid; gap: 10px; margin-top: 22px; }
+        .android-browser-btn {
+            display: flex; align-items: center; justify-content: center;
+            min-height: 46px; width: 100%; padding: 12px 16px;
+            border-radius: 11px; border: 1px solid transparent;
+            font: 700 14px Inter, sans-serif; cursor: pointer;
+            text-decoration: none; transition: background .18s ease, transform .18s ease;
+        }
+        .android-browser-btn:hover { transform: translateY(-1px); }
+        .android-browser-btn-primary { background: #003399; color: #fff; }
+        .android-browser-btn-primary:hover { background: #002266; }
+        .android-browser-btn-secondary { background: #fff; color: #003399; border-color: #cbd8ee; }
+        .android-browser-btn-secondary:hover { background: #f2f6ff; }
+        .android-browser-footnote { margin-top: 15px !important; font-size: 11px !important; color: #8991a2 !important; }
+        @media (max-width: 420px) {
+            .android-browser-dialog { padding: 24px 18px 20px; border-radius: 17px; }
+            .android-browser-dialog h2 { font-size: 20px; }
+        }
+
     </style>
 </head>
 <body class="text-gray-800 antialiased relative">
@@ -1823,6 +1878,68 @@
                 closeProfile();
             });
         }
+    })();
+    </script>
+
+
+    <!-- Android-only browser recommendation. Continue is temporary; refresh shows it again. -->
+    <div id="android-browser-modal" aria-hidden="true">
+        <section class="android-browser-dialog" role="dialog" aria-modal="true"
+                 aria-labelledby="android-browser-title" aria-describedby="android-browser-description">
+            <div class="android-browser-icon" aria-hidden="true">↗</div>
+            <h2 id="android-browser-title">For the Best Experience</h2>
+            <p id="android-browser-description">
+                You're viewing this portfolio on an Android mobile browser.
+                For better compatibility and performance, we recommend using Google Chrome.
+            </p>
+            <div class="android-browser-actions">
+                <button type="button" class="android-browser-btn android-browser-btn-primary"
+                        id="android-continue-btn">Continue This Site</button>
+                <a class="android-browser-btn android-browser-btn-secondary"
+                   id="android-chrome-btn" href="https://www.google.com/chrome/" rel="noopener">
+                    Open in Google Chrome
+                </a>
+            </div>
+            <p class="android-browser-footnote">Enjoy exploring my portfolio!</p>
+        </section>
+    </div>
+
+    <script>
+    /* Show only on Android phones. Continue hides the modal until the page is refreshed. */
+    (function () {
+        const modal = document.getElementById('android-browser-modal');
+        const continueBtn = document.getElementById('android-continue-btn');
+        const chromeBtn = document.getElementById('android-chrome-btn');
+        if (!modal || !continueBtn || !chromeBtn) return;
+
+        const ua = navigator.userAgent || '';
+        const isAndroid = /Android/i.test(ua);
+        const isMobileAndroid = isAndroid && /Mobile/i.test(ua);
+
+        if (isMobileAndroid) {
+            modal.classList.add('is-visible');
+            modal.setAttribute('aria-hidden', 'false');
+        }
+
+        continueBtn.addEventListener('click', function () {
+            modal.classList.remove('is-visible');
+            modal.setAttribute('aria-hidden', 'true');
+        });
+
+        // Try opening Chrome on Android; if unsupported, the link opens Google's Chrome page.
+        chromeBtn.addEventListener('click', function (event) {
+            if (!isMobileAndroid) return;
+            const currentUrl = window.location.href;
+            if (currentUrl.startsWith('https://')) {
+                event.preventDefault();
+                const intentUrl = 'intent://' + currentUrl.replace(/^https?:\\/\\//i, '') +
+                    '#Intent;scheme=https;package=com.android.chrome;end';
+                window.location.href = intentUrl;
+                window.setTimeout(function () {
+                    window.location.href = 'https://www.google.com/chrome/';
+                }, 1600);
+            }
+        });
     })();
     </script>
 
