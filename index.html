@@ -1905,41 +1905,49 @@
     </div>
 
     <script>
-    /* Show only on Android phones. Continue hides the modal until the page is refreshed. */
+    /* Android phone browser prompt. Continue closes it for this page view;
+       refreshing the page shows it again. */
     (function () {
-        const modal = document.getElementById('android-browser-modal');
-        const continueBtn = document.getElementById('android-continue-btn');
-        const chromeBtn = document.getElementById('android-chrome-btn');
-        if (!modal || !continueBtn || !chromeBtn) return;
+        function setupAndroidBrowserPrompt() {
+            const modal = document.getElementById('android-browser-modal');
+            const continueBtn = document.getElementById('android-continue-btn');
+            const chromeBtn = document.getElementById('android-chrome-btn');
+            if (!modal || !continueBtn || !chromeBtn) return;
 
-        const ua = navigator.userAgent || '';
-        const isAndroid = /Android/i.test(ua);
-        const isMobileAndroid = isAndroid && /Mobile/i.test(ua);
+            const ua = navigator.userAgent || navigator.vendor || '';
+            const isAndroid = /Android/i.test(ua);
+            // Some Android browsers/webviews omit "Mobile" from their user-agent string.
+            const screenWidth = window.screen.width || window.innerWidth;
+            const viewportWidth = window.innerWidth || screenWidth;
+            const isMobileAndroid = isAndroid && (/Mobile/i.test(ua) || Math.min(screenWidth, viewportWidth) <= 900);
 
-        if (isMobileAndroid) {
-            modal.classList.add('is-visible');
-            modal.setAttribute('aria-hidden', 'false');
-        }
-
-        continueBtn.addEventListener('click', function () {
-            modal.classList.remove('is-visible');
-            modal.setAttribute('aria-hidden', 'true');
-        });
-
-        // Try opening Chrome on Android; if unsupported, the link opens Google's Chrome page.
-        chromeBtn.addEventListener('click', function (event) {
-            if (!isMobileAndroid) return;
-            const currentUrl = window.location.href;
-            if (currentUrl.startsWith('https://')) {
-                event.preventDefault();
-                const intentUrl = 'intent://' + currentUrl.replace(/^https?:\\/\\//i, '') +
-                    '#Intent;scheme=https;package=com.android.chrome;end';
-                window.location.href = intentUrl;
-                window.setTimeout(function () {
-                    window.location.href = 'https://www.google.com/chrome/';
-                }, 1600);
+            if (isMobileAndroid) {
+                modal.classList.add('is-visible');
+                modal.setAttribute('aria-hidden', 'false');
             }
-        });
+
+            continueBtn.addEventListener('click', function () {
+                modal.classList.remove('is-visible');
+                modal.setAttribute('aria-hidden', 'true');
+            });
+
+            chromeBtn.addEventListener('click', function (event) {
+                if (!isMobileAndroid) return;
+                const currentUrl = window.location.href;
+                if (currentUrl.startsWith('https://')) {
+                    event.preventDefault();
+                    const intentUrl = 'intent://' + currentUrl.replace(/^https?:\/\//i, '') +
+                        '#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=' +
+                        encodeURIComponent('https://www.google.com/chrome/') + ';end';
+                    window.location.href = intentUrl;
+                }
+            });
+        }
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', setupAndroidBrowserPrompt);
+        } else {
+            setupAndroidBrowserPrompt();
+        }
     })();
     </script>
 
