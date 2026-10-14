@@ -541,6 +541,38 @@
             backdrop-filter: blur(5px);
         }
         #android-browser-modal.is-visible { display: flex; }
+
+        /* In-page Android browser picker. A website cannot force Android's native chooser,
+           so this presents browser choices and tries to launch the selected installed app. */
+        #android-browser-picker {
+            display: none; position: fixed; inset: 0; z-index: 20010;
+            align-items: center; justify-content: center; padding: 18px;
+            background: rgba(8, 20, 48, .72); backdrop-filter: blur(5px);
+        }
+        #android-browser-picker.is-visible { display: flex; }
+        .android-picker-dialog {
+            width: min(100%, 390px); max-height: 85vh; overflow-y: auto;
+            padding: 22px; border-radius: 20px; background: #fff;
+            border: 1px solid #dbe5f5; box-shadow: 0 24px 80px rgba(0,0,0,.3);
+            font-family: Inter, sans-serif;
+        }
+        .android-picker-dialog h3 { margin: 0 0 7px; color: #111827; font-size: 20px; font-weight: 800; }
+        .android-picker-dialog .picker-help { margin: 0 0 16px; color: #64748b; font-size: 13px; line-height: 1.5; }
+        .android-browser-choice {
+            display: flex; align-items: center; gap: 12px; width: 100%; box-sizing: border-box;
+            margin: 8px 0; padding: 13px 14px; border: 1px solid #e2e8f0; border-radius: 12px;
+            background: #fff; color: #111827; text-decoration: none; font: 600 14px Inter, sans-serif;
+        }
+        .android-browser-choice:active { background: #eff6ff; }
+        .android-browser-choice .browser-symbol {
+            display: grid; place-items: center; width: 34px; height: 34px; flex: 0 0 34px;
+            border-radius: 10px; background: #eff6ff; color: #2563eb; font-size: 17px; font-weight: 800;
+        }
+        .android-picker-cancel {
+            width: 100%; margin-top: 8px; padding: 12px; border: 0; border-radius: 12px;
+            background: #f1f5f9; color: #334155; font: 700 14px Inter, sans-serif;
+        }
+
         .android-browser-dialog {
             width: min(100%, 410px);
             padding: 28px 24px 22px;
@@ -1904,25 +1936,35 @@
         </section>
     </div>
 
+    <!-- Browser choices shown after the visitor taps Open in Another Browser. -->
+    <div id="android-browser-picker" aria-hidden="true">
+        <section class="android-picker-dialog" role="dialog" aria-modal="true" aria-labelledby="android-picker-title">
+            <h3 id="android-picker-title">Choose a Browser</h3>
+            <p class="picker-help">Select a browser to try opening this portfolio in it. The browser must be installed on your phone.</p>
+            <div id="android-browser-choice-list"></div>
+            <button type="button" class="android-picker-cancel" id="android-picker-cancel">Cancel</button>
+        </section>
+    </div>
+
     <script>
-    /* Show the browser prompt on every page load/refresh in Android mobile browsers.
-       Tapping Continue hides it only for the current page view. */
+    /* Android mobile prompt + an in-page browser picker. A website cannot force
+       Android's native app chooser; each option below tries a selected browser package. */
     (function () {
         function setupAndroidBrowserPrompt() {
             const modal = document.getElementById('android-browser-modal');
             const continueBtn = document.getElementById('android-continue-btn');
-            const chromeBtn = document.getElementById('android-chrome-btn');
-            if (!modal || !continueBtn || !chromeBtn) return;
+            const openPickerBtn = document.getElementById('android-chrome-btn');
+            const picker = document.getElementById('android-browser-picker');
+            const choiceList = document.getElementById('android-browser-choice-list');
+            const cancelPicker = document.getElementById('android-picker-cancel');
+            if (!modal || !continueBtn || !openPickerBtn || !picker || !choiceList || !cancelPicker) return;
 
             const ua = navigator.userAgent || navigator.vendor || '';
             const isAndroid = /Android/i.test(ua);
             const screenWidth = window.screen.width || window.innerWidth;
             const viewportWidth = window.innerWidth || screenWidth;
-            const isMobileAndroid = isAndroid &&
-                (/Mobile/i.test(ua) || Math.min(screenWidth, viewportWidth) <= 900);
+            const isMobileAndroid = isAndroid && (/Mobile/i.test(ua) || Math.min(screenWidth, viewportWidth) <= 900);
 
-            // Show on every Android mobile browser, including Chrome.
-            // Desktop/laptop and non-Android devices will not see this prompt.
             if (isMobileAndroid) {
                 modal.classList.add('is-visible');
                 modal.setAttribute('aria-hidden', 'false');
@@ -1936,22 +1978,49 @@
                 modal.setAttribute('aria-hidden', 'true');
             });
 
-            // Request Android to open the current page in another compatible browser.
-            // Browser chooser behavior depends on Android/device settings.
-            if (isMobileAndroid && /^https?:\/\//i.test(window.location.href)) {
-                const currentUrl = window.location.href;
-                const scheme = currentUrl.startsWith('https://') ? 'https' : 'http';
-                const encodedFallback = encodeURIComponent(currentUrl);
-                chromeBtn.href = 'intent://' + currentUrl.replace(/^https?:\/\//i, '') +
-                    '#Intent;scheme=' + scheme +
-                    ';action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE' +
-                    ';S.browser_fallback_url=' + encodedFallback + ';end';
-                chromeBtn.target = '_self';
-            } else {
-                chromeBtn.href = window.location.href;
+            function closePicker() {
+                picker.classList.remove('is-visible');
+                picker.setAttribute('aria-hidden', 'true');
             }
+            openPickerBtn.addEventListener('click', function (event) {
+                event.preventDefault();
+                if (!isMobileAndroid) return;
+                const currentUrl = window.location.href;
+                if (!/^https?:\/\//i.test(currentUrl)) {
+                    window.alert('Please open this portfolio from its live HTTPS website.');
+                    return;
+                }
+                const scheme = currentUrl.startsWith('https://') ? 'https' : 'http';
+                const hostAndPath = currentUrl.replace(/^https?:\/\//i, '');
+                const fallback = encodeURIComponent(currentUrl);
+                const browsers = [
+                    { name: 'Google Chrome', packageName: 'com.android.chrome', symbol: 'C' },
+                    { name: 'Firefox', packageName: 'org.mozilla.firefox', symbol: 'F' },
+                    { name: 'Samsung Internet', packageName: 'com.sec.android.app.sbrowser', symbol: 'S' },
+                    { name: 'Microsoft Edge', packageName: 'com.microsoft.emmx', symbol: 'E' },
+                    { name: 'Brave', packageName: 'com.brave.browser', symbol: 'B' },
+                    { name: 'Opera', packageName: 'com.opera.browser', symbol: 'O' }
+                ];
+                choiceList.innerHTML = '';
+                browsers.forEach(function (browser) {
+                    const link = document.createElement('a');
+                    link.className = 'android-browser-choice';
+                    link.href = 'intent://' + hostAndPath + '#Intent;scheme=' + scheme +
+                        ';action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE' +
+                        ';package=' + browser.packageName + ';S.browser_fallback_url=' + fallback + ';end';
+                    link.innerHTML = '<span class="browser-symbol" aria-hidden="true">' + browser.symbol +
+                        '</span><span>' + browser.name + '</span>';
+                    link.addEventListener('click', closePicker);
+                    choiceList.appendChild(link);
+                });
+                picker.classList.add('is-visible');
+                picker.setAttribute('aria-hidden', 'false');
+            });
+            cancelPicker.addEventListener('click', closePicker);
+            picker.addEventListener('click', function (event) {
+                if (event.target === picker) closePicker();
+            });
         }
-
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', setupAndroidBrowserPrompt);
         } else {
