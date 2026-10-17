@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | Umang Kakkad</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--blue:#2563eb;--blue-dark:#1d4ed8;--ink:#111827;--muted:#64748b;--line:#e5e7eb;--bg:#f8fafc;--red:#b91c1c;--green:#166534}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Arial,sans-serif}
+    button,input,textarea,select{font:inherit}button{cursor:pointer}
+    .topbar{height:70px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;z-index:5}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:800}.mark{width:38px;height:38px;display:grid;place-items:center;background:var(--blue);color:white;border-radius:12px}
+    .top-actions{display:flex;align-items:center;gap:12px}.muted{color:var(--muted);font-size:12px}
+    .layout{display:grid;grid-template-columns:235px minmax(0,1fr);min-height:calc(100vh - 70px)}
+    aside{background:#fff;border-right:1px solid var(--line);padding:24px 14px}
+    .nav-label{font-size:10px;letter-spacing:1.2px;font-weight:800;color:#94a3b8;padding:0 12px;margin:8px 0 12px}
+    .nav-btn{display:flex;width:100%;text-align:left;align-items:center;gap:11px;padding:12px;border:0;background:transparent;border-radius:10px;color:#475569;font-size:13px;font-weight:600;margin:3px 0}
+    .nav-btn:hover,.nav-btn.active{background:#eff6ff;color:var(--blue)}
+    main{padding:32px;min-width:0;max-width:1200px;width:100%;margin:0 auto}
+    .page-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:24px}
+    h1{font-size:27px;letter-spacing:-.8px;margin:0 0 8px}h2{font-size:17px;margin:0 0 8px}.sub{margin:0;color:var(--muted);font-size:13px;line-height:1.6}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:20px}
+    .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:0 8px 25px rgba(15,23,42,.025);min-width:0}
+    .metric{font-size:28px;font-weight:800;margin:10px 0 4px}.metric-label{font-size:12px;color:var(--muted)}
+    .editor-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:18px}
+    label{display:block;font-size:12px;font-weight:700;margin:14px 0 7px}
+    input,textarea,select{width:100%;border:1px solid #cbd5e1;border-radius:10px;padding:12px;outline:none;background:#fff;color:var(--ink);font-size:13px}
+    input:focus,textarea:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 3px #2563eb18}
+    textarea{min-height:320px;resize:vertical;font-family:Consolas,Monaco,monospace;line-height:1.55;tab-size:2}
+    .btn{border:0;border-radius:10px;padding:11px 15px;font-size:12px;font-weight:700;background:var(--blue);color:#fff}
+    .btn:hover{background:var(--blue-dark)}.btn:disabled{opacity:.6;cursor:wait}
+    .btn-secondary{background:#fff;color:#334155;border:1px solid var(--line)}.btn-secondary:hover{background:#f8fafc}
+    .btn-danger{background:#fff;color:var(--red);border:1px solid #fecaca}.btn-danger:hover{background:#fef2f2}
+    .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+    .notice{display:none;border-radius:10px;padding:12px 14px;font-size:12px;line-height:1.55;margin:16px 0 0;overflow-wrap:anywhere}
+    .notice.show{display:block}.notice.error{background:#fef2f2;border:1px solid #fecaca;color:var(--red)}.notice.success{background:#f0fdf4;border:1px solid #bbf7d0;color:var(--green)}.notice.info{background:#eff6ff;border:1px solid #bfdbfe;color:#1d4ed8}
+    .help{font-size:12px;color:var(--muted);line-height:1.7;margin-top:10px}
+    .hidden{display:none!important}.status-pill{display:inline-block;border-radius:99px;padding:6px 9px;background:#f1f5f9;color:#475569;font-size:10px;font-weight:700}
+    .footer{color:#94a3b8;font-size:11px;text-align:center;padding:22px}
+    @media(max-width:800px){.layout{grid-template-columns:1fr}aside{border-right:0;border-bottom:1px solid var(--line);padding:10px;display:flex;gap:5px;overflow-x:auto}.nav-label{display:none}.nav-btn{white-space:nowrap;width:auto;margin:0}.grid{grid-template-columns:1fr}.topbar{padding:0 16px}.top-actions .muted{display:none}main{padding:20px 14px}.page-head{flex-direction:column}textarea{min-height:260px}}
+  
+    /* Premium portfolio-matched visual refresh */
+    :root{--blue:#2563eb;--blue-dark:#1d4ed8;--ink:#111827;--muted:#667085;--line:#e6eaf0;--bg:#f7f9fc}
+    body{background:#f7f9fc;font-family:Inter,Arial,sans-serif;color:#111827}
+    .topbar{height:76px;padding:0 max(22px,calc((100vw - 1320px)/2));border-bottom:1px solid #e6eaf0;background:rgba(255,255,255,.96)}
+    .brand{gap:12px;font-family:Manrope,Inter,sans-serif;letter-spacing:-.3px}
+    .mark{width:42px;height:42px;border-radius:12px;background:#111827;box-shadow:none;font-family:Manrope,sans-serif;font-size:13px}
+    .top-actions{gap:14px}
+    .layout{grid-template-columns:245px minmax(0,1fr);min-height:calc(100vh - 76px)}
+    aside{padding:28px 16px;background:#fff;border-right:1px solid #e6eaf0}
+    .nav-label{letter-spacing:1.4px;font-size:9px;padding:0 13px;color:#98a2b3}
+    .nav-btn{padding:13px 14px;border-radius:10px;font-size:12px;transition:background .15s ease,color .15s ease}
+    .nav-btn.active{background:#eff4ff;color:#2563eb;box-shadow:inset 2px 0 #2563eb}
+    main{max-width:1260px;padding:36px}
+    h1,h2{font-family:Manrope,Inter,sans-serif}
+    h1{font-size:29px;letter-spacing:-1px}
+    .sub{line-height:1.75}
+    .card{border-radius:16px;border-color:#e6eaf0;box-shadow:0 8px 28px rgba(16,24,40,.035);padding:24px}
+    .grid{gap:18px}
+    .metric{font-family:Manrope,Inter,sans-serif;font-size:30px;letter-spacing:-1px}
+    .btn{border-radius:9px;padding:12px 16px;font-size:11px;transition:background .15s ease,border-color .15s ease}
+    .btn-secondary{border-color:#e0e5ed}
+    input,textarea,select{border-color:#d0d5dd;border-radius:9px}
+    input:focus,textarea:focus,select:focus{border-color:#2563eb;box-shadow:0 0 0 3px #2563eb15}
+    .status-pill{letter-spacing:.45px}
+    .footer{padding:25px 8px;color:#98a2b3}
+    @media(max-width:800px){.layout{grid-template-columns:1fr}.topbar{height:68px;padding:0 15px}.layout{min-height:calc(100vh - 68px)}aside{padding:10px;background:#fff}.nav-btn{padding:11px 12px}.nav-btn.active{box-shadow:none}main{padding:22px 14px}.card{padding:19px}}
+
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><div class="mark">UK</div><div>Portfolio Admin<div class="muted" style="font-weight:500;margin-top:3px">Umang Kakkad</div></div></div>
+    <div class="top-actions"><span id="adminEmail" class="muted">Checking admin session…</span><button id="logoutBtn" class="btn btn-secondary" type="button">Log out</button></div>
+  </header>
+
+  <div id="loadingScreen" style="max-width:650px;margin:70px auto;padding:24px;text-align:center">
+    <h2>Verifying secure admin access…</h2><p class="sub">Please wait.</p><div id="loadingMessage" class="notice show info"></div>
+  </div>
+
+  <div id="app" class="layout hidden">
+    <aside>
+      <div class="nav-label">WORKSPACE</div>
+      <button class="nav-btn active" data-section="overview">▦ Overview</button>
+      <button class="nav-btn" data-section="about">👤 About Me</button>
+      <button class="nav-btn" data-section="projects">▣ Projects</button>
+      <button class="nav-btn" data-section="education">🎓 Academics</button>
+      <button class="nav-btn" data-section="skills">🧠 Skills</button>
+      <button class="nav-btn" data-section="experience">💼 Experience</button>
+      <button class="nav-btn" data-section="certificates">🏆 Certificates</button>
+      <button class="nav-btn" data-section="events">▧ Events & Gallery</button>
+      <button class="nav-btn" data-section="resume">📄 Resume</button>
+      <button class="nav-btn" data-section="notices">📣 Latest Updates</button>
+      <button class="nav-btn" data-section="site_settings">⚙️ Site Settings</button>
+    </aside>
+
+    <main>
+      <section id="overviewPage">
+        <div class="page-head"><div><h1>Dashboard overview</h1><p class="sub">Your portfolio admin workspace.</p></div><span class="status-pill">ADMIN SESSION VERIFIED</span></div>
+        <div class="grid">
+          <div class="card"><div class="metric">✓</div><div class="metric-label">Authentication</div><p class="sub" style="margin-top:10px">Supabase login connected</p></div>
+          <div class="card"><div class="metric" id="sectionCount">—</div><div class="metric-label">Saved content sections</div><p class="sub" style="margin-top:10px">Records in portfolio_content</p></div>
+          <div class="card"><div class="metric">JSON</div><div class="metric-label">Content editor</div><p class="sub" style="margin-top:10px">Edit section data and save it</p></div>
+        </div>
+        <div class="card">
+          <h2>Welcome to your admin dashboard</h2>
+          <p class="sub">Choose a section from the left menu to load or edit its content. Your changes are saved to the Supabase database.</p>
+          <div class="notice show info">Important: this dashboard saves data to Supabase. Your existing GitHub Pages portfolio will not automatically display these changes until its frontend is connected to read from the portfolio_content table. This dashboard does not publish or commit files to GitHub.</div>
+          <div class="actions"><button class="btn" id="goAboutBtn" type="button">Start with About Me</button><button class="btn btn-secondary" id="refreshOverviewBtn" type="button">Refresh overview</button></div>
+        </div>
+      </section>
+
+      <section id="editorPage" class="hidden">
+        <div class="page-head"><div><h1 id="editorTitle">Edit content</h1><p class="sub" id="editorSubtitle">Edit this section's JSON data.</p></div><button id="loadBtn" class="btn btn-secondary" type="button">Reload from database</button></div>
+        <div class="card">
+          <div class="editor-head"><div><h2 id="formHeading">Edit details</h2><p class="sub">Fill in the boxes below. No coding required.</p></div><span id="recordStatus" class="status-pill">NOT LOADED</span></div>
+          <div id="formEditor"></div>
+          <p class="help">Images and files are uploaded to Supabase Storage. Make sure the Storage bucket configured for this dashboard exists.</p>
+          <div class="actions"><button id="saveBtn" class="btn" type="button">Save changes</button><button id="addItemBtn" class="btn btn-secondary hidden" type="button">+ Add another</button></div>
+          <div id="editorNotice" class="notice" role="status" aria-live="polite"></div>
+        </div>
+      </section>
+      <div id="globalNotice" class="notice" role="status" aria-live="polite"></div>
+      <div class="footer">Private admin area · Keep this page and your credentials private.</div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // Paste the SAME new project's base URL and Publishable Key used in admin/login.html.
+    // URL example format: https://your-project-ref.supabase.co (no /rest/v1).
+    const SUPABASE_URL = "https://rxbggmwzgbshmpjareav.supabase.co/";
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_ptDO2uplwLjlJ2i-KCvkmA_1rcvyeGY";
+
+    const sectionInfo = {
+      about: { title: "About Me", subtitle: "Your introduction, bio, skills, and profile details.", starter: { title: "About Me", description: "Write your introduction here.", skills: [] } },
+      projects: { title: "Projects", subtitle: "Your project portfolio data.", starter: [{ title: "Project title", description: "Project description", tech: [], link: "" }] },
+      education: { title: "Academics", subtitle: "Edit education and academic journey cards.", starter: [{ title: "Degree / qualification", date: "", description: "Institution and details", image: "" }] },
+      skills: { title: "Skills", subtitle: "Edit skills shown on the public portfolio.", starter: [{ title: "Skill category", date: "", description: "HTML, CSS, JavaScript" }] },
+      experience: { title: "Experience", subtitle: "Edit internships and professional experience.", starter: [{ title: "Role / experience", date: "", description: "Company and responsibilities", image: "" }] },
+      certificates: { title: "Certificates", subtitle: "Certificate names, dates, and image paths/URLs.", starter: [{ title: "Certificate name", date: "", image: "images/certificate.png" }] },
+      events: { title: "Events & Gallery", subtitle: "Event details and photo paths/URLs.", starter: [{ title: "Event name", date: "", images: ["images/event-photo.png"] }] },
+      resume: { title: "Resume", subtitle: "Resume link and display details.", starter: { title: "Resume", url: "files/resume.pdf" } },
+      notices: { title: "Latest Updates", subtitle: "Edit the scrolling Latest Updates message.", starter: { text: "Portfolio updated — welcome to my portfolio." } },
+      site_settings: { title: "Site Settings", subtitle: "Edit the header, hero text, and theme colors to match your portfolio.", starter: { name: "Umang Kakkad", role: "Software Developer & MCA Student", university: "GLS University, Ahmedabad", heroTitle: "Welcome to the Official Portfolio of", heroDescription: "Building reliable desktop and web applications with modern technologies.", primaryColor: "#003399", accentColor: "#FF9900" } }
+    };
+
+    let client = null;
+    let currentSection = "about";
+    let currentUserId = null;
+    let currentContent = null;
+    const el = id => document.getElementById(id);
+    const STORAGE_BUCKET = "portfolio-images"; // Create this bucket in Supabase Storage; public bucket for portfolio images.
+
+    function notice(target, message, type = "info") { target.textContent = message; target.className = "notice show " + type; }
+    function clearNotice(target) { target.textContent = ""; target.className = "notice"; }
+    function setupClient() {
+      if (!window.supabase) throw new Error("Supabase library failed to load. Check your internet connection and refresh.");
+      if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY || SUPABASE_URL.includes("PASTE_") || SUPABASE_PUBLISHABLE_KEY.includes("PASTE_") || !SUPABASE_URL.startsWith("https://") || !SUPABASE_URL.includes(".supabase.co") || SUPABASE_URL.includes("/rest/v1") || SUPABASE_URL.includes("/auth/v1")) throw new Error("Setup incomplete: add the same Supabase Project URL and Publishable Key used in login.html.");
+      client = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+    }
+    async function verifyAdmin() {
+      setupClient();
+      const {data:sessionData,error:sessionError}=await client.auth.getSession(); if(sessionError) throw sessionError;
+      if(!sessionData.session){window.location.replace("login.html");return false;}
+      const user=sessionData.session.user; currentUserId=user.id; el("adminEmail").textContent=user.email||"Admin";
+      const {data:adminRow,error:adminError}=await client.from("portfolio_admins").select("user_id").eq("user_id",user.id).maybeSingle();
+      if(adminError) throw new Error("Admin verification failed. Check portfolio_admins SELECT policy.");
+      if(!adminRow){await client.auth.signOut();window.location.replace("login.html");return false;}
+      el("loadingScreen").classList.add("hidden");el("app").classList.remove("hidden");await refreshOverview();return true;
+    }
+    async function refreshOverview(){
+      const {data,error}=await client.from("portfolio_content").select("section");
+      if(error){el("sectionCount").textContent="—";notice(el("globalNotice"),"Could not read portfolio_content: "+error.message,"error");return;}
+      el("sectionCount").textContent=String(new Set((data||[]).map(r=>r.section)).size);clearNotice(el("globalNotice"));
+    }
+    const defaults={
+      about:{title:"About Me",name:"",role:"",university:"",description:"",skills:[],image:""},
+      projects:[{title:"",description:"",tech:[],link:"",image:""}],
+      education:[{title:"",date:"",description:"",image:""}],
+      skills:[{title:"",date:"",description:""}],
+      experience:[{title:"",date:"",description:"",image:""}],
+      certificates:[{title:"",date:"",image:""}],
+      events:[{title:"",date:"",images:[]}],
+      resume:{title:"Resume",url:""},
+      notices:{text:""},
+      site_settings:{name:"Umang Kakkad",role:"Software Developer & MCA Student",university:"GLS University, Ahmedabad",heroTitle:"Welcome to the Official Portfolio of",heroDescription:"",primaryColor:"#003399",accentColor:"#FF9900"}
+    };
+    function escapeHtml(v){return String(v??"").replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+    function field(label,key,value,type="text",placeholder=""){
+      return `<label>${label}</label><input data-key="${key}" type="${type}" value="${escapeHtml(value)}" placeholder="${escapeHtml(placeholder)}">`;
+    }
+    function textareaField(label,key,value){return `<label>${label}</label><textarea data-key="${key}" style="min-height:100px;font-family:Inter,Arial,sans-serif" placeholder="Enter ${label.toLowerCase()}">${escapeHtml(value)}</textarea>`;}
+    function uploadField(label,key,value,accept="image/*"){
+      return `<label>${label}</label><input data-upload="${key}" type="file" accept="${accept}"><input data-key="${key}" type="url" value="${escapeHtml(value)}" placeholder="Uploaded file URL will appear here">${value?`<p class="help">Current file: <a href="${escapeHtml(value)}" target="_blank" rel="noopener">Open current file</a></p>`:""}`;
+    }
+    function renderForm(){
+      const host=el("formEditor");host.innerHTML="";el("addItemBtn").classList.toggle("hidden",!Array.isArray(currentContent));
+      if(currentSection==="about"){
+        const d=currentContent||{};host.innerHTML=field("Section title","title",d.title||"About Me")+field("Your name","name",d.name||"")+field("Role / headline","role",d.role||"")+field("University","university",d.university||"")+textareaField("About description","description",d.description||"")+field("Skills (separate with commas)","skills",Array.isArray(d.skills)?d.skills.join(", "):"")+uploadField("Profile image","image",d.image||"");
+      }else if(currentSection==="resume"){
+        const d=currentContent||{};host.innerHTML=field("Resume section title","title",d.title||"Resume")+uploadField("Upload resume PDF","url",d.url||"",".pdf,application/pdf");
+      }else if(currentSection==="notices"){
+        const d=currentContent||{};host.innerHTML=textareaField("Latest Updates ticker text","text",d.text||"");
+      }else if(currentSection==="site_settings"){
+        const d=currentContent||{};host.innerHTML=field("Portfolio name","name",d.name||"Umang Kakkad")+field("Role / headline","role",d.role||"")+field("University","university",d.university||"")+field("Hero heading","heroTitle",d.heroTitle||"")+textareaField("Hero description","heroDescription",d.heroDescription||"")+field("Primary blue color (hex)","primaryColor",d.primaryColor||"#003399")+field("Accent orange color (hex)","accentColor",d.accentColor||"#FF9900");
+      }else{
+        const items=Array.isArray(currentContent)?currentContent:[{...defaults[currentSection][0]}];
+        host.innerHTML=items.map((d,i)=>`<div class="card" data-item="${i}" style="margin-bottom:16px;padding:18px"><div class="editor-head"><h2>${currentSection.slice(0,-1).replace(/^./,c=>c.toUpperCase())} ${i+1}</h2><button type="button" class="btn btn-danger remove-item" data-index="${i}">Delete</button></div>`+
+          field("Title / name","title",d.title||"")+
+          (["projects","education","skills","experience"].includes(currentSection)?textareaField("Description / details","description",d.description||""):"")+
+          (currentSection==="projects"?field("Technologies (comma separated)","tech",Array.isArray(d.tech)?d.tech.join(", "):"")+field("Project link","link",d.link||"","url"):"")+
+          (["certificates","events","education","experience","skills"].includes(currentSection)?field("Date / subtitle (optional)","date",d.date||""):"")+
+          (currentSection==="certificates"?uploadField("Certificate image","image",d.image||""):"")+
+          (["projects","education","experience"].includes(currentSection)?uploadField("Image (optional)","image",d.image||""):"")+
+          (currentSection==="events"?uploadField("Event photo","eventImage",Array.isArray(d.images)?(d.images[0]||""):"", "image/*"):"")+
+          `</div>`).join("");
+        host.querySelectorAll(".remove-item").forEach(b=>b.addEventListener("click",()=>{if(confirm("Delete this item from the form? Click Save changes to save the removal.")){currentContent.splice(Number(b.dataset.index),1);renderForm();}}));
+      }
+      host.querySelectorAll("input[type=file]").forEach(inp=>inp.addEventListener("change",()=>uploadSelectedFile(inp)));
+    }
+    async function uploadSelectedFile(input){
+      const file=input.files&&input.files[0];if(!file)return;
+      if(file.size>15*1024*1024){notice(el("editorNotice"),"Please choose a file smaller than 15 MB.","error");input.value="";return;}
+      const key=input.dataset.upload;const urlInput=input.parentElement.querySelector(`[data-key="${key}"]`);
+      const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,"-");const path=`${currentUserId}/${Date.now()}-${safeName}`;
+      input.disabled=true;notice(el("editorNotice"),"Uploading file…","info");
+      try{
+        const {error}=await client.storage.from(STORAGE_BUCKET).upload(path,file,{upsert:false,contentType:file.type||"application/octet-stream"});if(error)throw error;
+        const {data}=client.storage.from(STORAGE_BUCKET).getPublicUrl(path);urlInput.value=data.publicUrl;
+        notice(el("editorNotice"),"Upload complete. Click Save changes to store this file URL in the section.","success");
+      }catch(e){notice(el("editorNotice"),"Upload failed: "+(e.message||"Unknown error")+". Check that the Supabase Storage bucket exists and its upload policy allows signed-in admins.","error");}
+      finally{input.disabled=false;}
+    }
+    async function openSection(section){
+      if(!defaults[section])return;currentSection=section;document.querySelectorAll(".nav-btn").forEach(b=>b.classList.toggle("active",b.dataset.section===section));el("overviewPage").classList.add("hidden");el("editorPage").classList.remove("hidden");el("editorTitle").textContent=({about:"About Me",projects:"Projects",education:"Academics",skills:"Skills",experience:"Experience",certificates:"Certificates",events:"Events & Gallery",resume:"Resume",notices:"Latest Updates",site_settings:"Site Settings"})[section];el("editorSubtitle").textContent="Edit details and upload files using the form below.";el("recordStatus").textContent="LOADING";clearNotice(el("editorNotice"));await loadSection();
+    }
+    async function loadSection(){const b=el("loadBtn");b.disabled=true;try{
+      const {data,error}=await client.from("portfolio_content").select("section,content,updated_at").eq("section",currentSection).maybeSingle();if(error)throw error;
+      currentContent=data?data.content:JSON.parse(JSON.stringify(defaults[currentSection]));
+      if(currentSection==="about"&&!Array.isArray(currentContent))currentContent={...defaults.about,...currentContent};
+      if(["projects","certificates","events"].includes(currentSection)&&!Array.isArray(currentContent))currentContent=[currentContent];
+      el("recordStatus").textContent=data?"SAVED IN DATABASE":"NEW SECTION";renderForm();notice(el("editorNotice"),data?"Loaded saved details. Edit the boxes, then click Save changes.":"No saved record yet. Fill in the form and click Save changes.",data?"success":"info");
+    }catch(e){el("recordStatus").textContent="LOAD FAILED";notice(el("editorNotice"),"Could not load this section: "+(e.message||"Unknown error"),"error");}finally{b.disabled=false;}}
+    function collectForm(){
+      if(currentSection==="about"){
+        const d={};el("formEditor").querySelectorAll("[data-key]").forEach(i=>d[i.dataset.key]=i.value.trim());d.skills=(d.skills||"").split(",").map(x=>x.trim()).filter(Boolean);return d;
+      }
+      if(["resume","notices","site_settings"].includes(currentSection)){const d={};el("formEditor").querySelectorAll("[data-key]").forEach(i=>d[i.dataset.key]=i.value.trim());return d;}
+      return [...el("formEditor").querySelectorAll("[data-item]")].map(card=>{const d={};card.querySelectorAll("[data-key]").forEach(i=>d[i.dataset.key]=i.value.trim());if(currentSection==="projects")d.tech=(d.tech||"").split(",").map(x=>x.trim()).filter(Boolean);if(currentSection==="events"){const img=card.querySelector('[data-key="eventImage"]')?.value.trim()||"";d.images=img?[img]:[];delete d.eventImage;}return d;});
+    }
+    async function saveSection(){clearNotice(el("editorNotice"));const button=el("saveBtn");button.disabled=true;button.textContent="Saving…";try{
+      const {data:sessionData}=await client.auth.getSession();if(!sessionData.session||sessionData.session.user.id!==currentUserId)throw new Error("Your admin session expired. Please log in again.");
+      const parsed=collectForm();const {error}=await client.from("portfolio_content").upsert({section:currentSection,content:parsed,updated_at:new Date().toISOString()},{onConflict:"section"});if(error)throw error;
+      currentContent=parsed;el("recordStatus").textContent="SAVED";notice(el("editorNotice"),"Saved to Supabase. The connected portfolio reads About, Projects, Certificates, Events, Resume, Latest Updates and Site Settings when refreshed.","success");await refreshOverview();
+    }catch(e){notice(el("editorNotice"),"Save failed: "+(e.message||"Unknown error")+". Check admin INSERT/UPDATE policies in Supabase.","error");}finally{button.disabled=false;button.textContent="Save changes";}}
+    document.querySelectorAll(".nav-btn").forEach(button => button.addEventListener("click", async () => {
+      if (button.dataset.section === "overview") {
+        document.querySelectorAll(".nav-btn").forEach(item => item.classList.toggle("active", item === button));
+        el("editorPage").classList.add("hidden");
+        el("overviewPage").classList.remove("hidden");
+        await refreshOverview();
+      } else {
+        await openSection(button.dataset.section);
+      }
+    }));
+    el("goAboutBtn").addEventListener("click", () => openSection("about"));
+    el("refreshOverviewBtn").addEventListener("click", refreshOverview);
+    el("loadBtn").addEventListener("click", loadSection);
+    el("saveBtn").addEventListener("click", saveSection);
+    el("addItemBtn").addEventListener("click",()=>{if(!Array.isArray(currentContent))return;currentContent.push(JSON.parse(JSON.stringify(defaults[currentSection][0])));renderForm();});
+    el("logoutBtn").addEventListener("click", async () => {
+      el("logoutBtn").disabled = true;
+      try { if (client) await client.auth.signOut(); }
+      finally { window.location.replace("login.html"); }
+    });
+
+    verifyAdmin().catch(error => {
+      el("loadingMessage").textContent = error.message || "Could not verify admin access.";
+      el("loadingMessage").className = "notice show error";
+    });
+  </script>
+</body>
+</html>

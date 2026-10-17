@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Access | Umang Kakkad</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#f5f7fb">
+  <meta name="description" content="Secure portfolio administration login for Umang Kakkad.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue: #2563eb;
+      --blue-hover: #1d4ed8;
+      --ink: #111827;
+      --muted: #667085;
+      --line: #e6eaf0;
+      --paper: #ffffff;
+      --wash: #fafafa;
+      --green: #166534;
+      --red: #b42318;
+    }
+    * { box-sizing: border-box; }
+    html { min-height: 100%; }
+    body {
+      margin: 0; min-height: 100vh; padding: 28px;
+      display: flex; flex-direction: column;
+      background: radial-gradient(ellipse at 15% 5%, rgba(37,99,235,.055), transparent 30%), var(--wash); color: var(--ink);
+      font-family: Inter, Arial, sans-serif;
+    }
+    a { color: inherit; }
+    .topbar {
+      width: min(1120px, 100%); margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 18px;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 11px; text-decoration: none; }
+    .brand-mark {
+      width: 42px; height: 42px; display: grid; place-items: center;
+      border-radius: 12px; background: #111111; color: white; box-shadow: inset 0 -3px 0 rgba(37,99,235,.95);
+      font: 800 14px Manrope, sans-serif; letter-spacing: -.5px;
+    }
+    .brand-name { font: 800 15px Manrope, sans-serif; letter-spacing: -.35px; }
+    .brand-sub { color: var(--muted); font-size: 11px; margin-top: 3px; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+      font-size: 12px; font-weight: 700; color: #344054; padding: 10px 13px;
+      border: 1px solid var(--line); border-radius: 10px; background: white;
+      transition: border-color .18s ease, color .18s ease, transform .18s ease, box-shadow .18s ease;
+    }
+    .back-link:hover { color: var(--blue); border-color: #b9ccff; box-shadow: 0 5px 16px rgba(37,99,235,.08); transform: translateY(-1px); }
+    .brand-mark, .form-logo, .check { transition: transform .18s ease, box-shadow .18s ease; }
+    .brand:hover .brand-mark { transform: translateY(-1px); box-shadow: 0 7px 18px rgba(17,17,17,.12); }
+    .main {
+      flex: 1; display: grid; place-items: center;
+      padding: 48px 0;
+    }
+    .login-layout {
+      position: relative;
+      width: min(920px, 100%); display: grid;
+      grid-template-columns: 1fr 420px; background: var(--paper);
+      border: 1px solid var(--line); border-radius: 18px; overflow: hidden;
+      box-shadow: 0 24px 70px rgba(17,17,17,.065);
+    }
+    .intro-panel {
+      position: relative;
+      padding: 48px; display: flex; flex-direction: column; justify-content: space-between;
+      background: linear-gradient(145deg, #ffffff 0%, #fafcff 100%);
+      border-right: 1px solid var(--line); min-height: 530px;
+    }
+    .intro-panel::before { content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 3px; background: linear-gradient(90deg, #111111 0%, #2563eb 62%, #93b4ff 100%); }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px; color: var(--blue);
+      font-size: 10px; font-weight: 800; letter-spacing: 1.45px; text-transform: uppercase;
+    }
+    .eyebrow-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--blue); }
+    h1 {
+      margin: 22px 0 15px; max-width: 400px;
+      font: 800 clamp(31px, 4vw, 43px)/1.13 Manrope, sans-serif;
+      letter-spacing: -1.8px;
+    }
+    .intro-copy { max-width: 340px; color: var(--muted); font-size: 13px; line-height: 1.85; margin: 0; }
+    .feature-list { list-style: none; padding: 0; margin: 30px 0 0; display: grid; gap: 15px; }
+    .feature-list li { display: flex; align-items: center; gap: 11px; color: #344054; font-size: 12px; font-weight: 600; }
+    .check {
+      display: grid; place-items: center; width: 25px; height: 25px;
+      flex: 0 0 25px; border: 1px solid #dbe6ff; border-radius: 8px;
+      background: #eff4ff; color: var(--blue); font-size: 12px; font-weight: 800;
+    }
+    .panel-note { color: #98a2b3; font-size: 10px; margin-top: 35px; }
+    .form-panel { padding: 42px 34px 32px; display: flex; flex-direction: column; justify-content: center; }
+    .form-logo {
+      width: 44px; height: 44px; display: grid; place-items: center;
+      border: 1px solid var(--line); border-radius: 13px; color: var(--blue);
+      background: #fff; font-size: 18px; margin-bottom: 25px;
+    }
+    h2 { margin: 0 0 8px; font: 800 23px Manrope, sans-serif; letter-spacing: -.7px; }
+    .form-intro { color: var(--muted); font-size: 12px; line-height: 1.7; margin: 0 0 23px; }
+    .view[hidden] { display: none !important; }
+    label { display: block; margin: 16px 0 7px; font-size: 11px; font-weight: 700; color: #344054; }
+    input {
+      width: 100%; min-height: 45px; padding: 12px 13px;
+      border: 1px solid #d0d5dd; border-radius: 10px; outline: none;
+      background: #fff; color: var(--ink); font: 13px Inter, sans-serif;
+      transition: border-color .15s ease, box-shadow .15s ease;
+    }
+    input::placeholder { color: #98a2b3; }
+    input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37,99,235,.11); }
+    .primary-btn {
+      width: 100%; min-height: 46px; margin-top: 21px; border: 1px solid var(--blue);
+      border-radius: 10px; background: #2563eb; color: white; font: 700 12px Inter, sans-serif; box-shadow: 0 8px 18px rgba(37,99,235,.16);
+      cursor: pointer; transition: background .15s ease, transform .15s ease;
+    }
+    .primary-btn:hover { background: var(--blue-hover); box-shadow: 0 10px 22px rgba(37,99,235,.22); }
+    .primary-btn:active { transform: translateY(1px); }
+    .primary-btn:disabled { opacity: .65; cursor: wait; }
+    .form-row { display: flex; justify-content: flex-end; }
+    .text-btn {
+      border: 0; background: transparent; padding: 0; margin-top: 17px;
+      color: var(--blue); font: 700 11px Inter, sans-serif; cursor: pointer;
+    }
+    .text-btn:hover { text-decoration: underline; }
+    .message {
+      display: none; margin-top: 17px; padding: 11px 12px; border-radius: 9px;
+      font-size: 11px; line-height: 1.6; overflow-wrap: anywhere;
+    }
+    .message.show { display: block; }
+    .message.error { color: var(--red); background: #fff5f5; border: 1px solid #fecdca; }
+    .message.success { color: var(--green); background: #f0fdf4; border: 1px solid #bbf7d0; }
+    .message.info { color: #1d4ed8; background: #eff6ff; border: 1px solid #bfdbfe; }
+    .secure-note {
+      display: flex; justify-content: center; align-items: center; gap: 7px;
+      margin-top: 25px; color: #98a2b3; font-size: 10px;
+    }
+    .bottom { width: min(1120px, 100%); margin: 0 auto; display: flex; justify-content: space-between; gap: 12px; color: #98a2b3; font-size: 10px; }
+    @media (max-width: 760px) {
+      body { padding: 18px; }
+      .main { padding: 34px 0; }
+      .login-layout { max-width: 440px; grid-template-columns: 1fr; }
+      .intro-panel { min-height: auto; padding: 27px 27px 24px; border-right: 0; border-bottom: 1px solid var(--line); }
+      h1 { margin-top: 16px; font-size: 30px; letter-spacing: -1.2px; }
+      .intro-copy { font-size: 12px; }
+      .feature-list { grid-template-columns: 1fr; gap: 10px; margin-top: 21px; }
+      .feature-list li { font-size: 11px; }
+      .panel-note { margin-top: 22px; }
+      .form-panel { padding: 29px 27px 27px; }
+      .form-logo { margin-bottom: 20px; }
+      .bottom { flex-direction: column; align-items: center; text-align: center; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="https://kakkadumang.github.io/Umang-_Kakkad_portfolio.com/" aria-label="Return to Umang Kakkad portfolio">
+      <span class="brand-mark">UK</span>
+      <span><span class="brand-name">Umang Kakkad</span><span class="brand-sub" style="display:block">Software Developer · MCA Student</span></span>
+    </a>
+    <a class="back-link" href="https://kakkadumang.github.io/Umang-_Kakkad_portfolio.com/"><span aria-hidden="true">←</span> Back to portfolio</a>
+  </header>
+
+  <main class="main">
+    <div class="login-layout">
+      <section class="intro-panel">
+        <div>
+          <div class="eyebrow"><span class="eyebrow-dot"></span> Private workspace</div>
+          <h1>Your work.<br>One secure place.</h1>
+          <p class="intro-copy">Welcome to the private management area for Umang Kakkad’s portfolio. Sign in to access the tools for maintaining your professional profile and portfolio content.</p>
+          <ul class="feature-list">
+            <li><span class="check">✓</span> Manage portfolio content in one place</li>
+            <li><span class="check">✓</span> Keep your admin access private</li>
+            <li><span class="check">✓</span> Save content to your connected database</li>
+          </ul>
+        </div>
+        <div class="panel-note">UMANG KAKKAD · PORTFOLIO ADMIN</div>
+      </section>
+
+      <section class="form-panel">
+        <div id="loginView" class="view">
+          <div class="form-logo" aria-hidden="true">↗</div>
+          <h2>Admin sign in</h2>
+          <p class="form-intro">Enter your administrator credentials to continue.</p>
+          <form id="loginForm">
+            <label for="loginEmail">Email address</label>
+            <input id="loginEmail" type="email" autocomplete="username" required placeholder="you@example.com">
+            <label for="loginPassword">Password</label>
+            <input id="loginPassword" type="password" autocomplete="current-password" required placeholder="Enter your password">
+            <button id="loginSubmit" class="primary-btn" type="submit">Sign in to admin <span aria-hidden="true">→</span></button>
+          </form>
+          <div class="form-row"><button id="forgotLink" class="text-btn" type="button">Forgot password?</button></div>
+        </div>
+
+        <div id="forgotView" class="view" hidden>
+          <div class="form-logo" aria-hidden="true">↗</div>
+          <h2>Reset password</h2>
+          <p class="form-intro">Enter your admin email and we’ll send a password-reset link if an account matches.</p>
+          <form id="forgotForm">
+            <label for="forgotEmail">Email address</label>
+            <input id="forgotEmail" type="email" autocomplete="email" required placeholder="you@example.com">
+            <button id="forgotSubmit" class="primary-btn" type="submit">Send reset link →</button>
+          </form>
+          <button class="text-btn" id="backToLogin1" type="button">← Back to sign in</button>
+        </div>
+
+        <div id="resetView" class="view" hidden>
+          <div class="form-logo" aria-hidden="true">↗</div>
+          <h2>Create new password</h2>
+          <p class="form-intro">Choose a new password with at least 8 characters.</p>
+          <form id="resetForm">
+            <label for="newPassword">New password</label>
+            <input id="newPassword" type="password" minlength="8" autocomplete="new-password" required placeholder="At least 8 characters">
+            <label for="confirmPassword">Confirm password</label>
+            <input id="confirmPassword" type="password" minlength="8" autocomplete="new-password" required placeholder="Enter it again">
+            <button id="resetSubmit" class="primary-btn" type="submit">Update password →</button>
+          </form>
+          <button class="text-btn" id="backToLogin2" type="button">← Back to sign in</button>
+        </div>
+
+        <div id="message" class="message" role="status" aria-live="polite"></div>
+        <div class="secure-note"><span aria-hidden="true">▣</span> Secure authentication powered by Supabase</div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="bottom">
+    <span>© <span id="year"></span> Umang Kakkad. All rights reserved.</span>
+    <span>Private Admin Portal · Authorized access only</span>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // Keep these as the base URL and Publishable Key from your NEW Supabase project.
+    const SUPABASE_URL = "https://rxbggmwzgbshmpjareav.supabase.co/";
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_ptDO2uplwLjlJ2i-KCvkmA_1rcvyeGY";
+
+    const loginView = document.getElementById("loginView");
+    const forgotView = document.getElementById("forgotView");
+    const resetView = document.getElementById("resetView");
+    const messageBox = document.getElementById("message");
+    const loginForm = document.getElementById("loginForm");
+    const forgotForm = document.getElementById("forgotForm");
+    const resetForm = document.getElementById("resetForm");
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    function showMessage(text, type = "error") {
+      messageBox.textContent = text;
+      messageBox.className = "message show " + type;
+    }
+    function clearMessage() {
+      messageBox.textContent = "";
+      messageBox.className = "message";
+    }
+    function showView(view) {
+      [loginView, forgotView, resetView].forEach(item => item.hidden = item !== view);
+      clearMessage();
+    }
+    function setBusy(button, busy, label) {
+      button.disabled = busy;
+      if (busy) {
+        button.dataset.originalText = button.textContent;
+        button.textContent = label || "Please wait...";
+      } else if (button.dataset.originalText) {
+        button.textContent = button.dataset.originalText;
+      }
+    }
+    function getClient() {
+      if (!window.supabase) throw new Error("Supabase library could not load. Check your internet connection and refresh.");
+      if (SUPABASE_URL.includes("PASTE_") || SUPABASE_PUBLISHABLE_KEY.includes("PASTE_") ||
+          !SUPABASE_URL.startsWith("https://") || !SUPABASE_URL.includes(".supabase.co") ||
+          SUPABASE_URL.includes("/rest/v1") || SUPABASE_URL.includes("/auth/v1")) {
+        throw new Error("Setup incomplete: enter your NEW Supabase base Project URL and Publishable Key in this file.");
+      }
+      return window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+    }
+
+    document.getElementById("forgotLink").addEventListener("click", () => {
+      document.getElementById("forgotEmail").value = document.getElementById("loginEmail").value.trim();
+      showView(forgotView);
+    });
+    document.getElementById("backToLogin1").addEventListener("click", () => showView(loginView));
+    document.getElementById("backToLogin2").addEventListener("click", () => showView(loginView));
+
+    loginForm.addEventListener("submit", async event => {
+      event.preventDefault(); clearMessage();
+      const button = document.getElementById("loginSubmit");
+      setBusy(button, true, "Signing in...");
+      try {
+        const client = getClient();
+        const email = document.getElementById("loginEmail").value.trim();
+        const password = document.getElementById("loginPassword").value;
+        const { data, error } = await client.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        const { data: admin, error: adminError } = await client.from("portfolio_admins")
+          .select("user_id").eq("user_id", data.user.id).maybeSingle();
+        if (adminError) {
+          await client.auth.signOut();
+          throw new Error("Could not verify admin access. Check portfolio_admins table and its SELECT policy.");
+        }
+        if (!admin) {
+          await client.auth.signOut();
+          throw new Error("This account is not registered as a portfolio admin.");
+        }
+        showMessage("Login successful. Open your admin dashboard to continue.", "success");
+        // Dashboard is a separate page in the same admin folder.
+        setTimeout(() => { window.location.href = "dashboard.html"; }, 700);
+      } catch (error) {
+        showMessage(error.message || "Sign in failed. Check your email and password.");
+      } finally {
+        setBusy(button, false);
+      }
+    });
+
+    forgotForm.addEventListener("submit", async event => {
+      event.preventDefault(); clearMessage();
+      const button = document.getElementById("forgotSubmit");
+      setBusy(button, true, "Sending email...");
+      try {
+        const client = getClient();
+        const email = document.getElementById("forgotEmail").value.trim();
+        const redirectTo = window.location.origin + window.location.pathname + "?reset=1";
+        const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo });
+        if (error) throw error;
+        showMessage("If an account matches this email, a reset link will be sent. Check Inbox and Spam.", "success");
+      } catch (error) {
+        showMessage(error.message || "Could not send reset email. Try again later.");
+      } finally {
+        setBusy(button, false);
+      }
+    });
+
+    async function initializeRecovery() {
+      const url = new URL(window.location.href);
+      const hashParams = new URLSearchParams(url.hash.replace(/^#/, ""));
+      const queryError = url.searchParams.get("error_description");
+      const hashError = hashParams.get("error_description");
+      if (queryError || hashError) {
+        showView(forgotView);
+        showMessage((queryError || hashError).replace(/\+/g, " "));
+        return;
+      }
+      const isReset = url.searchParams.get("reset") === "1" ||
+        hashParams.get("type") === "recovery" || url.searchParams.get("type") === "recovery";
+      if (!isReset) return;
+      try {
+        const client = getClient();
+        const { data, error } = await client.auth.getSession();
+        if (error) throw error;
+        if (data.session) { showView(resetView); return; }
+        const accessToken = hashParams.get("access_token");
+        const refreshToken = hashParams.get("refresh_token");
+        if (accessToken && refreshToken) {
+          const { error: sessionError } = await client.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
+          if (sessionError) throw sessionError;
+          showView(resetView);
+        } else {
+          showView(forgotView);
+          showMessage("This reset link is invalid or expired. Request a new password-reset email.");
+        }
+      } catch (error) {
+        showView(forgotView);
+        showMessage(error.message || "Could not open the reset link.");
+      }
+    }
+
+    resetForm.addEventListener("submit", async event => {
+      event.preventDefault(); clearMessage();
+      const password = document.getElementById("newPassword").value;
+      const confirmation = document.getElementById("confirmPassword").value;
+      if (password.length < 8) { showMessage("Password must be at least 8 characters long."); return; }
+      if (password !== confirmation) { showMessage("Both passwords do not match."); return; }
+      const button = document.getElementById("resetSubmit");
+      setBusy(button, true, "Updating password...");
+      try {
+        const client = getClient();
+        const { data } = await client.auth.getSession();
+        if (!data.session) throw new Error("Reset session is missing or expired. Request a new reset link.");
+        const { error } = await client.auth.updateUser({ password });
+        if (error) throw error;
+        await client.auth.signOut();
+        resetForm.reset();
+        showView(loginView);
+        showMessage("Password updated successfully. Sign in with your new password.", "success");
+      } catch (error) {
+        showMessage(error.message || "Could not update password.");
+      } finally {
+        setBusy(button, false);
+      }
+    });
+
+    initializeRecovery();
+  </script>
+</body>
+</html>
