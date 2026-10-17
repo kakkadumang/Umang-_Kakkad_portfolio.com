@@ -105,6 +105,9 @@
           <div class="card"><div class="metric">✓</div><div class="metric-label">Authentication</div><p class="sub" style="margin-top:10px">Supabase login connected</p></div>
           <div class="card"><div class="metric" id="sectionCount">—</div><div class="metric-label">Saved content sections</div><p class="sub" style="margin-top:10px">Records in portfolio_content</p></div>
           <div class="card"><div class="metric">JSON</div><div class="metric-label">Content editor</div><p class="sub" style="margin-top:10px">Edit section data and save it</p></div>
+          <div class="card"><div class="metric" id="totalViews">—</div><div class="metric-label">Total Page Views</div><p class="sub" style="margin-top:10px">All recorded page views</p></div>
+          <div class="card"><div class="metric" id="todayViews">—</div><div class="metric-label">Today's Views</div><p class="sub" style="margin-top:10px">Page views since local midnight</p></div>
+          <div class="card"><div class="metric" id="weekViews">—</div><div class="metric-label">Last 7 Days</div><p class="sub" style="margin-top:10px">Page views in the last 7 days</p></div>
         </div>
         <div class="card">
           <h2>Welcome to your admin dashboard</h2>
@@ -176,7 +179,43 @@
     async function refreshOverview(){
       const {data,error}=await client.from("portfolio_content").select("section");
       if(error){el("sectionCount").textContent="—";notice(el("globalNotice"),"Could not read portfolio_content: "+error.message,"error");return;}
-      el("sectionCount").textContent=String(new Set((data||[]).map(r=>r.section)).size);clearNotice(el("globalNotice"));
+      el("sectionCount").textContent=String(new Set((data||[]).map(r=>r.section)).size);
+      clearNotice(el("globalNotice"));
+      await refreshVisitorStats();
+    }
+
+    async function refreshVisitorStats(){
+      ["totalViews","todayViews","weekViews"].forEach(id=>{if(el(id))el(id).textContent="…";});
+      try{
+        // Total page views recorded in site_stats.
+        const totalResult = await client.from("site_stats")
+          .select("id", { count: "exact", head: true })
+          .eq("event_type", "page_view");
+        if(totalResult.error) throw totalResult.error;
+        el("totalViews").textContent=String(totalResult.count ?? 0);
+
+        // Start of the current day in the admin's local timezone.
+        const now = new Date();
+        const localMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const todayResult = await client.from("site_stats")
+          .select("id", { count: "exact", head: true })
+          .eq("event_type", "page_view")
+          .gte("created_at", localMidnight.toISOString());
+        if(todayResult.error) throw todayResult.error;
+        el("todayViews").textContent=String(todayResult.count ?? 0);
+
+        const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+        const weekResult = await client.from("site_stats")
+          .select("id", { count: "exact", head: true })
+          .eq("event_type", "page_view")
+          .gte("created_at", sevenDaysAgo.toISOString());
+        if(weekResult.error) throw weekResult.error;
+        el("weekViews").textContent=String(weekResult.count ?? 0);
+      }catch(e){
+        ["totalViews","todayViews","weekViews"].forEach(id=>{if(el(id))el(id).textContent="—";});
+        console.error("Could not load visitor statistics:", e.message || e);
+        notice(el("globalNotice"),"Visitor statistics could not load: "+(e.message||"Check the site_stats SELECT policy for authenticated admins."),"error");
+      }
     }
     const defaults={
       about:{title:"About Me",name:"",role:"",university:"",description:"",skills:[],image:""},
