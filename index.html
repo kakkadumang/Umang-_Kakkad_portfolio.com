@@ -1829,15 +1829,16 @@
 
 
 
-<!-- Supabase: public portfolio content reader. Replace the two placeholders below. -->
+<!-- Supabase: public portfolio content reader. Add your project URL and publishable key below. -->
 <script>
 (function () {
+  // Paste the Supabase Project URL and PUBLISHABLE key here. Never use a secret/service_role key.
   const SUPABASE_URL = 'https://rxbggmwzgbshmpjareav.supabase.co/';
   const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_ptDO2uplwLjlJ2i-KCvkmA_1rcvyeGY';
 
-  // This frontend uses only the publishable/anon key. Never put a service_role/secret key here.
-  if (SUPABASE_URL.includes('PASTE_YOUR_') || SUPABASE_PUBLISHABLE_KEY.includes('PASTE_YOUR_')) {
-    console.info('Supabase is not configured yet. Add your project URL and publishable key.');
+  if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY ||
+      SUPABASE_URL.includes('PASTE_YOUR_') || SUPABASE_PUBLISHABLE_KEY.includes('PASTE_YOUR_')) {
+    console.warn('Portfolio Supabase connection is not configured: add Project URL and Publishable key.');
     return;
   }
 
@@ -1847,13 +1848,13 @@
         '/rest/v1/portfolio_content?select=section,content&section=eq.about&limit=1';
       const response = await fetch(endpoint, {
         headers: {
-          'apikey': SUPABASE_PUBLISHABLE_KEY,
-          'Authorization': 'Bearer ' + SUPABASE_PUBLISHABLE_KEY,
-          'Accept': 'application/json'
+          apikey: SUPABASE_PUBLISHABLE_KEY,
+          Authorization: 'Bearer ' + SUPABASE_PUBLISHABLE_KEY,
+          Accept: 'application/json'
         }
       });
       if (!response.ok) {
-        console.warn('Supabase content could not be loaded. Check the public SELECT policy and project settings.');
+        console.warn('Supabase portfolio read failed:', response.status, await response.text());
         return;
       }
 
@@ -1862,35 +1863,53 @@
       const data = rows[0].content;
       const about = document.getElementById('about');
       if (!about) return;
-        const about = document.getElementById('about');
-if (!about) return;
 
-// Update only the existing About section; keep the original design and layout.
-      // Update only the existing About section; keep the original design and layout.
-      const paragraphs = about.querySelectorAll('.lg\\:col-span-2 p');
-      if (data.description && paragraphs.length) {
-        paragraphs[0].textContent = data.description;
+      // Update existing visible text only; preserve the page layout and styling.
+      if (data.name) {
+        const headerName = document.querySelector('.header-identity h1');
+        if (headerName) headerName.textContent = data.name;
+        const heroName = document.querySelector('#home .hero-content h1');
+        if (heroName) heroName.textContent = data.name;
+        const profileButton = document.getElementById('profile-open-btn');
+        if (profileButton) profileButton.setAttribute('aria-label', 'Open ' + data.name + "'s profile");
       }
-      const brief = about.querySelector('.bg-suGray');
-      if (brief) {
-        const briefItems = brief.querySelectorAll('li');
-        if (data.role && briefItems[0]) {
-          const value = briefItems[0].querySelector('span');
-          if (value) value.textContent = data.role;
-        }
-        if (data.university && briefItems[1]) {
-          const value = briefItems[1].querySelector('span');
-          if (value) value.textContent = data.university;
-        }
+
+      if (data.role) {
+        const headerRole = document.querySelector('.header-identity p');
+        if (headerRole) headerRole.textContent = data.role;
+        const brief = about.querySelector('.bg-suGray');
+        const roleValue = brief && brief.querySelector('li:first-child span');
+        if (roleValue) roleValue.textContent = data.role;
       }
-      // Add an accessible skills line if skills were saved in the dashboard.
+
+      if (data.university) {
+        const headerIdentity = document.querySelector('.header-identity');
+        const universityLine = headerIdentity && headerIdentity.querySelector('p:last-child');
+        if (universityLine) universityLine.textContent = data.university;
+        const brief = about.querySelector('.bg-suGray');
+        const universityValue = brief && brief.querySelector('li:nth-child(2) span');
+        if (universityValue) universityValue.textContent = data.university;
+      }
+
+      if (data.title) {
+        const aboutTitle = about.querySelector('h2');
+        if (aboutTitle) aboutTitle.textContent = data.title;
+      }
+
+      if (data.description) {
+        const paragraphs = about.querySelectorAll('.lg\:col-span-2 p');
+        if (paragraphs.length) paragraphs[0].textContent = data.description;
+        const heroParagraph = document.querySelector('#home .hero-content p');
+        if (heroParagraph) heroParagraph.textContent = data.description;
+      }
+
       if (Array.isArray(data.skills) && data.skills.length) {
         let skillsLine = about.querySelector('[data-supabase-skills]');
         if (!skillsLine) {
           skillsLine = document.createElement('p');
           skillsLine.setAttribute('data-supabase-skills', 'true');
           skillsLine.className = 'text-sm font-semibold text-suBlue mt-4';
-          const copy = about.querySelector('.lg\\:col-span-2');
+          const copy = about.querySelector('.lg\:col-span-2');
           if (copy) copy.appendChild(skillsLine);
         }
         skillsLine.textContent = 'Skills: ' + data.skills.join(' · ');
