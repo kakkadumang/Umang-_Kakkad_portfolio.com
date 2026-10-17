@@ -1828,5 +1828,82 @@
     </script>
 
 
+
+<!-- Supabase: public portfolio content reader. Replace the two placeholders below. -->
+<script>
+(function () {
+  const SUPABASE_URL = 'https://rxbggmwzgbshmpjareav.supabase.co/';
+  const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_ptDO2uplwLjlJ2i-KCvkmA_1rcvyeGY';
+
+  // This frontend uses only the publishable/anon key. Never put a service_role/secret key here.
+  if (SUPABASE_URL.includes('PASTE_YOUR_') || SUPABASE_PUBLISHABLE_KEY.includes('PASTE_YOUR_')) {
+    console.info('Supabase is not configured yet. Add your project URL and publishable key.');
+    return;
+  }
+
+  async function loadPortfolioContent() {
+    try {
+      const endpoint = SUPABASE_URL.replace(/\/$/, '') +
+        '/rest/v1/portfolio_content?select=section,content&section=eq.about&limit=1';
+      const response = await fetch(endpoint, {
+        headers: {
+          'apikey': SUPABASE_PUBLISHABLE_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_PUBLISHABLE_KEY,
+          'Accept': 'application/json'
+        }
+      });
+      if (!response.ok) {
+        console.warn('Supabase content could not be loaded. Check the public SELECT policy and project settings.');
+        return;
+      }
+
+      const rows = await response.json();
+      if (!Array.isArray(rows) || !rows.length || !rows[0].content) return;
+      const data = rows[0].content;
+      const about = document.getElementById('about');
+      if (!about) return;
+
+      // Update only the existing About section; keep the original design and layout.
+      const paragraphs = about.querySelectorAll('.lg\\:col-span-2 p');
+      if (data.description && paragraphs.length) {
+        paragraphs[0].textContent = data.description;
+      }
+      const brief = about.querySelector('.bg-suGray');
+      if (brief) {
+        const briefItems = brief.querySelectorAll('li');
+        if (data.role && briefItems[0]) {
+          const value = briefItems[0].querySelector('span');
+          if (value) value.textContent = data.role;
+        }
+        if (data.university && briefItems[1]) {
+          const value = briefItems[1].querySelector('span');
+          if (value) value.textContent = data.university;
+        }
+      }
+      // Add an accessible skills line if skills were saved in the dashboard.
+      if (Array.isArray(data.skills) && data.skills.length) {
+        let skillsLine = about.querySelector('[data-supabase-skills]');
+        if (!skillsLine) {
+          skillsLine = document.createElement('p');
+          skillsLine.setAttribute('data-supabase-skills', 'true');
+          skillsLine.className = 'text-sm font-semibold text-suBlue mt-4';
+          const copy = about.querySelector('.lg\\:col-span-2');
+          if (copy) copy.appendChild(skillsLine);
+        }
+        skillsLine.textContent = 'Skills: ' + data.skills.join(' · ');
+      }
+    } catch (error) {
+      console.warn('Portfolio content connection error:', error);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadPortfolioContent);
+  } else {
+    loadPortfolioContent();
+  }
+})();
+</script>
+
 </body>
 </html>
