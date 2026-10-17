@@ -1836,103 +1836,52 @@
 
 
 
-<!-- Supabase: public portfolio content reader. Add your project URL and publishable key below. -->
+<!-- Supabase dynamic portfolio reader. Configure URL and public publishable key below. -->
 <script>
-(function () {
-  // Paste the Supabase Project URL and PUBLISHABLE key here. Never use a secret/service_role key.
-  const SUPABASE_URL = '';
-  const SUPABASE_PUBLISHABLE_KEY = '';
-
-  if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY ||
-      SUPABASE_URL.includes('PASTE_YOUR_') || SUPABASE_PUBLISHABLE_KEY.includes('PASTE_YOUR_')) {
-    console.warn('Portfolio Supabase connection is not configured: add Project URL and Publishable key.');
-    return;
-  }
-
-  async function loadPortfolioContent() {
-    try {
-      const endpoint = SUPABASE_URL.replace(/\/$/, '') +
-        '/rest/v1/portfolio_content?select=section,content&section=eq.about&limit=1';
-      const response = await fetch(endpoint, {
-        headers: {
-          apikey: SUPABASE_PUBLISHABLE_KEY,
-          Authorization: 'Bearer ' + SUPABASE_PUBLISHABLE_KEY,
-          Accept: 'application/json'
-        }
-      });
-      if (!response.ok) {
-        console.warn('Supabase portfolio read failed:', response.status, await response.text());
-        return;
-      }
-
-      const rows = await response.json();
-      if (!Array.isArray(rows) || !rows.length || !rows[0].content) return;
-      const data = rows[0].content;
-      const about = document.getElementById('about');
-      if (!about) return;
-
-      // Update existing visible text only; preserve the page layout and styling.
-      if (data.name) {
-        const headerName = document.querySelector('.header-identity h1');
-        if (headerName) headerName.textContent = data.name;
-        const heroName = document.querySelector('#home .hero-content h1');
-        if (heroName) heroName.textContent = data.name;
-        const profileButton = document.getElementById('profile-open-btn');
-        if (profileButton) profileButton.setAttribute('aria-label', 'Open ' + data.name + "'s profile");
-      }
-
-      if (data.role) {
-        const headerRole = document.querySelector('.header-identity p');
-        if (headerRole) headerRole.textContent = data.role;
-        const brief = about.querySelector('.bg-suGray');
-        const roleValue = brief && brief.querySelector('li:first-child span');
-        if (roleValue) roleValue.textContent = data.role;
-      }
-
-      if (data.university) {
-        const headerIdentity = document.querySelector('.header-identity');
-        const universityLine = headerIdentity && headerIdentity.querySelector('p:last-child');
-        if (universityLine) universityLine.textContent = data.university;
-        const brief = about.querySelector('.bg-suGray');
-        const universityValue = brief && brief.querySelector('li:nth-child(2) span');
-        if (universityValue) universityValue.textContent = data.university;
-      }
-
-      if (data.title) {
-        const aboutTitle = about.querySelector('h2');
-        if (aboutTitle) aboutTitle.textContent = data.title;
-      }
-
-      if (data.description) {
-        const paragraphs = about.querySelectorAll('.lg\:col-span-2 p');
-        if (paragraphs.length) paragraphs[0].textContent = data.description;
-        const heroParagraph = document.querySelector('#home .hero-content p');
-        if (heroParagraph) heroParagraph.textContent = data.description;
-      }
-
-      if (Array.isArray(data.skills) && data.skills.length) {
-        let skillsLine = about.querySelector('[data-supabase-skills]');
-        if (!skillsLine) {
-          skillsLine = document.createElement('p');
-          skillsLine.setAttribute('data-supabase-skills', 'true');
-          skillsLine.className = 'text-sm font-semibold text-suBlue mt-4';
-          const copy = about.querySelector('.lg\:col-span-2');
-          if (copy) copy.appendChild(skillsLine);
-        }
-        skillsLine.textContent = 'Skills: ' + data.skills.join(' · ');
-      }
-    } catch (error) {
-      console.warn('Portfolio content connection error:', error);
+(async function(){
+  const SUPABASE_URL = 'https://rxbggmwzgbshmpjareav.supabase.co/';
+  const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_ptDO2uplwLjlJ2i-KCvkmA_1rcvyeGY';
+  if(!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY){console.warn('Configure Supabase URL and Publishable key in index.html.');return;}
+  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const arr=v=>Array.isArray(v)?v:(v?[v]:[]);
+  const url=v=>{v=String(v||'').trim();return /^(https?:\/\/|\/|assets\/|images\/|files\/)/i.test(v)?v:''};
+  try{
+    const r=await fetch(SUPABASE_URL.replace(/\/$/,'')+'/rest/v1/portfolio_content?select=section,content',{headers:{apikey:SUPABASE_PUBLISHABLE_KEY,Authorization:'Bearer '+SUPABASE_PUBLISHABLE_KEY,Accept:'application/json'},cache:'no-store'});
+    if(!r.ok) throw Error('Supabase read error '+r.status+': '+await r.text());
+    const rows=await r.json(), d=Object.fromEntries(rows.map(x=>[x.section,x.content]));
+    const about=d.about;
+    if(about && !Array.isArray(about)){
+      if(about.name){document.querySelectorAll('.header-identity h1,#home .hero-content h1').forEach(x=>x.textContent=about.name);}
+      if(about.role){const x=document.querySelector('.header-identity p');if(x)x.textContent=about.role;const y=document.querySelector('#about .bg-suGray li:first-child span');if(y)y.textContent=about.role;}
+      if(about.university){const x=document.querySelector('.header-identity p:last-child');if(x)x.textContent=about.university;const y=document.querySelector('#about .bg-suGray li:nth-child(2) span');if(y)y.textContent=about.university;}
+      if(about.title){const x=document.querySelector('#about h2');if(x)x.textContent=about.title;}
+      if(about.description){const x=document.querySelector('#about .lg\\:col-span-2 p');if(x)x.textContent=about.description;const h=document.querySelector('#home .hero-content p');if(h)h.textContent=about.description;}
+      if(Array.isArray(about.skills)){let x=document.querySelector('#about [data-supabase-skills]');if(!x){x=document.createElement('p');x.dataset.supabaseSkills='true';x.className='text-sm font-semibold text-suBlue mt-4';document.querySelector('#about .lg\\:col-span-2')?.appendChild(x);}if(x)x.textContent='Skills: '+about.skills.join(' · ');}
+      if(url(about.image))document.querySelectorAll('#profile-open-btn img.header-profile,#profile-modal img.profile-large-photo').forEach(x=>{x.src=url(about.image);x.style.display='';});
     }
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', loadPortfolioContent);
-  } else {
-    loadPortfolioContent();
-  }
+    if(Array.isArray(d.education)&&d.education.length){const sec=document.getElementById('education');const host=sec?.querySelector('.space-y-8');if(host)host.innerHTML=d.education.map(x=>`<article class="bg-white border-l-4 border-suBlue p-6 lg:p-8 rounded shadow-sm academic-card flex flex-col lg:flex-row gap-8 items-start">${url(x.image)?`<img src="${esc(url(x.image))}" alt="${esc(x.title)}" class="max-w-full max-h-48 object-contain" onerror="this.style.display='none'">`:''}<div class="flex-1"><h3 class="text-2xl font-bold text-suBlue mb-2">${esc(x.title||'Academic qualification')}</h3>${x.date?`<p class="text-sm text-gray-500 mb-2">${esc(x.date)}</p>`:''}<p class="text-gray-700 leading-relaxed">${esc(x.description||'')}</p></div></article>`).join('');}
+    if(Array.isArray(d.skills)&&d.skills.length){const sec=document.getElementById('skills');const grid=sec?.querySelector('.grid');if(grid)grid.innerHTML=d.skills.map(x=>`<article class="bg-white border border-gray-200 rounded shadow-sm p-6 academic-card border-t-4 border-suBlue"><h3 class="text-lg font-bold text-suBlue mb-2">${esc(x.title||'Skills')}</h3>${x.date?`<p class="text-xs text-gray-500 mb-2">${esc(x.date)}</p>`:''}<p class="text-gray-700 text-sm leading-relaxed">${esc(x.description||'')}</p></article>`).join('');}
+    if(Array.isArray(d.experience)&&d.experience.length){const sec=document.getElementById('experience');const host=sec?.querySelector('.space-y-8')||sec?.querySelector('.grid');if(host)host.innerHTML=d.experience.map(x=>`<article class="bg-white border-l-4 border-suBlue p-6 rounded shadow-sm academic-card">${url(x.image)?`<img src="${esc(url(x.image))}" alt="${esc(x.title)}" class="max-w-full max-h-48 object-contain mb-4" onerror="this.style.display='none'">`:''}<h3 class="text-xl font-bold text-suBlue mb-2">${esc(x.title||'Experience')}</h3>${x.date?`<p class="text-sm text-gray-500 mb-2">${esc(x.date)}</p>`:''}<p class="text-gray-700 text-sm leading-relaxed">${esc(x.description||'')}</p></article>`).join('');}
+    if(Array.isArray(d.projects)&&d.projects.length){const grid=document.querySelector('#projects .grid');if(grid)grid.innerHTML=d.projects.map(x=>`<article class="bg-white border border-gray-200 rounded shadow-sm overflow-hidden academic-card flex flex-col"><div class="h-40 bg-gray-100 flex items-center justify-center p-4 border-b border-gray-200">${url(x.image)?`<img src="${esc(url(x.image))}" alt="${esc(x.title)}" class="h-full max-w-full object-contain" onerror="this.style.display='none'">`:'<span class="text-gray-400 text-sm">Project</span>'}</div><div class="p-6 flex-1 flex flex-col"><h3 class="font-bold text-lg text-suBlue mb-2">${esc(x.title||'Project')}</h3><p class="text-sm text-gray-600 mb-4 flex-1">${esc(x.description||'')}</p>${arr(x.tech).length?`<p class="text-xs text-suBlue font-semibold mb-3">${arr(x.tech).map(esc).join(' · ')}</p>`:''}${url(x.link)?`<a class="text-sm font-bold text-suBlue mt-auto" href="${esc(url(x.link))}" target="_blank" rel="noopener noreferrer">View project ↗</a>`:''}</div></article>`).join('');}
+    if(Array.isArray(d.certificates)&&d.certificates.length){const grid=document.querySelector('#certificates .grid');if(grid)grid.innerHTML=d.certificates.map(x=>`<article class="bg-suGray p-4 border border-gray-200 shadow-sm rounded academic-card text-center border-t-4 border-suBlue"><div class="bg-white h-48 mb-4 border border-gray-200 flex items-center justify-center p-2 rounded shadow-sm">${url(x.image)?`<img src="${esc(url(x.image))}" alt="${esc(x.title||'Certificate')}" class="max-h-full max-w-full object-contain cursor-pointer" onclick="window.open(this.src,'_blank','noopener,noreferrer')" onerror="this.style.display='none'">`:'<span class="text-sm text-gray-400">No image uploaded</span>'}</div><h3 class="font-bold text-gray-800">${esc(x.title||'Certificate')}</h3>${x.date?`<p class="text-xs text-gray-500 mt-1">${esc(x.date)}</p>`:''}</article>`).join('');}
+    if(Array.isArray(d.events)&&d.events.length){const sec=document.querySelector('#events');const grids=sec?.querySelectorAll('.grid');const grid=grids?.[grids.length-1];if(grid)grid.innerHTML=d.events.map(x=>`<article class="bg-suGray border border-gray-200 rounded shadow-sm p-6 academic-card border-t-4 border-suOrange"><h3 class="text-xl font-bold text-suBlue mb-2 serif-heading">${esc(x.title||'Event')}</h3>${x.date?`<p class="text-sm text-gray-500 mb-4 border-b border-gray-300 pb-3">${esc(x.date)}</p>`:''}${x.description?`<p class="text-gray-700 text-sm mb-6 leading-relaxed">${esc(x.description)}</p>`:''}<div class="grid grid-cols-2 sm:grid-cols-3 gap-3">${arr(x.images).map(url).filter(Boolean).map((im,i)=>`<img src="${esc(im)}" alt="${esc(x.title||'Event')} ${i+1}" class="w-full max-h-48 object-contain bg-white rounded border border-gray-300 cursor-pointer" onclick="window.open(this.src,'_blank','noopener,noreferrer')" onerror="this.style.display='none'">`).join('')}</div></article>`).join('');}
+    if(d.resume&&url(d.resume.url))document.querySelectorAll('a[href*="resume-placeholder"],a[href*="resume.pdf"]').forEach(a=>{a.href=url(d.resume.url);a.target='_blank';a.rel='noopener noreferrer';});
+    const notice=d.notices||d.notice;if(notice){const ticker=document.getElementById('notice-marquee');const text=typeof notice==='string'?notice:(notice.text||notice.title||'');if(ticker&&text)ticker.textContent=text;}
+    const settings=d.site_settings;if(settings&&typeof settings==='object'){
+      if(settings.name)document.querySelectorAll('.header-identity h1,#home .hero-content h1').forEach(x=>x.textContent=settings.name);
+      if(settings.role){const x=document.querySelector('.header-identity p');if(x)x.textContent=settings.role;}
+      if(settings.university){const x=document.querySelector('.header-identity p:last-child');if(x)x.textContent=settings.university;}
+      if(settings.heroTitle){const x=document.querySelector('#home .hero-content h2');if(x)x.textContent=settings.heroTitle;}
+      if(settings.heroDescription){const x=document.querySelector('#home .hero-content p');if(x)x.textContent=settings.heroDescription;}
+      const blue=v=>/^#[0-9a-f]{6}$/i.test(v||'')?v:'';const b=blue(settings.primaryColor),o=blue(settings.accentColor);
+      if(b)document.querySelectorAll('.bg-suBlue,.text-suBlue,.border-suBlue').forEach(x=>{if(x.classList.contains('bg-suBlue'))x.style.backgroundColor=b;if(x.classList.contains('text-suBlue'))x.style.color=b;if(x.classList.contains('border-suBlue'))x.style.borderColor=b;});
+      if(o)document.querySelectorAll('.bg-suOrange,.text-suOrange,.border-suOrange').forEach(x=>{if(x.classList.contains('bg-suOrange'))x.style.backgroundColor=o;if(x.classList.contains('text-suOrange'))x.style.color=o;if(x.classList.contains('border-suOrange'))x.style.borderColor=o;});
+    }
+    document.documentElement.dataset.portfolioDataLoaded='true';
+  }catch(e){console.error('Portfolio could not load Supabase content:',e);document.documentElement.dataset.portfolioDataLoaded='error';}
 })();
 </script>
+
 
 </body>
 </html>
