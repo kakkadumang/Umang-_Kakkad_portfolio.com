@@ -1882,6 +1882,30 @@
 })();
 </script>
 
+<!-- Portfolio Visitor Tracking -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<script>
+(async function () {
+    const SUPABASE_URL = "https://rxbggmwzgbshmpjareav.supabase.co/";
+    const SUPABASE_KEY = "sb_publishable_ptDO2uplwLjlJ2i-KCvkmA_1rcvyeGY";
+
+    const client = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+    const { error } = await client
+        .from("site_stats")
+        .insert({
+            event_type: "page_view",
+            page_path: window.location.pathname
+        });
+
+    if (error) {
+        console.error("Visitor tracking error:", error.message);
+    }
+})();
+</script>
 </body>
 </html>
