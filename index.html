@@ -1862,7 +1862,10 @@
       const data = rows[0].content;
       const about = document.getElementById('about');
       if (!about) return;
+        const about = document.getElementById('about');
+if (!about) return;
 
+// Update only the existing About section; keep the original design and layout.
       // Update only the existing About section; keep the original design and layout.
       const paragraphs = about.querySelectorAll('.lg\\:col-span-2 p');
       if (data.description && paragraphs.length) {
