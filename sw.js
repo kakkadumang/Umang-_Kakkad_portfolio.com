@@ -1,10 +1,18 @@
 /* Umang Kakkad Portfolio - Service Worker */
-/* Enables offline error handling and caching so the site can display custom offline UI */
+/* Enables offline error handling, PWA installation, and caching so the site can display custom offline UI */
 
-const CACHE_NAME = 'umang-portfolio-v1';
+const CACHE_NAME = 'umang-portfolio-v2';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
+  './manifest.webmanifest',
+  './manifest.json',
+  './favicon.ico',
+  './assets/icons/icon-192.png',
+  './assets/icons/icon-512.png',
+  './assets/icons/icon-maskable.png',
+  './assets/icons/apple-touch-icon.png',
+  './assets/icons/icon.svg',
   './admin/login.html',
   './admin/dashboard.html'
 ];
