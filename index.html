@@ -8975,10 +8975,11 @@ setInterval(updateLiveGreeting, 30000);
 <!-- ========================================== -->
 
 <!-- ========================================== -->
-<!-- APP INSTALL MODAL (Pure Hindi / Hinglish)   -->
+<!-- ========================================== -->
+<!-- APP INSTALL MODAL (Clean Professional English) -->
 <!-- ========================================== -->
 <div id="ukAppInstallModal" class="hidden fixed inset-0 z-[10000] bg-slate-950/80 backdrop-blur-md items-center justify-center p-4 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="installModalTitle">
-    <div class="relative bg-white w-full max-w-lg rounded-3xl shadow-2xl border-2 border-amber-400/90 overflow-hidden my-auto">
+    <div class="relative bg-white w-full max-w-lg rounded-3xl shadow-2xl border-2 border-amber-400/90 overflow-hidden my-auto animate-scaleUp">
         <!-- Header Banner -->
         <div class="bg-gradient-to-r from-suBlue via-[#002266] to-suBlue p-6 text-center text-white relative">
             <button type="button" onclick="closeAppInstallModal()" class="absolute top-4 right-4 text-white/80 hover:text-white bg-white/10 hover:bg-white/20 rounded-full w-8 h-8 flex items-center justify-center text-xl transition cursor-pointer" aria-label="Close modal">
@@ -8990,8 +8991,8 @@ setInterval(updateLiveGreeting, 30000);
                 <img src="assets/icons/icon-512.png" alt="Umang Kakkad Official App Logo" class="w-24 h-24 rounded-2xl shadow-2xl border-2 border-amber-400/90 mx-auto object-cover transition duration-300 hover:scale-105">
             </div>
             
-            <h3 id="installModalTitle" class="text-xl sm:text-2xl font-black uppercase tracking-wide">Umang Kakkad App</h3>
-            <p class="text-xs text-amber-300 font-semibold mt-1">Apne Phone ya Laptop par 1-Click mein App Install Karein</p>
+            <h3 id="installModalTitle" class="text-xl sm:text-2xl font-black uppercase tracking-wide">Umang Kakkad Portfolio</h3>
+            <p class="text-xs text-amber-300 font-semibold mt-1">Install the official application on your device for instant 1-click access</p>
         </div>
 
         <!-- Content Body -->
@@ -9000,79 +9001,83 @@ setInterval(updateLiveGreeting, 30000);
             <div class="text-center">
                 <button id="pwaDirectInstallBtn" type="button" onclick="triggerPwaInstall()" class="w-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400 hover:from-amber-500 hover:to-amber-500 text-slate-950 font-black text-sm sm:text-base py-3.5 px-4 rounded-2xl shadow-md flex items-center justify-center gap-2 transition transform active:scale-95 cursor-pointer leading-tight">
                     <svg class="w-5 h-5 text-slate-950 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
-                    <span id="pwaDirectInstallText" class="truncate sm:whitespace-normal">📲 Abhi App Install Karein</span>
+                    <span id="pwaDirectInstallText" class="truncate sm:whitespace-normal">Install App Now</span>
                 </button>
-                <p id="pwaInstallSubNotice" class="text-[11px] text-gray-500 mt-2 font-medium">Click karte hi home screen par official app icon ban jayega</p>
+                <p id="pwaInstallSubNotice" class="text-[11px] text-gray-500 mt-2 font-medium">Fast, offline-ready &amp; opens directly from your home screen</p>
             </div>
 
             <!-- OS Selection Tabs -->
             <div class="border-t border-gray-200 pt-3">
                 <div class="flex items-center justify-center gap-1.5 p-1 bg-gray-100 rounded-xl text-xs font-bold mb-3">
-                    <button type="button" id="tabBtnAndroid" onclick="switchInstallTab('android')" class="install-tab-btn flex-1 py-2 px-2 rounded-lg transition text-center cursor-pointer">
-                        🤖 Android Mobile
+                    <button type="button" id="tab-btn-android" onclick="switchInstallTab('android')" class="install-tab-btn flex-1 py-2 px-2 rounded-lg transition text-center cursor-pointer flex items-center justify-center gap-1.5">
+                        <svg class="w-3.5 h-3.5 fill-current text-emerald-600 flex-shrink-0" viewBox="0 0 24 24"><path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-1.0007 0-.5521.4482-1.0007.9993-1.0007.5521 0 1.0007.4486 1.0007 1.0007 0 .5521-.4486 1.0007-1.0007 1.0007m-11.046 0c-.5521 0-1.0007-.4486-1.0007-1.0007 0-.5521.4486-1.0007 1.0007-1.0007.5511 0 .9993.4486.9993 1.0007 0 .5521-.4482 1.0007-.9993 1.0007m11.4045-6.02l1.9964-3.4564c.1054-.183.0425-.417-.1405-.5225-.183-.1055-.417-.0425-.5225.1405l-2.0238 3.5042c-1.5224-.6943-3.2185-1.0772-5.0111-1.0772-1.7925 0-3.4886.3829-5.011 1.0772L5.1652 5.4832c-.1055-.183-.3395-.246-.5225-.1405-.183.1055-.2459.3395-.1405.5225l1.9964 3.4564C2.6886 11.1611.0746 15.111.0746 19.6738h23.8508c0-4.5628-2.614-8.5127-6.0449-10.3524"/></svg>
+                        <span>Android</span>
                     </button>
-                    <button type="button" id="tabBtnIOS" onclick="switchInstallTab('ios')" class="install-tab-btn flex-1 py-2 px-2 rounded-lg transition text-center cursor-pointer">
-                        🍎 iPhone / iPad
+                    <button type="button" id="tab-btn-ios" onclick="switchInstallTab('ios')" class="install-tab-btn flex-1 py-2 px-2 rounded-lg transition text-center cursor-pointer flex items-center justify-center gap-1.5">
+                        <svg class="w-3.5 h-3.5 fill-current text-slate-900 flex-shrink-0" viewBox="0 0 170 170"><path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.7-3.04-7.58-7.78-11.65-14.23-5.99-9.46-10.77-20.28-14.34-32.47-3.57-12.19-5.36-23.91-5.36-35.16 0-14.58 3.73-26.6 11.19-36.06 7.46-9.46 16.89-14.31 28.29-14.55 5.23 0 11.05 1.55 17.47 4.65 6.41 3.1 10.15 4.66 11.22 4.66 1.41 0 5.48-1.63 12.21-4.89 6.73-3.26 12.37-4.67 16.92-4.24 12.83.98 22.84 5.88 30.04 14.7-11.31 6.85-16.85 16.36-16.63 28.53.22 9.57 3.82 17.58 10.8 24.02 7 6.45 15.11 10.06 24.35 10.82-2.18 6.53-4.9 13.06-8.16 19.59zM119.22 31.84c0-7.72 2.76-14.97 8.28-21.75 5.53-6.77 12.41-10.09 20.65-9.96.11 1.09.16 1.96.16 2.61 0 7.61-2.93 14.89-8.8 21.84-5.87 6.96-12.87 10.49-21.01 10.6-.22-1.09-.33-2.2-.33-3.34z"/></svg>
+                        <span>iPhone / iPad</span>
                     </button>
-                    <button type="button" id="tabBtnDesktop" onclick="switchInstallTab('desktop')" class="install-tab-btn flex-1 py-2 px-2 rounded-lg transition text-center cursor-pointer">
-                        💻 Laptop / PC
+                    <button type="button" id="tab-btn-desktop" onclick="switchInstallTab('desktop')" class="install-tab-btn flex-1 py-2 px-2 rounded-lg transition text-center cursor-pointer flex items-center justify-center gap-1.5">
+                        <svg class="w-3.5 h-3.5 fill-none stroke-current text-blue-600 flex-shrink-0" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        <span>Laptop / PC</span>
                     </button>
                 </div>
 
                 <!-- Tab 1: Android Guide -->
-                <div id="tabContentAndroid" class="install-tab-content space-y-2 text-xs text-gray-700 bg-blue-50/70 p-3.5 rounded-2xl border border-blue-100">
+                <div id="tab-content-android" class="install-tab-content space-y-2 text-xs text-gray-700 bg-blue-50/70 p-3.5 rounded-2xl border border-blue-100">
                     <h4 class="font-extrabold text-suBlue text-xs uppercase tracking-wider flex items-center gap-1.5">
-                        <span>Android Phone mein Install Karne Ka Tareeqa:</span>
+                        <span>How to Install on Android:</span>
                     </h4>
                     <div class="flex items-start gap-2">
                         <span class="w-5 h-5 bg-suBlue text-white rounded-full flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">1</span>
-                        <p>Upar diye gaye <strong>"📲 Abhi App Install Karein"</strong> button par click karein.</p>
+                        <p>Click the <strong>"Install App Now"</strong> button above.</p>
                     </div>
                     <div class="flex items-start gap-2">
                         <span class="w-5 h-5 bg-suBlue text-white rounded-full flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">2</span>
-                        <p>Agar direct popup na aaye, to Chrome browser ke upar right side me <strong>3 dots (⋮)</strong> dabayein aur <strong>"Install app"</strong> ya <strong>"Add to Home screen"</strong> select karein.</p>
+                        <p>If the automatic prompt does not appear, tap the <strong>Chrome Menu (⋮)</strong> in the top-right corner.</p>
                     </div>
                     <div class="flex items-start gap-2">
                         <span class="w-5 h-5 bg-suBlue text-white rounded-full flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">3</span>
-                        <p>Aapke phone ke home screen par Umang Kakkad ka official 3D blue logo set ho jayega. 1 tap mein app khulegi!</p>
+                        <p>Select <strong>"Install app"</strong> or <strong>"Add to Home screen"</strong>. The official app icon will be added to your home screen!</p>
                     </div>
                 </div>
 
                 <!-- Tab 2: iPhone / iOS Guide -->
-                <div id="tabContentIOS" class="install-tab-content hidden space-y-2 text-xs text-gray-700 bg-amber-50/70 p-3.5 rounded-2xl border border-amber-200">
+                <div id="tab-content-ios" class="install-tab-content hidden space-y-2 text-xs text-gray-700 bg-amber-50/70 p-3.5 rounded-2xl border border-amber-200">
                     <h4 class="font-extrabold text-amber-900 text-xs uppercase tracking-wider flex items-center gap-1.5">
-                        <span>iPhone / iPad mein Install Karne Ka Tareeqa:</span>
+                        <svg class="w-3.5 h-3.5 fill-current text-amber-900 flex-shrink-0" viewBox="0 0 170 170"><path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.7-3.04-7.58-7.78-11.65-14.23-5.99-9.46-10.77-20.28-14.34-32.47-3.57-12.19-5.36-23.91-5.36-35.16 0-14.58 3.73-26.6 11.19-36.06 7.46-9.46 16.89-14.31 28.29-14.55 5.23 0 11.05 1.55 17.47 4.65 6.41 3.1 10.15 4.66 11.22 4.66 1.41 0 5.48-1.63 12.21-4.89 6.73-3.26 12.37-4.67 16.92-4.24 12.83.98 22.84 5.88 30.04 14.7-11.31 6.85-16.85 16.36-16.63 28.53.22 9.57 3.82 17.58 10.8 24.02 7 6.45 15.11 10.06 24.35 10.82-2.18 6.53-4.9 13.06-8.16 19.59zM119.22 31.84c0-7.72 2.76-14.97 8.28-21.75 5.53-6.77 12.41-10.09 20.65-9.96.11 1.09.16 1.96.16 2.61 0 7.61-2.93 14.89-8.8 21.84-5.87 6.96-12.87 10.49-21.01 10.6-.22-1.09-.33-2.2-.33-3.34z"/></svg>
+                        <span>How to Install on iPhone &amp; iPad (Safari):</span>
                     </h4>
                     <div class="flex items-start gap-2">
                         <span class="w-5 h-5 bg-amber-500 text-slate-950 rounded-full flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">1</span>
-                        <p>Safari browser mein neeche screen par <strong>Share button</strong> <span class="inline-block px-1.5 py-0.5 bg-gray-200 rounded font-mono font-bold text-[10px]">⎋ Share</span> par tap karein.</p>
+                        <p>In Apple Safari, tap the <strong>Share button</strong> <span class="inline-block px-1.5 py-0.5 bg-gray-200 rounded font-mono font-bold text-[10px]">⎋ Share</span> at the bottom of the screen.</p>
                     </div>
                     <div class="flex items-start gap-2">
                         <span class="w-5 h-5 bg-amber-500 text-slate-950 rounded-full flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">2</span>
-                        <p>Menu ko thoda neeche karke <strong>"Add to Home Screen" <span class="font-bold">(⊕)</span></strong> select karein.</p>
+                        <p>Scroll down the share sheet and tap <strong>"Add to Home Screen" <span class="font-bold">(⊕)</span></strong>.</p>
                     </div>
                     <div class="flex items-start gap-2">
                         <span class="w-5 h-5 bg-amber-500 text-slate-950 rounded-full flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">3</span>
-                        <p>Top-right corner par <strong>"Add"</strong> dabayein. Bas! iPhone par official app ready ho jayegi!</p>
+                        <p>Tap <strong>"Add"</strong> in the top-right corner. The official app will be pinned directly on your iPhone!</p>
                     </div>
                 </div>
 
                 <!-- Tab 3: Desktop Guide -->
-                <div id="tabContentDesktop" class="install-tab-content hidden space-y-2 text-xs text-gray-700 bg-slate-50 p-3.5 rounded-2xl border border-gray-200">
+                <div id="tab-content-desktop" class="install-tab-content hidden space-y-2 text-xs text-gray-700 bg-slate-50 p-3.5 rounded-2xl border border-gray-200">
                     <h4 class="font-extrabold text-slate-900 text-xs uppercase tracking-wider flex items-center gap-1.5">
-                        <span>Laptop / Desktop mein Install Karne Ka Tareeqa:</span>
+                        <span>How to Install on Laptop &amp; Desktop (Windows / Mac):</span>
                     </h4>
                     <div class="flex items-start gap-2">
                         <span class="w-5 h-5 bg-slate-800 text-white rounded-full flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">1</span>
-                        <p>Upar diye gaye <strong>"📲 Abhi App Install Karein"</strong> button par click karein.</p>
+                        <p>Click the <strong>"Install App Now"</strong> button above.</p>
                     </div>
                     <div class="flex items-start gap-2">
                         <span class="w-5 h-5 bg-slate-800 text-white rounded-full flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">2</span>
-                        <p>Google Chrome ya Microsoft Edge ke <strong>Address Bar ke right side</strong> mein <strong>Install Icon <span class="font-mono font-bold bg-gray-200 px-1 rounded">[⊕]</span></strong> par click karein.</p>
+                        <p>Or click the <strong>Install Icon <span class="font-mono font-bold bg-gray-200 px-1 rounded">[⊕]</span></strong> on the right side of the Chrome / Edge address bar.</p>
                     </div>
                     <div class="flex items-start gap-2">
                         <span class="w-5 h-5 bg-slate-800 text-white rounded-full flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">3</span>
-                        <p>Desktop par shortcut pin ho jayega — double click karte hi native standalone app window open hogi!</p>
+                        <p>The app will be installed to your Desktop and Taskbar for fast standalone window access!</p>
                     </div>
                 </div>
             </div>
@@ -9080,7 +9085,7 @@ setInterval(updateLiveGreeting, 30000);
 
         <!-- Footer -->
         <div class="bg-gray-50 px-6 py-3 border-t border-gray-100 flex items-center justify-end text-[12px]">
-            <button type="button" onclick="closeAppInstallModal()" class="bg-suBlue hover:bg-blue-800 text-white px-5 py-1.5 rounded-lg font-bold transition cursor-pointer">Band Karein (Close)</button>
+            <button type="button" onclick="closeAppInstallModal()" class="bg-suBlue hover:bg-blue-800 text-white px-5 py-1.5 rounded-lg font-bold transition cursor-pointer">Close</button>
         </div>
     </div>
 </div>
@@ -9105,7 +9110,7 @@ setInterval(updateLiveGreeting, 30000);
 
         const directBtnText = document.getElementById('pwaDirectInstallText');
         if (directBtnText) {
-            directBtnText.textContent = '📲 Abhi App Install Karein';
+            directBtnText.textContent = 'Install App Now';
         }
     });
 
@@ -9177,8 +9182,8 @@ setInterval(updateLiveGreeting, 30000);
     window.switchInstallTab = function(platform) {
         const platforms = ['android', 'ios', 'desktop'];
         platforms.forEach(function(p) {
-            const content = document.getElementById('tabContent' + p.charAt(0).toUpperCase() + p.slice(1));
-            const btn = document.getElementById('tabBtn' + p.charAt(0).toUpperCase() + p.slice(1));
+            const content = document.getElementById('tab-content-' + p);
+            const btn = document.getElementById('tab-btn-' + p);
             if (content) content.classList.add('hidden');
             if (btn) {
                 btn.classList.remove('bg-white', 'text-suBlue', 'shadow-sm');
@@ -9186,8 +9191,8 @@ setInterval(updateLiveGreeting, 30000);
             }
         });
 
-        const activeContent = document.getElementById('tabContent' + platform.charAt(0).toUpperCase() + platform.slice(1));
-        const activeBtn = document.getElementById('tabBtn' + platform.charAt(0).toUpperCase() + platform.slice(1));
+        const activeContent = document.getElementById('tab-content-' + platform);
+        const activeBtn = document.getElementById('tab-btn-' + platform);
         if (activeContent) activeContent.classList.remove('hidden');
         if (activeBtn) {
             activeBtn.classList.remove('text-gray-600');
