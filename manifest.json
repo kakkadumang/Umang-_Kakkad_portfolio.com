@@ -1,0 +1,36 @@
+{
+  "name": "Umang Kakkad | Official Portfolio",
+  "short_name": "Umang Kakkad",
+  "description": "Official Academic & Professional Portfolio of Umang Kakkad - Software Developer & MCA Student.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#003399",
+  "theme_color": "#003399",
+  "categories": [
+    "education",
+    "portfolio",
+    "productivity"
+  ],
+  "icons": [
+    {
+      "src": "assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
