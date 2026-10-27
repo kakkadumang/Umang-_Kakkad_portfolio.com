@@ -3244,9 +3244,9 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
 
                 <div class="flex items-center gap-3">
 
-                    <button id="mobileInstallAppBtn" type="button" onclick="openAppInstallModal()" class="bg-amber-400 hover:bg-amber-500 text-slate-950 text-xs font-black px-2.5 py-1.5 rounded flex items-center gap-1 shadow-sm transition cursor-pointer" title="Install App on Phone">
-                        <svg class="w-3.5 h-3.5 text-slate-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                        <span>Install</span>
+                    <button id="mobileInstallAppBtn" type="button" onclick="handleInstallAppClick()" class="bg-amber-400 hover:bg-amber-500 active:scale-95 text-slate-950 text-[11px] sm:text-xs font-black px-2.5 sm:px-3 py-1.5 rounded-lg flex items-center gap-1 shadow-sm transition cursor-pointer whitespace-nowrap" title="Install App on Phone">
+                        <svg class="w-3.5 h-3.5 text-slate-950 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                        <span>Install App</span>
                     </button>
                     <a href="admin/login.html" class="bg-suOrange hover:bg-orange-600 text-white text-xs font-bold px-3 py-1.5 rounded flex items-center gap-1 shadow-sm transition">
 
@@ -3293,7 +3293,7 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
                 <li><a href="#contact" class="block px-4 py-3 nav-link border-r border-blue-800">Contact</a></li>
 
                 <li>
-                    <button id="navInstallAppBtn" type="button" onclick="openAppInstallModal()" class="block px-3 py-3 nav-link bg-amber-400 hover:bg-amber-500 text-slate-950 font-black border-r border-blue-800 flex items-center gap-1.5 transition shadow-inner cursor-pointer" title="Install App on Desktop/Laptop/Mobile">
+                    <button id="navInstallAppBtn" type="button" onclick="handleInstallAppClick()" class="block px-3 py-3 nav-link bg-amber-400 hover:bg-amber-500 text-slate-950 font-black border-r border-blue-800 flex items-center gap-1.5 transition shadow-inner cursor-pointer" title="Install App on Desktop/Laptop/Mobile">
                         <svg class="w-4 h-4 text-slate-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                         <span>Install App</span>
                     </button>
@@ -4967,7 +4967,7 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
 
 
 
-                    <li><a href="javascript:void(0)" onclick="openAppInstallModal()" class="text-amber-400 font-bold hover:text-amber-300 transition flex items-center gap-1.5 cursor-pointer">&rarr; 📲 Install App (Android / iPhone / PC)</a></li>
+                    <li><a href="javascript:void(0)" onclick="handleInstallAppClick()" class="text-amber-400 font-bold hover:text-amber-300 transition flex items-center gap-1.5 cursor-pointer">&rarr; 📲 Install App (Android / iPhone / PC)</a></li>
 
                 </ul>
 
@@ -8974,37 +8974,8 @@ setInterval(updateLiveGreeting, 30000);
 
 <!-- ========================================== -->
 
-<div id="floatingInstallPill" class="hidden fixed left-4 bottom-5 z-[9990] items-center gap-3 bg-slate-900/95 text-white pl-2.5 pr-3 py-2 rounded-full shadow-2xl border-2 border-amber-400 backdrop-blur-md transition-all duration-300 hover:scale-[1.02]">
-
-    <img src="assets/icons/favicon-32x32.png" alt="Umang Logo" class="w-8 h-8 rounded-full border border-amber-400 object-cover shadow-sm">
-
-    <div class="leading-tight cursor-pointer" onclick="openAppInstallModal()">
-
-        <span class="block text-[11px] font-black uppercase tracking-wider text-amber-400">Install App</span>
-
-        <span class="block text-[10px] text-slate-300 font-medium">Add to Phone / Desktop</span>
-
-    </div>
-
-    <button type="button" onclick="openAppInstallModal()" class="bg-amber-400 hover:bg-amber-500 text-slate-950 text-[11px] font-black px-2.5 py-1 rounded-full shadow-sm ml-1 transition cursor-pointer">
-
-        Install
-
-    </button>
-
-    <button type="button" onclick="dismissFloatingInstallPill()" class="text-slate-400 hover:text-white text-base px-1 leading-none cursor-pointer" title="Dismiss" aria-label="Dismiss banner">
-
-        &times;
-
-    </button>
-
-</div>
-
-
-
 <!-- ========================================== -->
-
-<!-- APP INSTALL MODAL (Clean, Premium, No PWA/Download Icons) -->
+<!-- APP INSTALL MODAL (Pure Hindi / Hinglish)   -->
 <!-- ========================================== -->
 <div id="ukAppInstallModal" class="hidden fixed inset-0 z-[10000] bg-slate-950/80 backdrop-blur-md items-center justify-center p-4 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="installModalTitle">
     <div class="relative bg-white w-full max-w-lg rounded-3xl shadow-2xl border-2 border-amber-400/90 overflow-hidden my-auto">
@@ -9014,31 +8985,31 @@ setInterval(updateLiveGreeting, 30000);
                 &times;
             </button>
             
-            <!-- Custom App Logo (Clean, No PWA badge) -->
+            <!-- Custom 3D App Logo -->
             <div class="inline-block relative mb-3">
                 <img src="assets/icons/icon-512.png" alt="Umang Kakkad Official App Logo" class="w-24 h-24 rounded-2xl shadow-2xl border-2 border-amber-400/90 mx-auto object-cover transition duration-300 hover:scale-105">
             </div>
             
             <h3 id="installModalTitle" class="text-xl sm:text-2xl font-black uppercase tracking-wide">Umang Kakkad App</h3>
-            <p class="text-xs text-amber-300 font-semibold mt-1">Official Portfolio Application • Fast 1-Tap Access</p>
+            <p class="text-xs text-amber-300 font-semibold mt-1">Apne Phone ya Laptop par 1-Click mein App Install Karein</p>
         </div>
 
         <!-- Content Body -->
         <div class="p-5 sm:p-6 space-y-4">
-            <!-- 1-Click Install Button (Properly Aligned & Responsive) -->
+            <!-- 1-Click Install Button -->
             <div class="text-center">
                 <button id="pwaDirectInstallBtn" type="button" onclick="triggerPwaInstall()" class="w-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400 hover:from-amber-500 hover:to-amber-500 text-slate-950 font-black text-sm sm:text-base py-3.5 px-4 rounded-2xl shadow-md flex items-center justify-center gap-2 transition transform active:scale-95 cursor-pointer leading-tight">
                     <svg class="w-5 h-5 text-slate-950 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
-                    <span id="pwaDirectInstallText" class="truncate sm:whitespace-normal">Install App on Phone / PC</span>
+                    <span id="pwaDirectInstallText" class="truncate sm:whitespace-normal">📲 Abhi App Install Karein</span>
                 </button>
-                <p id="pwaInstallSubNotice" class="text-[11px] text-gray-500 mt-2 font-medium">Click karte hi home screen par official app icon set ho jayega</p>
+                <p id="pwaInstallSubNotice" class="text-[11px] text-gray-500 mt-2 font-medium">Click karte hi home screen par official app icon ban jayega</p>
             </div>
 
             <!-- OS Selection Tabs -->
             <div class="border-t border-gray-200 pt-3">
                 <div class="flex items-center justify-center gap-1.5 p-1 bg-gray-100 rounded-xl text-xs font-bold mb-3">
                     <button type="button" id="tabBtnAndroid" onclick="switchInstallTab('android')" class="install-tab-btn flex-1 py-2 px-2 rounded-lg transition text-center cursor-pointer">
-                        🤖 Android
+                        🤖 Android Mobile
                     </button>
                     <button type="button" id="tabBtnIOS" onclick="switchInstallTab('ios')" class="install-tab-btn flex-1 py-2 px-2 rounded-lg transition text-center cursor-pointer">
                         🍎 iPhone / iPad
@@ -9051,26 +9022,26 @@ setInterval(updateLiveGreeting, 30000);
                 <!-- Tab 1: Android Guide -->
                 <div id="tabContentAndroid" class="install-tab-content space-y-2 text-xs text-gray-700 bg-blue-50/70 p-3.5 rounded-2xl border border-blue-100">
                     <h4 class="font-extrabold text-suBlue text-xs uppercase tracking-wider flex items-center gap-1.5">
-                        <span>How to Install on Android Phone:</span>
+                        <span>Android Phone mein Install Karne Ka Tareeqa:</span>
                     </h4>
                     <div class="flex items-start gap-2">
                         <span class="w-5 h-5 bg-suBlue text-white rounded-full flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">1</span>
-                        <p>Upar diye gaye <strong>"Install App on Phone / PC"</strong> button par click karein.</p>
+                        <p>Upar diye gaye <strong>"📲 Abhi App Install Karein"</strong> button par click karein.</p>
                     </div>
                     <div class="flex items-start gap-2">
                         <span class="w-5 h-5 bg-suBlue text-white rounded-full flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">2</span>
-                        <p>Agar prompt na aaye to Chrome browser ke top-right me <strong>3 dots (⋮)</strong> dabayein aur <strong>"Install app"</strong> ya <strong>"Add to Home screen"</strong> chunein.</p>
+                        <p>Agar direct popup na aaye, to Chrome browser ke upar right side me <strong>3 dots (⋮)</strong> dabayein aur <strong>"Install app"</strong> ya <strong>"Add to Home screen"</strong> select karein.</p>
                     </div>
                     <div class="flex items-start gap-2">
                         <span class="w-5 h-5 bg-suBlue text-white rounded-full flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">3</span>
-                        <p>Phone ki home screen par official app icon set ho jayega. 1 click karte hi direct app open hogi!</p>
+                        <p>Aapke phone ke home screen par Umang Kakkad ka official 3D blue logo set ho jayega. 1 tap mein app khulegi!</p>
                     </div>
                 </div>
 
                 <!-- Tab 2: iPhone / iOS Guide -->
                 <div id="tabContentIOS" class="install-tab-content hidden space-y-2 text-xs text-gray-700 bg-amber-50/70 p-3.5 rounded-2xl border border-amber-200">
                     <h4 class="font-extrabold text-amber-900 text-xs uppercase tracking-wider flex items-center gap-1.5">
-                        <span>How to Install on iPhone / iPad (Safari):</span>
+                        <span>iPhone / iPad mein Install Karne Ka Tareeqa:</span>
                     </h4>
                     <div class="flex items-start gap-2">
                         <span class="w-5 h-5 bg-amber-500 text-slate-950 rounded-full flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">1</span>
@@ -9078,22 +9049,22 @@ setInterval(updateLiveGreeting, 30000);
                     </div>
                     <div class="flex items-start gap-2">
                         <span class="w-5 h-5 bg-amber-500 text-slate-950 rounded-full flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">2</span>
-                        <p>Share menu ko scroll karke <strong>"Add to Home Screen" <span class="font-bold">(⊕)</span></strong> select karein.</p>
+                        <p>Menu ko thoda neeche karke <strong>"Add to Home Screen" <span class="font-bold">(⊕)</span></strong> select karein.</p>
                     </div>
                     <div class="flex items-start gap-2">
                         <span class="w-5 h-5 bg-amber-500 text-slate-950 rounded-full flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">3</span>
-                        <p>Top-right corner par <strong>"Add"</strong> dabayein. Bas! Aapke iPhone screen par official UK logo ke saath app ready ho jayegi!</p>
+                        <p>Top-right corner par <strong>"Add"</strong> dabayein. Bas! iPhone par official app ready ho jayegi!</p>
                     </div>
                 </div>
 
                 <!-- Tab 3: Desktop Guide -->
                 <div id="tabContentDesktop" class="install-tab-content hidden space-y-2 text-xs text-gray-700 bg-slate-50 p-3.5 rounded-2xl border border-gray-200">
                     <h4 class="font-extrabold text-slate-900 text-xs uppercase tracking-wider flex items-center gap-1.5">
-                        <span>How to Install on Laptop / Desktop (Windows & Mac):</span>
+                        <span>Laptop / Desktop mein Install Karne Ka Tareeqa:</span>
                     </h4>
                     <div class="flex items-start gap-2">
                         <span class="w-5 h-5 bg-slate-800 text-white rounded-full flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">1</span>
-                        <p>Upar diye gaye <strong>"Install App on Phone / PC"</strong> button par click karein.</p>
+                        <p>Upar diye gaye <strong>"📲 Abhi App Install Karein"</strong> button par click karein.</p>
                     </div>
                     <div class="flex items-start gap-2">
                         <span class="w-5 h-5 bg-slate-800 text-white rounded-full flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">2</span>
@@ -9101,15 +9072,15 @@ setInterval(updateLiveGreeting, 30000);
                     </div>
                     <div class="flex items-start gap-2">
                         <span class="w-5 h-5 bg-slate-800 text-white rounded-full flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">3</span>
-                        <p>Desktop shortcut aur Windows Taskbar par app icon pin ho jayega — double click karte hi native standalone window open hogi!</p>
+                        <p>Desktop par shortcut pin ho jayega — double click karte hi native standalone app window open hogi!</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Footer (Clean, No PWA Version Text) -->
+        <!-- Footer -->
         <div class="bg-gray-50 px-6 py-3 border-t border-gray-100 flex items-center justify-end text-[12px]">
-            <button type="button" onclick="closeAppInstallModal()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-1.5 rounded-lg font-bold transition cursor-pointer">Close</button>
+            <button type="button" onclick="closeAppInstallModal()" class="bg-suBlue hover:bg-blue-800 text-white px-5 py-1.5 rounded-lg font-bold transition cursor-pointer">Band Karein (Close)</button>
         </div>
     </div>
 </div>
@@ -9129,26 +9100,17 @@ setInterval(updateLiveGreeting, 30000);
 
         const navBtn = document.getElementById('navInstallAppBtn');
         const mobBtn = document.getElementById('mobileInstallAppBtn');
-        const floatPill = document.getElementById('floatingInstallPill');
-
         if (navBtn) navBtn.style.display = 'flex';
         if (mobBtn) mobBtn.style.display = 'flex';
-        if (floatPill && !sessionStorage.getItem('uk_pwa_floating_dismissed')) {
-            floatPill.classList.remove('hidden');
-            floatPill.classList.add('flex');
-        }
 
         const directBtnText = document.getElementById('pwaDirectInstallText');
         if (directBtnText) {
-            directBtnText.textContent = 'Install App on Phone / PC';
+            directBtnText.textContent = '📲 Abhi App Install Karein';
         }
     });
 
     window.addEventListener('appinstalled', function() {
         deferredPrompt = null;
-        const floatPill = document.getElementById('floatingInstallPill');
-        if (floatPill) floatPill.style.display = 'none';
-
         const directBtnText = document.getElementById('pwaDirectInstallText');
         if (directBtnText) {
             directBtnText.textContent = '✅ App Successfully Installed!';
@@ -9158,7 +9120,24 @@ setInterval(updateLiveGreeting, 30000);
             directBtn.classList.remove('from-amber-400', 'via-amber-500', 'to-amber-400');
             directBtn.classList.add('bg-green-600', 'text-white');
         }
+        const mobBtn = document.getElementById('mobileInstallAppBtn');
+        if (mobBtn) mobBtn.innerHTML = '<span>✅ Installed</span>';
+        const navBtn = document.getElementById('navInstallAppBtn');
+        if (navBtn) navBtn.innerHTML = '<span>✅ Installed</span>';
     });
+
+    window.handleInstallAppClick = function() {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then(function(choice) {
+                if (choice && choice.outcome === 'accepted') {
+                    deferredPrompt = null;
+                }
+            });
+        } else {
+            window.openAppInstallModal();
+        }
+    };
 
     window.openAppInstallModal = function() {
         const modal = document.getElementById('ukAppInstallModal');
@@ -9195,15 +9174,6 @@ setInterval(updateLiveGreeting, 30000);
         document.body.style.overflow = '';
     };
 
-    window.dismissFloatingInstallPill = function() {
-        const floatPill = document.getElementById('floatingInstallPill');
-        if (floatPill) {
-            floatPill.classList.add('hidden');
-            floatPill.classList.remove('flex');
-        }
-        sessionStorage.setItem('uk_pwa_floating_dismissed', 'true');
-    };
-
     window.switchInstallTab = function(platform) {
         const platforms = ['android', 'ios', 'desktop'];
         platforms.forEach(function(p) {
@@ -9237,36 +9207,13 @@ setInterval(updateLiveGreeting, 30000);
             const ua = navigator.userAgent || '';
             const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
             const isAndroid = /android/i.test(ua);
-            const isLocal = window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
             if (isIOS) {
                 window.switchInstallTab('ios');
-                alert('iPhone/iPad me install karne ke liye:\n\n1. Safari ke neeche Share button [⎋] tap karein\n2. "Add to Home Screen" (+) chunein\n3. Top-right par "Add" dabayein!');
             } else if (isAndroid) {
                 window.switchInstallTab('android');
-                alert('Android me install karne ke liye:\n\n1. Chrome ke top-right 3 dots (⋮) dabayein\n2. "Install app" ya "Add to Home screen" select karein\n3. Icon aapke mobile screen par set ho jayega!');
             } else {
                 window.switchInstallTab('desktop');
-                if (window.location.protocol === 'file:') {
-                    // Create Windows Desktop Shortcut file
-                    const siteUrl = window.location.href;
-                    const shortcutContent = '[InternetShortcut]\r\nURL=' + siteUrl + '\r\nIconFile=' + siteUrl.replace(/[^\/]+$/, '') + 'favicon.ico\r\nIconIndex=0\r\n';
-                    const blob = new Blob([shortcutContent], { type: 'application/octet-stream' });
-                    const link = document.createElement('a');
-                    link.href = URL.createObjectURL(blob);
-                    link.download = 'Umang Kakkad Portfolio.url';
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                    URL.revokeObjectURL(link.href);
-
-                    const subNotice = document.getElementById('pwaInstallSubNotice');
-                    if (subNotice) {
-                        subNotice.innerHTML = '<span class="text-green-700 font-bold">✅ Desktop Shortcut downloaded! Ise desktop par rakh lein, direct click se site open hogi. GitHub live URL par Edge/Chrome direct in-browser install karega!</span>';
-                    }
-                } else {
-                    alert('Desktop me install karne ke liye:\n\n1. Browser address bar ke right side me Install [⊕] icon par click karein\n2. Ya Edge/Chrome Menu (⋮) -> Apps -> "Install this site as an app" par click karein!');
-                }
             }
         }
     };
@@ -9280,20 +9227,6 @@ setInterval(updateLiveGreeting, 30000);
         const modal = document.getElementById('ukAppInstallModal');
         if (modal && !modal.classList.contains('hidden') && e.target === modal) {
             window.closeAppInstallModal();
-        }
-    });
-
-    // Initial check on load for floating pill
-    window.addEventListener('load', function() {
-        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-        if (!isStandalone && !sessionStorage.getItem('uk_pwa_floating_dismissed')) {
-            const floatPill = document.getElementById('floatingInstallPill');
-            if (floatPill) {
-                setTimeout(function() {
-                    floatPill.classList.remove('hidden');
-                    floatPill.classList.add('flex');
-                }, 1800);
-            }
         }
     });
 })();
