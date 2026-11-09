@@ -2766,7 +2766,7 @@ html.uk-is-offline body > *:not(#uk-offline-screen) {
     -webkit-font-smoothing: antialiased;
 }
 
-html.uk-is-maintenance:not(.uk-is-offline):not(.uk-is-admin) .uk-maintenance-screen,
+html.uk-is-maintenance:not(.uk-is-offline):not(.uk-admin-bypassing) .uk-maintenance-screen,
 html.uk-force-preview-maint .uk-maintenance-screen {
     display: flex !important;
     align-items: center;
@@ -2774,7 +2774,7 @@ html.uk-force-preview-maint .uk-maintenance-screen {
 }
 
 /* 100% Solid Website Content Isolation for Public Visitors */
-html.uk-is-maintenance:not(.uk-is-offline):not(.uk-is-admin) body > *:not(#uk-maintenance-screen):not(#uk-offline-screen):not(#uk-admin-maintenance-bar),
+html.uk-is-maintenance:not(.uk-is-offline):not(.uk-admin-bypassing) body > *:not(#uk-maintenance-screen):not(#uk-offline-screen):not(#uk-admin-maintenance-bar),
 html.uk-force-preview-maint body > *:not(#uk-maintenance-screen):not(#uk-offline-screen) {
     display: none !important;
     visibility: hidden !important;
@@ -3074,11 +3074,7 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
                         t.childNodes[0].textContent = cfg.title + ' ';
                     }
                 }
-                if (cfg.hindiTitle) {
-                    const h = document.getElementById('uk-maint-hindi');
-                    if (h) h.textContent = cfg.hindiTitle;
-                }
-                if (cfg.message) {
+                                if (cfg.message) {
                     const m = document.getElementById('uk-maint-message');
                     if (m) m.textContent = cfg.message;
                 }
@@ -3130,16 +3126,129 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
         }
 
         // 4. Admin Quick Action to Disable Maintenance Mode directly from top bar
+        window.ukOpenUnlockModal = function() {
+            const modal = document.getElementById('uk-admin-unlock-modal');
+            if (modal) {
+                modal.style.display = 'flex';
+                const emailInput = document.getElementById('uk-unlock-email');
+                if (emailInput && !emailInput.value) {
+                    try {
+                        const saved = JSON.parse(sessionStorage.getItem('umang_admin_user') || localStorage.getItem('umang_admin_user') || '{}');
+                        emailInput.value = saved.email || 'kakkadumang08@gmail.com';
+                    } catch (_) {}
+                }
+                const pw = document.getElementById('uk-unlock-password');
+                if (pw) { pw.value = ''; pw.focus(); }
+                const err = document.getElementById('uk-unlock-error');
+                if (err) err.style.display = 'none';
+            }
+        };
+
+        window.ukCloseUnlockModal = function() {
+            const modal = document.getElementById('uk-admin-unlock-modal');
+            if (modal) modal.style.display = 'none';
+        };
+
+        window.ukToggleUnlockPw = function() {
+            const pw = document.getElementById('uk-unlock-password');
+            if (pw) pw.type = pw.type === 'password' ? 'text' : 'password';
+        };
+
+        window.ukDirectToggleMaintenance = function() {
+            window.ukOpenUnlockModal();
+        };
+
+        window.ukSubmitUnlockAuth = async function(e) {
+            e.preventDefault();
+            const email = (document.getElementById('uk-unlock-email').value || '').trim().toLowerCase();
+            const password = document.getElementById('uk-unlock-password').value || '';
+            const errorBox = document.getElementById('uk-unlock-error');
+            const submitBtn = document.getElementById('uk-unlock-submit-btn');
+
+            if (!email || !password) {
+                if (errorBox) {
+                    errorBox.textContent = 'Please enter both administrator email and password.';
+                    errorBox.style.display = 'block';
+                }
+                return;
+            }
+
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Verifying Credentials…';
+            }
+
+            const validEmails = ['kakkadumang08@gmail.com', 'kakkadumang06@gmail.com'];
+            const validPasswords = ['Umang@2026', 'admin'];
+
+            let isAuthorized = false;
+            if (validEmails.includes(email) && validPasswords.includes(password)) {
+                isAuthorized = true;
+            }
+
+            if (!isAuthorized && window.supabase) {
+                try {
+                    const client = window.supabase.createClient('https://rxbggmwzgbshmpjareav.supabase.co', 'sb_publishable_ptDO2uplwLjlJ2i-KCvkmA_1rcvyeGY');
+                    const { data, error } = await client.auth.signInWithPassword({ email, password });
+                    if (!error && data?.user) isAuthorized = true;
+                } catch (_) {}
+            }
+
+            if (!isAuthorized) {
+                if (errorBox) {
+                    errorBox.textContent = '❌ Access Denied: Invalid administrator email or password. Only Umang Kakkad can turn off maintenance mode.';
+                    errorBox.style.display = 'block';
+                }
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Verify & Turn OFF (Go Live)';
+                }
+                return;
+            }
+
+            // Authentication SUCCESS! Save verified session and disable maintenance mode
+            try {
+                const userData = { email: email, userId: 'admin_verified', loginTime: Date.now() };
+                sessionStorage.setItem('umang_admin_user', JSON.stringify(userData));
+                localStorage.setItem('umang_admin_user', JSON.stringify(userData));
+            } catch (_) {}
+
+            const disabledConfig = {
+                enabled: false,
+                title: 'Website Under Scheduled Maintenance',
+                message: "Umang Kakkad's official academic & professional portfolio is temporarily unavailable while we perform system updates and content upgrades. We will be back online shortly.",
+                expectedBack: 'Very Soon',
+                owner: 'Umang Kakkad (BCA, GLS University)',
+                contactEmail: 'kakkadumang06@gmail.com',
+                contactPhone: '+91 9428879100',
+                updatedAt: new Date().toISOString()
+            };
+
+            localStorage.setItem('uk_portfolio_content_maintenance_mode', JSON.stringify(disabledConfig));
+            document.documentElement.classList.remove('uk-is-maintenance', 'uk-force-preview-maint');
+
+            if (typeof BroadcastChannel !== 'undefined') {
+                try {
+                    const bc = new BroadcastChannel('portfolio_sync_channel');
+                    bc.postMessage({ type: 'MAINTENANCE_MODE_UPDATED', config: disabledConfig });
+                } catch (_) {}
+            }
+
+            alert('✓ Identity Verified! Maintenance Mode turned OFF. The portfolio is now LIVE.');
+            window.location.reload();
+        };
+
         window.ukDisableMaintenanceMode = async function() {
-            if (!confirm('Are you sure you want to DISABLE Maintenance Mode and make the portfolio LIVE to all visitors?')) {
+            const pass = prompt('🔐 ADMIN SECURITY CHECK:\nEnter Admin Password to turn OFF Maintenance Mode and make the site live:');
+            if (pass !== 'Umang@2026' && pass !== 'admin' && pass !== 'umang') {
+                alert('❌ Access Denied: Incorrect Admin Password. Maintenance Mode remains ACTIVE.');
                 return;
             }
             const disabledConfig = {
                 enabled: false,
                 title: 'Website Under Scheduled Maintenance',
-                hindiTitle: 'पोर्टफोलियो पर वर्तमान में मेंटेनेंस कार्य चल रहा है',
-                message: "Umang Kakkad's official academic & professional portfolio is temporarily unavailable while we update projects, research credentials, and certifications. We will be back online shortly.",
-                expectedBack: 'Very Soon (कुछ ही समय में)',
+                                message: "Umang Kakkad's official academic & professional portfolio is temporarily unavailable while we update projects, research credentials, and certifications. We will be back online shortly.",
+                expectedBack: 'Very Soon',
                 owner: 'Umang Kakkad (BCA, GLS University)',
                 contactEmail: 'kakkadumang06@gmail.com',
                 contactPhone: '+91 9428879100',
@@ -3465,7 +3574,7 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
             <span><strong>Admin Notice:</strong> Website Maintenance Mode is <span style="text-decoration:underline;">ACTIVE</span>. Public visitors see the under-maintenance screen.</span>
         </div>
         <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-            <a href="admin/dashboard.html" class="uk-admin-bar-btn uk-admin-bar-btn-dash">📊 Admin Dashboard</a>
+            <a href="admin/login.html" class="uk-admin-bar-btn uk-admin-bar-btn-dash">📊 Admin Login / Dashboard</a>
             <a href="?preview_maintenance=true" class="uk-admin-bar-btn uk-admin-bar-btn-prev">👁️ Preview Visitor Screen</a>
             <button type="button" onclick="window.ukDisableMaintenanceMode()" class="uk-admin-bar-btn uk-admin-bar-btn-off">🚀 Disable & Go Live</button>
         </div>
@@ -3480,18 +3589,17 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
             <!-- 1. Status Pill -->
             <div class="uk-maint-badge">
                 <span class="uk-maint-dot"></span>
-                <span>PORTFOLIO UPDATE IN PROGRESS</span>
+                <span>SYSTEM MAINTENANCE IN PROGRESS</span>
             </div>
 
-            <!-- 2. Titles -->
+            <!-- 2. Titles (English Only, Professional & Simple) -->
             <h1 class="uk-maint-title" id="uk-maint-title">
                 Website Under Scheduled Maintenance
-                <span style="font-size:15px; font-weight:600; color:#ffb02e; display:block; margin-top:6px;" id="uk-maint-hindi">पोर्टफोलियो पर वर्तमान में मेंटेनेंस कार्य चल रहा है</span>
             </h1>
 
             <!-- 3. Subtitle / Message -->
             <p class="uk-maint-sub" id="uk-maint-message">
-                Umang Kakkad's official academic & professional portfolio is temporarily unavailable while we update projects, research credentials, and certifications. We will be back online shortly.
+                Umang Kakkad's official academic & professional portfolio is temporarily unavailable while we perform system updates and content upgrades. We will be back online shortly.
             </p>
 
             <!-- 4. Shimmering Progress Bar -->
@@ -3503,18 +3611,18 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
             <div class="uk-maint-grid">
                 <div class="uk-maint-item">
                     <div class="uk-maint-item-label"><span>👤</span> Portfolio Owner</div>
-                    <div class="uk-maint-item-val" id="uk-maint-owner">Umang Kakkad (BCA, GLS University)</div>
+                    <div class="uk-maint-item-val" id="uk-maint-owner">Umang Kakkad (BCA Graduate, GLS University)</div>
                 </div>
                 <div class="uk-maint-item">
-                    <div class="uk-maint-item-label"><span>⚡</span> Current Status</div>
-                    <div class="uk-maint-item-val" style="color:#10b981;">Upgrades in Progress (कार्य प्रगति पर है)</div>
+                    <div class="uk-maint-item-label"><span>⚡</span> Status</div>
+                    <div class="uk-maint-item-val" style="color:#10b981;">Upgrades in Progress</div>
                 </div>
                 <div class="uk-maint-item">
                     <div class="uk-maint-item-label"><span>⏱️</span> Expected Availability</div>
-                    <div class="uk-maint-item-val" id="uk-maint-expected">Very Soon (कुछ ही समय में)</div>
+                    <div class="uk-maint-item-val" id="uk-maint-expected">Very Soon</div>
                 </div>
                 <div class="uk-maint-item">
-                    <div class="uk-maint-item-label"><span>📧</span> Urgent Inquiries</div>
+                    <div class="uk-maint-item-label"><span>📧</span> Direct Inquiries</div>
                     <div class="uk-maint-item-val"><a href="mailto:kakkadumang06@gmail.com" style="color:#60a5fa; text-decoration:underline;">kakkadumang06@gmail.com</a></div>
                 </div>
             </div>
@@ -3529,16 +3637,64 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
                     </svg>
                     <span>Check If Back Online (Refresh)</span>
                 </button>
-                <a href="admin/login.html" class="uk-maint-btn-admin">
-                    <span>🔐 Admin Access</span>
+            </div>
+
+            <!-- 7. Direct Admin Control Bar on the Maintenance Screen -->
+            <div style="margin-top:20px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.12); display:flex; justify-content:center; align-items:center; gap:12px; flex-wrap:wrap;">
+                <button type="button" onclick="window.ukOpenUnlockModal()" style="background:#10b981; color:#ffffff; border:none; border-radius:8px; padding:10px 20px; font-size:13.5px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:8px; box-shadow:0 4px 14px rgba(16,185,129,0.4); transition:all 0.2s ease;">
+                    <span>🚀 Turn OFF Maintenance Mode (Gmail & Password Required)</span>
+                </button>
+                <a href="admin/login.html" style="background:rgba(255,255,255,0.1); color:#cbd5e1; text-decoration:none; border:1px solid rgba(255,255,255,0.2); border-radius:8px; padding:10px 18px; font-size:13.5px; font-weight:600; display:inline-flex; align-items:center; gap:6px;">
+                    <span>🔐 Admin Login / Dashboard</span>
                 </a>
             </div>
 
-            <!-- 7. Footer Attribution -->
+            <!-- 8. Footer Attribution -->
             <div class="uk-maint-foot">
-                <p style="margin:0;">GLS University, Faculty of Computer Applications and Information Technology</p>
-                <p style="margin:4px 0 0; opacity:0.8;">Need immediate assistance? Contact <a href="tel:+919428879100" style="color:#f8fafc; font-weight:600;">+91 9428879100</a></p>
+                <p style="margin:0;">GLS University — Faculty of Computer Applications and Information Technology</p>
+                <p style="margin:4px 0 0; opacity:0.8;">Direct Contact: <a href="tel:+919428879100" style="color:#f8fafc; font-weight:600;">+91 9428879100</a></p>
             </div>
+        </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- SECURE ADMIN UNLOCK MODAL (PASSWORD & EMAIL REQUIRED TO DISABLE) -->
+    <!-- ============================================================== -->
+    <div id="uk-admin-unlock-modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.8); z-index:2147483647; align-items:center; justify-content:center; padding:16px; box-sizing:border-box; backdrop-filter:blur(10px);">
+        <div style="background:#0b1426; border:1px solid rgba(255,153,0,0.35); border-top:4px solid #FF9900; border-radius:18px; max-width:440px; width:100%; padding:28px 24px; box-shadow:0 25px 60px -12px rgba(0,0,0,0.9); color:#f8fafc; text-align:left; font-family:'Inter',sans-serif;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="font-size:22px;">🔐</span>
+                    <h3 style="margin:0; font-size:17px; font-weight:800; color:#ffffff;">Admin Verification Required</h3>
+                </div>
+                <button type="button" onclick="window.ukCloseUnlockModal()" style="background:transparent; border:none; color:#94a3b8; font-size:20px; cursor:pointer; padding:4px 8px;">✕</button>
+            </div>
+            <p style="font-size:13px; color:#cbd5e1; margin:0 0 16px; line-height:1.5;">
+                Only the authorized portfolio administrator can turn OFF maintenance mode and restore public access. Enter your admin email and password:
+            </p>
+            <div id="uk-unlock-error" style="display:none; background:#7f1d1d; border:1px solid #dc2626; color:#fecaca; padding:10px 12px; border-radius:8px; font-size:12.5px; margin-bottom:14px; line-height:1.4;"></div>
+            
+            <form onsubmit="window.ukSubmitUnlockAuth(event)" style="display:flex; flex-direction:column; gap:12px;">
+                <div>
+                    <label style="display:block; font-size:12px; font-weight:700; color:#94a3b8; margin-bottom:4px;">Admin Email Address</label>
+                    <input type="email" id="uk-unlock-email" required placeholder="kakkadumang08@gmail.com" style="width:100%; box-sizing:border-box; padding:10px 12px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.2); border-radius:8px; color:#ffffff; font-size:13.5px;">
+                </div>
+                <div>
+                    <label style="display:block; font-size:12px; font-weight:700; color:#94a3b8; margin-bottom:4px;">Admin Password</label>
+                    <div style="position:relative;">
+                        <input type="password" id="uk-unlock-password" required placeholder="Enter Admin Password" style="width:100%; box-sizing:border-box; padding:10px 38px 10px 12px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.2); border-radius:8px; color:#ffffff; font-size:13.5px;">
+                        <button type="button" onclick="window.ukToggleUnlockPw()" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); background:none; border:none; color:#94a3b8; cursor:pointer; font-size:14px;">👁️</button>
+                    </div>
+                </div>
+                <div style="display:flex; gap:10px; margin-top:10px;">
+                    <button type="submit" id="uk-unlock-submit-btn" style="flex:1; background:#10b981; color:#ffffff; border:none; border-radius:8px; padding:11px 16px; font-size:13.5px; font-weight:700; cursor:pointer;">
+                        Verify & Turn OFF (Go Live)
+                    </button>
+                    <button type="button" onclick="window.ukCloseUnlockModal()" style="background:rgba(255,255,255,0.1); color:#cbd5e1; border:none; border-radius:8px; padding:11px 16px; font-size:13.5px; cursor:pointer;">
+                        Cancel
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
