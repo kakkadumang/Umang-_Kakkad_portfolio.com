@@ -1608,7 +1608,7 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
       e.preventDefault();
       clearMsg();
 
-      const email = loginEmail.value.trim();
+      const email = loginEmail.value.trim().toLowerCase();
       const password = loginPassword.value;
 
       if (!email || !password) {
@@ -1619,63 +1619,90 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
       loginSubmitBtn.disabled = true;
       loginBtnText.textContent = "Verifying Credentials…";
 
+      // Authorized credentials
+      const validEmails = ["kakkadumang08@gmail.com", "kakkadumang06@gmail.com"];
+      const validPasswords = ["Umang@2026", "admin"];
+      const isValidAdmin = validEmails.includes(email) && validPasswords.includes(password);
+
+      let authSuccess = false;
+      let authUserId = "admin_local";
+
       try {
         const client = getSb();
-        if (!client) throw new Error("Supabase client is not available.");
-
-        // Attempt Supabase Auth login
-        const { data, error } = await client.auth.signInWithPassword({
-          email: email,
-          password: password
-        });
-
-        if (error) {
-          throw error;
-        }
-
-        // Store session for smooth multi-page navigation across file:// and web
-        const userData = {
-          email: email,
-          userId: data.user.id,
-          loginTime: Date.now()
-        };
-        sessionStorage.setItem("umang_admin_user", JSON.stringify(userData));
-        localStorage.setItem("umang_admin_user", JSON.stringify(userData));
-
-        if (data.session) {
-          try {
-            sessionStorage.setItem("umang_supabase_session", JSON.stringify(data.session));
-            localStorage.setItem("umang_supabase_session", JSON.stringify(data.session));
-          } catch(_) {}
-        }
-
-        showMsg("✓ Login successful! Redirecting to Dashboard…", "success");
-
-        setTimeout(() => {
-          window.location.href = "dashboard.html";
-        }, 500);
-
-      } catch (err) {
-        console.warn("Supabase auth response:", err);
-        const isRestricted = err.message && (err.message.includes("restricted") || err.message.includes("quota") || err.message.includes("402") || err.status === 402 || err.message.includes("Failed to fetch"));
-        if (isRestricted || !navigator.onLine) {
-          const userData = {
+        if (client) {
+          const { data, error } = await client.auth.signInWithPassword({
             email: email,
-            userId: "admin_local",
-            loginTime: Date.now()
-          };
-          sessionStorage.setItem("umang_admin_user", JSON.stringify(userData));
-          localStorage.setItem("umang_admin_user", JSON.stringify(userData));
-          showMsg("✓ Local Mode Access granted (Supabase Cloud is restricted). Redirecting to Dashboard…", "success");
-          setTimeout(() => {
-            window.location.href = "dashboard.html";
-          }, 600);
-          return;
+            password: password
+          });
+          if (!error && data?.user) {
+            authSuccess = true;
+            authUserId = data.user.id;
+            if (data.session) {
+              try {
+                sessionStorage.setItem("umang_supabase_session", JSON.stringify(data.session));
+                localStorage.setItem("umang_supabase_session", JSON.stringify(data.session));
+              } catch(_) {}
+            }
+          }
         }
-        showMsg(err.message || "Invalid credentials. Please verify your email and password.");
+      } catch (err) {
+        console.warn("Supabase auth note:", err);
+      }
+
+      // Check verified local admin credentials if cloud is restricted or failed
+      if (!authSuccess && isValidAdmin) {
+        authSuccess = true;
+      }
+
+      if (!authSuccess) {
+        showMsg("❌ Invalid credentials. Please enter authorized admin email and password.");
         loginSubmitBtn.disabled = false;
         loginBtnText.textContent = "Sign In to Dashboard";
+        return;
       }
+
+      // Store authenticated admin user session
+      const userData = {
+        email: email,
+        userId: authUserId,
+        loginTime: Date.now()
+      };
+      sessionStorage.setItem("umang_admin_user", JSON.stringify(userData));
+      localStorage.setItem("umang_admin_user", JSON.stringify(userData));
+
+      // Check if user came from maintenance page to turn off maintenance mode
+      const urlParams = new URLSearchParams(window.location.search);
+      const action = urlParams.get("action");
+
+      if (action === "disable_maintenance") {
+        const disabledConfig = {
+          enabled: false,
+          title: "Website Under Scheduled Maintenance",
+          message: "Umang Kakkad's official academic & professional portfolio is temporarily unavailable while we perform system updates and content upgrades. We will be back online shortly.",
+          expectedBack: "Very Soon",
+          owner: "Umang Kakkad (BCA, GLS University)",
+          contactEmail: "kakkadumang06@gmail.com",
+          contactPhone: "+91 9428879100",
+          updatedAt: new Date().toISOString()
+        };
+        localStorage.setItem("uk_portfolio_content_maintenance_mode", JSON.stringify(disabledConfig));
+        if (typeof BroadcastChannel !== 'undefined') {
+          try {
+            const bc = new BroadcastChannel('portfolio_sync_channel');
+            bc.postMessage({ type: 'MAINTENANCE_MODE_UPDATED', config: disabledConfig });
+          } catch (_) {}
+        }
+        showMsg("✓ Verified! Maintenance Mode turned OFF. Opening portfolio…", "success");
+        setTimeout(() => {
+          window.location.href = "../index.html";
+        }, 600);
+        return;
+      }
+
+      showMsg("✓ Login successful! Redirecting to Dashboard…", "success");
+      setTimeout(() => {
+        window.location.href = "dashboard.html";
+      }, 500);
     });
 
     // HANDLE FORGOT PASSWORD

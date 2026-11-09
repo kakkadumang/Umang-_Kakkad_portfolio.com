@@ -4,6 +4,28 @@
 
 <head>
 
+  <script>
+    // Strict Authentication Guard: Redirect immediately to login.html if not authenticated
+    (function() {
+      try {
+        const user = JSON.parse(sessionStorage.getItem("umang_admin_user") || localStorage.getItem("umang_admin_user") || "null");
+        if (!user || !user.email) {
+          sessionStorage.removeItem("umang_admin_user");
+      localStorage.removeItem("umang_admin_user");
+      sessionStorage.removeItem("umang_supabase_session");
+      localStorage.removeItem("umang_supabase_session");
+      window.location.replace("login.html");
+        }
+      } catch (_) {
+        sessionStorage.removeItem("umang_admin_user");
+      localStorage.removeItem("umang_admin_user");
+      sessionStorage.removeItem("umang_supabase_session");
+      localStorage.removeItem("umang_supabase_session");
+      window.location.replace("login.html");
+      }
+    })();
+  </script>
+
   <meta charset="UTF-8">
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -4718,6 +4740,18 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
     };
 
     window.handleMaintenanceToggle = async function(isChecked) {
+      if (!isChecked) {
+        const pass = prompt('🔐 ADMIN SECURITY CHECK:\nEnter Admin Password to turn OFF Maintenance Mode:');
+        if (pass === null) {
+          if (el('maintToggleCheckbox')) el('maintToggleCheckbox').checked = true;
+          return;
+        }
+        if (pass !== 'Umang@2026' && pass !== 'admin' && pass !== 'umang') {
+          alert('❌ Access Denied: Incorrect Admin Password. Maintenance Mode remains ACTIVE.');
+          if (el('maintToggleCheckbox')) el('maintToggleCheckbox').checked = true;
+          return;
+        }
+      }
       const config = {
         enabled: isChecked,
         title: el('maintTitleInput') ? el('maintTitleInput').value.trim() : "Website Under Scheduled Maintenance",
@@ -8621,7 +8655,11 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
 
       try { if (client) await client.auth.signOut(); }
 
-      finally { window.location.replace("login.html"); }
+      finally { sessionStorage.removeItem("umang_admin_user");
+      localStorage.removeItem("umang_admin_user");
+      sessionStorage.removeItem("umang_supabase_session");
+      localStorage.removeItem("umang_supabase_session");
+      window.location.replace("login.html"); }
 
     });
 
