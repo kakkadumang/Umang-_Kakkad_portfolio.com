@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  <defs>
+    <linearGradient id="p3Bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090e24"/>
+      <stop offset="100%" stop-color="#040614"/>
+    </linearGradient>
+    <linearGradient id="vaultCyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f5ff"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <filter id="p3Glow">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="600" height="360" rx="16" fill="url(#p3Bg)"/>
+  <rect x="1" y="1" width="598" height="358" rx="15" fill="none" stroke="rgba(0, 245, 255, 0.2)" stroke-width="1.5"/>
+
+  <!-- Window Header -->
+  <rect x="0" y="0" width="600" height="42" rx="16" fill="#0b1333"/>
+  <circle cx="28" cy="21" r="5" fill="#f43f5e"/>
+  <circle cx="46" cy="21" r="5" fill="#fbbf24"/>
+  <circle cx="64" cy="21" r="5" fill="#10b981"/>
+  <text x="95" y="25" fill="#38bdf8" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="bold">CLOUDVAULT DISTRIBUTED S3</text>
+
+  <!-- Central Isometric / Cyber Vault Core -->
+  <g transform="translate(190, 80)">
+    <!-- Central Hexagonal Node -->
+    <polygon points="110,20 190,65 190,155 110,200 30,155 30,65" fill="rgba(14, 25, 60, 0.7)" stroke="#00f5ff" stroke-width="2" filter="url(#p3Glow)"/>
+    <polygon points="110,40 170,75 170,145 110,180 50,145 50,75" fill="none" stroke="rgba(168, 85, 247, 0.6)" stroke-width="1.5" stroke-dasharray="6 4"/>
+    
+    <!-- Shield / Lock Icon in Core -->
+    <path d="M 110 75 L 140 90 V 125 C 140 145 110 160 110 160 C 110 160 80 145 80 125 V 90 Z" fill="rgba(0, 245, 255, 0.2)" stroke="#00f5ff" stroke-width="2"/>
+    <circle cx="110" cy="115" r="7" fill="#00f5ff"/>
+    <line x1="110" y1="120" x2="110" y2="132" stroke="#00f5ff" stroke-width="2.5"/>
+  </g>
+
+  <!-- Surrounding Satellite Server Nodes -->
+  <!-- Node US-East -->
+  <g transform="translate(40, 110)">
+    <rect width="110" height="60" rx="8" fill="rgba(15, 23, 42, 0.85)" stroke="#38bdf8" stroke-width="1.5"/>
+    <text x="15" y="25" fill="#f8fafc" font-size="11" font-weight="bold" font-family="sans-serif">US-East Node</text>
+    <text x="15" y="45" fill="#10b981" font-size="10" font-family="sans-serif">● 99.999% Sync</text>
+  </g>
+  <line x1="150" y1="140" x2="220" y2="140" stroke="#00f5ff" stroke-width="1.5" stroke-dasharray="4 4"/>
+
+  <!-- Node EU-Central -->
+  <g transform="translate(450, 110)">
+    <rect width="110" height="60" rx="8" fill="rgba(15, 23, 42, 0.85)" stroke="#a855f7" stroke-width="1.5"/>
+    <text x="15" y="25" fill="#f8fafc" font-size="11" font-weight="bold" font-family="sans-serif">EU-Central</text>
+    <text x="15" y="45" fill="#10b981" font-size="10" font-family="sans-serif">● 99.999% Sync</text>
+  </g>
+  <line x1="400" y1="140" x2="450" y2="140" stroke="#a855f7" stroke-width="1.5" stroke-dasharray="4 4"/>
+
+  <!-- Node AP-South -->
+  <g transform="translate(40, 240)">
+    <rect width="110" height="60" rx="8" fill="rgba(15, 23, 42, 0.85)" stroke="#38bdf8" stroke-width="1.5"/>
+    <text x="15" y="25" fill="#f8fafc" font-size="11" font-weight="bold" font-family="sans-serif">AP-South</text>
+    <text x="15" y="45" fill="#10b981" font-size="10" font-family="sans-serif">● 99.999% Sync</text>
+  </g>
+  <line x1="150" y1="260" x2="240" y2="230" stroke="#00f5ff" stroke-width="1.5" stroke-dasharray="4 4"/>
+
+  <!-- Node Edge-CDN -->
+  <g transform="translate(450, 240)">
+    <rect width="110" height="60" rx="8" fill="rgba(15, 23, 42, 0.85)" stroke="#a855f7" stroke-width="1.5"/>
+    <text x="15" y="25" fill="#f8fafc" font-size="11" font-weight="bold" font-family="sans-serif">Edge CDN</text>
+    <text x="15" y="45" fill="#10b981" font-size="10" font-family="sans-serif">● 12ms Cache</text>
+  </g>
+  <line x1="450" y1="260" x2="380" y2="230" stroke="#a855f7" stroke-width="1.5" stroke-dasharray="4 4"/>
+
+  <!-- Bottom status strip -->
+  <rect x="180" y="300" width="240" height="32" rx="16" fill="rgba(0, 245, 255, 0.08)" stroke="#00f5ff" stroke-width="1"/>
+  <circle cx="200" cy="316" r="4" fill="#10b981"/>
+  <text x="215" y="320" fill="#f8fafc" font-size="11" font-family="sans-serif">AES-256 ZERO KNOWLEDGE</text>
+</svg>

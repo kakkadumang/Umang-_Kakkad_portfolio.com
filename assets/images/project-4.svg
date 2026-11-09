@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  <defs>
+    <linearGradient id="p4Bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0b22"/>
+      <stop offset="100%" stop-color="#030511"/>
+    </linearGradient>
+    <linearGradient id="neonPink" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ec4899"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="600" height="360" rx="16" fill="url(#p4Bg)"/>
+  <rect x="1" y="1" width="598" height="358" rx="15" fill="none" stroke="rgba(236, 72, 153, 0.25)" stroke-width="1.5"/>
+
+  <!-- Top bar -->
+  <rect x="0" y="0" width="600" height="42" rx="16" fill="#0f102c"/>
+  <circle cx="28" cy="21" r="5" fill="#f43f5e"/>
+  <circle cx="46" cy="21" r="5" fill="#fbbf24"/>
+  <circle cx="64" cy="21" r="5" fill="#10b981"/>
+  <text x="95" y="25" fill="#ec4899" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="bold">HYPERPULSE DEV NET</text>
+
+  <!-- Left Chat Channels -->
+  <rect x="20" y="60" width="140" height="280" rx="8" fill="rgba(255, 255, 255, 0.03)" stroke="rgba(255, 255, 255, 0.05)"/>
+  <text x="35" y="85" fill="#94a3b8" font-size="11" font-weight="bold"># CHANNELS</text>
+  <rect x="30" y="100" width="120" height="24" rx="4" fill="rgba(236, 72, 153, 0.2)"/>
+  <text x="40" y="116" fill="#f43f5e" font-size="11"># general-chat</text>
+  <text x="40" y="145" fill="#94a3b8" font-size="11"># code-reviews</text>
+  <text x="40" y="175" fill="#94a3b8" font-size="11"># ai-agents</text>
+  <text x="40" y="205" fill="#94a3b8" font-size="11"># cloud-infra</text>
+
+  <!-- Center Live Code Sharing & Chat Stream -->
+  <rect x="175" y="60" width="405" height="210" rx="8" fill="rgba(10, 14, 38, 0.85)" stroke="rgba(0, 245, 255, 0.15)"/>
+  
+  <!-- Message 1 -->
+  <circle cx="198" cy="88" r="10" fill="#00f5ff"/>
+  <text x="216" y="85" fill="#f8fafc" font-size="11" font-weight="bold">DevCore</text>
+  <text x="268" y="85" fill="#64748b" font-size="9">10:42 AM</text>
+  <text x="216" y="103" fill="#cbd5e1" font-size="11">Check this high throughput WebSocket handler implementation:</text>
+  
+  <!-- Code Snippet Box inside chat -->
+  <rect x="216" y="115" width="345" height="60" rx="6" fill="#040612" stroke="rgba(255, 255, 255, 0.1)"/>
+  <text x="226" y="132" fill="#c084fc" font-family="monospace" font-size="10">const stream = new CyberStream({ sync: true });</text>
+  <text x="226" y="148" fill="#00f5ff" font-family="monospace" font-size="10">stream.pipe(neuralWorkerPool).on('data', emit);</text>
+  <text x="226" y="164" fill="#10b981" font-family="monospace" font-size="10">// latency: 2.1ms | connected clients: 48,200</text>
+
+  <!-- Message 2 -->
+  <circle cx="198" cy="205" r="10" fill="#a855f7"/>
+  <text x="216" y="202" fill="#f8fafc" font-size="11" font-weight="bold">Alex_Architect</text>
+  <text x="300" y="202" fill="#64748b" font-size="9">10:44 AM</text>
+  <text x="216" y="220" fill="#cbd5e1" font-size="11">Brilliant architecture! Clean zero-copy buffer abstraction.</text>
+
+  <!-- Input Bar Mock -->
+  <rect x="175" y="285" width="405" height="45" rx="8" fill="rgba(255, 255, 255, 0.04)" stroke="rgba(236, 72, 153, 0.3)"/>
+  <text x="195" y="312" fill="#64748b" font-size="11">Message #general-chat (Markdown, Code &amp; Snippets supported)...</text>
+  <rect x="525" y="293" width="45" height="28" rx="6" fill="url(#neonPink)"/>
+  <text x="535" y="311" fill="#ffffff" font-size="12" font-weight="bold">→</text>
+</svg>

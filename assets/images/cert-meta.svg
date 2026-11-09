@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <linearGradient id="metaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0064e0"/>
+      <stop offset="100%" stop-color="#00f5ff"/>
+    </linearGradient>
+    <filter id="metaGlow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <polygon points="100,10 180,55 180,145 100,190 20,145 20,55" fill="#0b122c" stroke="url(#metaGrad)" stroke-width="3" filter="url(#metaGlow)"/>
+  <polygon points="100,25 165,62 165,138 100,175 35,138 35,62" fill="rgba(0, 100, 224, 0.08)" stroke="rgba(0, 245, 255, 0.3)" stroke-width="1.5"/>
+  <!-- Infinity Meta shape -->
+  <path d="M 65 95 C 50 80, 50 115, 75 115 C 90 115, 100 100, 100 100 C 100 100, 110 115, 125 115 C 150 115, 150 80, 135 95 C 120 110, 100 100, 100 100 C 100 100, 80 80, 65 95 Z" fill="none" stroke="url(#metaGrad)" stroke-width="4.5" stroke-linecap="round"/>
+  <text x="100" y="70" text-anchor="middle" fill="#ffffff" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="900" letter-spacing="1">META</text>
+  <text x="100" y="145" text-anchor="middle" fill="#00f5ff" font-family="'Segoe UI', sans-serif" font-size="10" font-weight="bold" letter-spacing="1">FULL STACK</text>
+  <text x="100" y="158" text-anchor="middle" fill="#94a3b8" font-family="'Segoe UI', sans-serif" font-size="9" font-weight="bold">ENGINEER</text>
+</svg>
