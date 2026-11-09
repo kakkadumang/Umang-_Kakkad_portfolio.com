@@ -1,0 +1,304 @@
+/* ==========================================================================
+   FUTURISTIC DEVELOPER PORTFOLIO - RESPONSIVE STYLES
+   Desktop, Laptop, Tablet, and Android / Mobile
+   ========================================================================== */
+
+/* --- LAPTOPS & MEDIUM DESKTOPS (<= 1199px) --- */
+@media (max-width: 1199px) {
+  .hero-grid {
+    gap: 36px;
+  }
+  
+  .hologram-card-container {
+    width: 340px;
+    height: 420px;
+  }
+
+  .avatar-image-box {
+    width: 220px;
+    height: 220px;
+  }
+}
+
+/* --- TABLETS & SMALL LAPTOPS (<= 991px) --- */
+@media (max-width: 991px) {
+  :root {
+    --nav-height: 72px;
+  }
+
+  .nav-links,
+  .nav-actions .btn {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .hero-section {
+    padding-top: calc(var(--nav-height) + 30px);
+    text-align: center;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-typewriter-wrapper {
+    justify-content: center;
+  }
+
+  .hero-desc {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-cta-group {
+    justify-content: center;
+  }
+
+  .hero-social-strip {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .hero-stats-bar {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 50px;
+  }
+
+  .stat-item:nth-child(2)::after {
+    display: none;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .footer-top-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+
+  .footer-brand {
+    grid-column: span 2;
+  }
+
+  .resume-overview-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- PHONES & ANDROID DEVICES (<= 767px) --- */
+@media (max-width: 767px) {
+  .section {
+    padding: 70px 0;
+  }
+
+  .container {
+    padding: 0 18px;
+  }
+
+  .section-header {
+    margin-bottom: 40px;
+  }
+
+  .section-title {
+    font-size: 2.1rem;
+  }
+
+  .hero-name {
+    font-size: clamp(2.2rem, 9vw, 3.2rem);
+  }
+
+  .hero-typewriter-wrapper {
+    font-size: 1.1rem;
+  }
+
+  .hero-cta-group {
+    flex-direction: column;
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .hero-cta-group .btn {
+    width: 100%;
+  }
+
+  .hologram-card-container {
+    width: 290px;
+    height: 380px;
+  }
+
+  .avatar-image-box {
+    width: 190px;
+    height: 190px;
+  }
+
+  .floating-badge {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+  }
+
+  .badge-top-right {
+    right: -10px;
+  }
+
+  .badge-bottom-left {
+    left: -10px;
+  }
+
+  .hero-stats-bar {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+
+  .stat-item::after {
+    display: none !important;
+  }
+
+  .stat-item:not(:last-child) {
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .about-key-points {
+    grid-template-columns: 1fr;
+  }
+
+  /* Timelines adjustment for mobile */
+  .education-timeline::before,
+  .experience-timeline::before {
+    left: 20px;
+  }
+
+  .education-item,
+  .exp-item {
+    gap: 16px;
+  }
+
+  .edu-node-icon,
+  .exp-milestone-node {
+    width: 42px;
+    height: 42px;
+    font-size: 1rem;
+  }
+
+  .education-card,
+  .exp-card {
+    padding: 20px 16px;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .certificates-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .resume-box {
+    padding: 24px 18px;
+  }
+
+  .resume-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .resume-action-buttons {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .resume-action-buttons .btn {
+    width: 100%;
+  }
+
+  .contact-form-wrap {
+    padding: 24px 18px;
+  }
+
+  .contact-card-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .contact-btn-action {
+    width: 100%;
+    text-align: center;
+  }
+
+  .footer-top-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .footer-brand {
+    grid-column: span 1;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+
+  .back-to-top-btn {
+    bottom: 20px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* --- SMALL SCREENS (<= 480px) --- */
+@media (max-width: 480px) {
+  .hero-name {
+    font-size: 2.1rem;
+  }
+
+  .hologram-card-container {
+    width: 260px;
+    height: 350px;
+  }
+
+  .avatar-image-box {
+    width: 160px;
+    height: 160px;
+  }
+
+  .floating-badge {
+    display: none;
+  }
+
+  .modal-dialog {
+    padding: 24px 16px;
+  }
+
+  .project-actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .project-action-links {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
