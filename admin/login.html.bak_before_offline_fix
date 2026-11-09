@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login | Umang Kakkad Portfolio</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#072566">
+  <meta name="description" content="Secure administration login portal for Umang Kakkad portfolio.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
+  <!-- Supabase JS Library -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    :root {
+      --navy: #072566;
+      --blue: #003399;
+      --blue-hover: #002266;
+      --blue-soft: #e8f0fe;
+      --orange: #ff9900;
+      --orange-hover: #e68a00;
+      --ink: #0f172a;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --card-bg: #ffffff;
+      --page-bg: #f4f7fc;
+      --success: #059669;
+      --danger: #dc2626;
+      --shadow-sm: 0 4px 12px rgba(7, 37, 102, 0.06);
+      --shadow-lg: 0 25px 60px -15px rgba(7, 37, 102, 0.16);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse at 10% 15%, rgba(0, 51, 153, 0.08) 0%, transparent 40%),
+        radial-gradient(ellipse at 90% 85%, rgba(255, 153, 0, 0.08) 0%, transparent 40%),
+        var(--page-bg);
+      padding: clamp(16px, 3.5vw, 40px);
+    }
+
+    /* TOP BAR */
+    .topbar {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--blue);
+      border: 2.5px solid var(--orange);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.5px;
+      box-shadow: 0 4px 14px rgba(0, 51, 153, 0.22);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .brand-link:hover .brand-avatar {
+      transform: scale(1.05);
+      box-shadow: 0 6px 18px rgba(0, 51, 153, 0.32);
+    }
+
+    .brand-info h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.3px;
+    }
+
+    .brand-info span {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.2px;
+    }
+
+    .back-home-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 16px;
+      border-radius: 10px;
+      background: #fff;
+      border: 1px solid var(--line);
+      color: var(--navy);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+
+    .back-home-btn:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(0, 51, 153, 0.12);
+    }
+
+    /* MAIN CONTAINER */
+    .main-wrap {
+      flex: 1;
+      display: grid;
+      place-items: center;
+      padding: clamp(24px, 4vh, 50px) 0;
+    }
+
+    .login-box {
+      width: min(1020px, 100%);
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      background: var(--card-bg);
+      border-radius: 24px;
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .login-box::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--navy) 0%, var(--blue) 50%, var(--orange) 100%);
+      z-index: 10;
+    }
+
+    /* LEFT HERO PANEL */
+    .hero-panel {
+      padding: clamp(36px, 4.5vw, 54px);
+      background: linear-gradient(155deg, #f8faff 0%, #f0f4fc 100%);
+      border-right: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .hero-panel::after {
+      content: "";
+      position: absolute;
+      bottom: -60px;
+      right: -60px;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 153, 0, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .security-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(0, 51, 153, 0.08);
+      border: 1px solid rgba(0, 51, 153, 0.15);
+      color: var(--blue);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      width: fit-content;
+    }
+
+    .security-badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--orange);
+      box-shadow: 0 0 8px rgba(255, 153, 0, 0.6);
+      animation: pulseDot 2s infinite;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    .hero-panel h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(30px, 3.4vw, 42px);
+      line-height: 1.15;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -1.2px;
+      margin: 20px 0 14px;
+    }
+
+    .hero-panel h2 em {
+      font-style: normal;
+      color: var(--orange);
+    }
+
+    .hero-copy {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.75;
+      max-width: 420px;
+    }
+
+    .feature-points {
+      list-style: none;
+      display: grid;
+      gap: 14px;
+      margin: 28px 0;
+    }
+
+    .feature-point {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .feature-icon-box {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid #cbd5e1;
+      display: grid;
+      place-items: center;
+      color: var(--blue);
+      box-shadow: 0 2px 6px rgba(0, 51, 153, 0.08);
+      flex-shrink: 0;
+    }
+
+    /* SIGNATURE BADGE */
+    .signature-card {
+      padding-top: 18px;
+      border-top: 1px dashed rgba(100, 116, 139, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .signature-img-wrap {
+      max-width: 170px;
+    }
+
+    .signature-img {
+      width: 100%;
+      height: auto;
+      max-height: 58px;
+      object-fit: contain;
+      filter: contrast(1.1);
+    }
+
+    .signature-meta {
+      text-align: right;
+    }
+
+    .signature-meta strong {
+      display: block;
+      font-size: 13px;
+      color: var(--navy);
+    }
+
+    .signature-meta span {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+    }
+
+    /* RIGHT FORM PANEL */
+    .form-panel {
+      padding: clamp(36px, 4.5vw, 54px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: #fff;
+    }
+
+    .form-header {
+      margin-bottom: 26px;
+    }
+
+    .form-header-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--blue-soft);
+      color: var(--blue);
+      display: grid;
+      place-items: center;
+      margin-bottom: 16px;
+      border: 1px solid #bfdbfe;
+    }
+
+    .form-header h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.6px;
+      margin-bottom: 6px;
+    }
+
+    .form-header p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* FORM STYLING */
+    form {
+      display: grid;
+      gap: 18px;
+    }
+
+    .form-group {
+      display: grid;
+      gap: 7px;
+    }
+
+    .form-group label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #334155;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+
+    .input-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 14px;
+      color: #94a3b8;
+      pointer-events: none;
+      display: grid;
+      place-items: center;
+    }
+
+    .input-field {
+      width: 100%;
+      min-height: 48px;
+      padding: 12px 14px 12px 44px;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      background: #f8fafc;
+      color: var(--ink);
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .input-field::placeholder {
+      color: #94a3b8;
+    }
+
+    .input-field:focus {
+      background: #fff;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(0, 51, 153, 0.12);
+    }
+
+    /* PASSWORD TOGGLE EYE */
+    .password-toggle-btn {
+      position: absolute;
+      right: 12px;
+      background: transparent;
+      border: none;
+      padding: 6px;
+      color: #64748b;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      border-radius: 6px;
+      transition: color 0.15s ease;
+    }
+
+    .password-toggle-btn:hover {
+      color: var(--blue);
+      background: #f1f5f9;
+    }
+
+    /* OPTIONS ROW */
+    .form-options {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 12px;
+    }
+
+    .remember-me {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: #475569;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .remember-me input {
+      accent-color: var(--blue);
+      cursor: pointer;
+    }
+
+    .forgot-link-btn {
+      background: none;
+      border: none;
+      color: var(--blue);
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .forgot-link-btn:hover {
+      color: var(--navy);
+      text-decoration: underline;
+    }
+
+    /* SUBMIT BUTTON */
+    .submit-btn {
+      min-height: 50px;
+      margin-top: 4px;
+      background: linear-gradient(135deg, var(--blue) 0%, #002777 100%);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 8px 20px rgba(0, 51, 153, 0.24);
+      transition: all 0.2s ease;
+    }
+
+    .submit-btn:hover:not(:disabled) {
+      background: linear-gradient(135deg, #0940b3 0%, var(--blue) 100%);
+      box-shadow: 0 10px 25px rgba(0, 51, 153, 0.32);
+      transform: translateY(-1px);
+    }
+
+    .submit-btn:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.7;
+      cursor: wait;
+      transform: none;
+    }
+
+    /* NOTIFICATION / STATUS MESSAGE */
+    .status-msg {
+      display: none;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    .status-msg.show {
+      display: block;
+    }
+
+    .status-msg.error {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: var(--danger);
+    }
+
+    .status-msg.success {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      color: var(--success);
+    }
+
+    .status-msg.info {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: var(--blue);
+    }
+
+    /* VIEW SWITCHING (Forgot Password) */
+    .view-card[hidden] {
+      display: none !important;
+    }
+
+    /* FOOTER */
+    .page-footer {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .page-footer a {
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .page-footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* RESPONSIVE - MOBILE FIRST FORM ORDER */
+    @media (max-width: 860px) {
+      body {
+        padding: 12px 10px;
+        overflow-x: hidden;
+        width: 100%;
+      }
+
+      .topbar {
+        padding: 0 4px;
+        margin-bottom: 14px;
+        width: 100%;
+        gap: 10px;
+      }
+
+      .brand-info h1 {
+        font-size: 14px;
+      }
+
+      .brand-info span {
+        font-size: 9.5px;
+      }
+
+      .brand-avatar {
+        width: 38px;
+        height: 38px;
+        font-size: 13px;
+      }
+
+      .back-home-btn {
+        padding: 7px 12px;
+        font-size: 11px;
+        white-space: nowrap;
+      }
+
+      .main-wrap {
+        padding: 6px 0 20px;
+        width: 100%;
+      }
+
+      .login-box {
+        display: flex;
+        flex-direction: column;
+        max-width: 440px;
+        width: 100%;
+        border-radius: 18px;
+        box-shadow: 0 10px 30px rgba(7, 37, 102, 0.1);
+        margin: 0 auto;
+      }
+
+      /* LOGIN FORM COMES FIRST ON MOBILE SO USER ENTERS CREDENTIALS IMMEDIATELY! */
+      .form-panel {
+        order: 1;
+        padding: 26px 20px;
+        width: 100%;
+      }
+
+      .form-header h3 {
+        font-size: 20px;
+      }
+
+      .form-header p {
+        font-size: 12px;
+      }
+
+      .form-group {
+        margin-bottom: 14px;
+      }
+
+      .input-field {
+        height: 46px;
+        font-size: 13px;
+      }
+
+      .submit-btn {
+        height: 46px;
+        font-size: 13px;
+      }
+
+      /* EXECUTIVE WORKSPACE / INFO PANEL COMES SECOND ON MOBILE */
+      .hero-panel {
+        order: 2;
+        border-right: none;
+        border-top: 1px solid var(--line);
+        padding: 22px 20px;
+        width: 100%;
+      }
+
+      .hero-panel h2 {
+        font-size: 20px;
+        line-height: 1.25;
+      }
+
+      .hero-copy {
+        font-size: 12px;
+        margin-top: 6px;
+        line-height: 1.5;
+      }
+
+      .feature-points {
+        margin: 12px 0;
+        gap: 8px;
+      }
+
+      .feature-point {
+        font-size: 11.5px;
+      }
+
+      .signature-card {
+        padding-top: 12px;
+        margin-top: 10px;
+      }
+
+      .admin-signature-img {
+        height: 28px;
+      }
+
+      .page-footer {
+        flex-direction: column;
+        text-align: center;
+        gap: 6px;
+        margin-top: 14px;
+        font-size: 11px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <a href="../index.html" class="brand-link" title="Return to public portfolio website">
+      <div class="brand-avatar">UK</div>
+      <div class="brand-info">
+        <h1>Umang Kakkad</h1>
+        <span>Official Academic &amp; Developer Portfolio</span>
+      </div>
+    </a>
+
+    <a href="../index.html" class="back-home-btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <span>Back to Portfolio</span>
+    </a>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="main-wrap">
+    <div class="login-box">
+
+      <!-- LEFT HERO / IDENTITY PANEL -->
+      <section class="hero-panel" aria-label="Umang Kakkad Administration Portal">
+        <div>
+          <div class="security-badge">
+            <span class="security-badge-dot"></span>
+            <span>Executive Workspace</span>
+          </div>
+
+          <h2>Admin Control<br><em>New Experience</em>.</h2>
+
+          <p class="hero-copy">
+            Authorized administrative gateway for managing profile data, updating project showcases, monitoring real-time visitor traffic, and moderating public feedback.
+          </p>
+
+          <ul class="feature-points">
+            <li class="feature-point">
+              <div class="feature-icon-box">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <span>Instant Portfolio Content &amp; Degree Management</span>
+            </li>
+            <li class="feature-point">
+              <div class="feature-icon-box">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <span>Live Visitor Traffic &amp; Accurate Page Count</span>
+            </li>
+            <li class="feature-point">
+              <div class="feature-icon-box">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <span>Direct Supabase Database Synchronization</span>
+            </li>
+            <li class="feature-point">
+              <div class="feature-icon-box">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <span>Visitor Review &amp; Wish Moderation Desk</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="signature-card">
+          <div class="signature-img-wrap">
+            <img src="../assets/images/umang-signature.png" alt="Umang Kakkad handwritten signature" class="signature-img" onerror="this.style.display='none'">
+          </div>
+          <div class="signature-meta">
+            <strong>Umang Kakkad</strong>
+            <span>Portfolio Administrator</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT FORM PANEL -->
+      <section class="form-panel" aria-label="Sign in form">
+
+        
+
+        <!-- 1. LOGIN VIEW -->
+        <div id="loginView" class="view-card">
+          <div class="form-header">
+            <div class="form-header-badge">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <h3>Admin Sign In</h3>
+            <p>Enter your administrator credentials to unlock the dashboard.</p>
+          </div>
+
+          <form id="loginForm" autocomplete="on">
+            <div class="form-group">
+              <label for="loginEmail">Administrator Email</label>
+              <div class="input-box">
+                <span class="input-icon">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </span>
+                <input
+                  id="loginEmail"
+                  type="email"
+                  class="input-field"
+                  placeholder="sample@gmail.com"
+                  autocomplete="username"
+                  required
+                >
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="loginPassword">Security Password</label>
+              <div class="input-box">
+                <span class="input-icon">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                </span>
+                <input
+                  id="loginPassword"
+                  type="password"
+                  class="input-field"
+                  placeholder="Enter your admin password"
+                  autocomplete="current-password"
+                  required
+                >
+                <button type="button" id="togglePasswordBtn" class="password-toggle-btn" aria-label="Show password" title="Toggle password visibility">
+                  <svg id="eyeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-options">
+              <label class="remember-me">
+                <input type="checkbox" id="rememberMe" checked>
+                <span>Remember me</span>
+              </label>
+              <button type="button" id="openForgotBtn" class="forgot-link-btn">Forgot password?</button>
+            </div>
+
+            <button type="submit" id="loginSubmitBtn" class="submit-btn">
+              <span id="loginBtnText">Sign In to Dashboard</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </form>
+        </div>
+
+        <!-- 2. FORGOT PASSWORD VIEW -->
+        <div id="forgotView" class="view-card" hidden>
+          <div class="form-header">
+            <div class="form-header-badge">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            </div>
+            <h3>Reset Password</h3>
+            <p>Enter your registered administrator email to receive a secure recovery link.</p>
+          </div>
+
+          <form id="forgotForm">
+            <div class="form-group">
+              <label for="forgotEmail">Admin Email</label>
+              <div class="input-box">
+                <span class="input-icon">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </span>
+                <input
+                  id="forgotEmail"
+                  type="email"
+                  class="input-field"
+                  placeholder="sample@gmail.com"
+                  required
+                >
+              </div>
+            </div>
+
+            <button type="submit" id="forgotSubmitBtn" class="submit-btn">
+              <span>Send Reset Email</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+
+            <button type="button" id="backToLoginBtn" class="forgot-link-btn" style="margin-top:10px;text-align:center;">
+              ← Back to Sign In
+            </button>
+          </form>
+        </div>
+
+        <!-- STATUS MESSAGE ALERT -->
+        <div id="statusMessage" class="status-msg" role="status" aria-live="polite"></div>
+
+      </section>
+    </div>
+  </main>
+
+  <!-- PAGE FOOTER -->
+  <footer class="page-footer">
+    <span>© <span id="yearVal">2026</span> Umang Kakkad. Official Portfolio Control Center.</span>
+    <span>Protected by Supabase Authentication · Authorized Access Only</span>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+    // Supabase Configuration
+    const SUPABASE_URL = "https://rxbggmwzgbshmpjareav.supabase.co";
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_ptDO2uplwLjlJ2i-KCvkmA_1rcvyeGY";
+
+    let supabaseClient = null;
+    function getSb() {
+      if (!supabaseClient && window.supabase) {
+        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+          auth: {
+            persistSession: true,
+            autoRefreshToken: true,
+            detectSessionInUrl: true
+          }
+        });
+      }
+      return supabaseClient;
+    }
+
+    // Elements
+    const loginView = document.getElementById("loginView");
+    const forgotView = document.getElementById("forgotView");
+    const loginForm = document.getElementById("loginForm");
+    const forgotForm = document.getElementById("forgotForm");
+    const loginEmail = document.getElementById("loginEmail");
+    const loginPassword = document.getElementById("loginPassword");
+    const loginSubmitBtn = document.getElementById("loginSubmitBtn");
+    const loginBtnText = document.getElementById("loginBtnText");
+    const togglePasswordBtn = document.getElementById("togglePasswordBtn");
+    const eyeIcon = document.getElementById("eyeIcon");
+    const statusMessage = document.getElementById("statusMessage");
+    const backToLoginBtn = document.getElementById("backToLoginBtn");
+
+    document.getElementById("yearVal").textContent = new Date().getFullYear();
+
+
+
+
+    // Show / Hide Password toggle
+    togglePasswordBtn.addEventListener("click", () => {
+      const isPassword = loginPassword.type === "password";
+      loginPassword.type = isPassword ? "text" : "password";
+      eyeIcon.innerHTML = isPassword
+        ? '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>'
+        : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+    });
+
+    // Toggle views
+    openForgotBtn.addEventListener("click", () => {
+      loginView.hidden = true;
+      forgotView.hidden = false;
+      document.getElementById("forgotEmail").value = loginEmail.value.trim();
+      clearMsg();
+    });
+
+    backToLoginBtn.addEventListener("click", () => {
+      forgotView.hidden = true;
+      loginView.hidden = false;
+      clearMsg();
+    });
+
+    function showMsg(text, type = "error") {
+      statusMessage.textContent = text;
+      statusMessage.className = "status-msg show " + type;
+    }
+
+    function clearMsg() {
+      statusMessage.textContent = "";
+      statusMessage.className = "status-msg";
+    }
+
+    
+
+    // HANDLE LOGIN SUBMIT
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      clearMsg();
+
+      const email = loginEmail.value.trim();
+      const password = loginPassword.value;
+
+      if (!email || !password) {
+        showMsg("Please enter both admin email and password.");
+        return;
+      }
+
+      loginSubmitBtn.disabled = true;
+      loginBtnText.textContent = "Verifying Credentials…";
+
+      try {
+        const client = getSb();
+        if (!client) throw new Error("Supabase client is not available.");
+
+        // Attempt Supabase Auth login
+        const { data, error } = await client.auth.signInWithPassword({
+          email: email,
+          password: password
+        });
+
+        if (error) {
+          throw error;
+        }
+
+        // Store session for smooth multi-page navigation across file:// and web
+        const userData = {
+          email: email,
+          userId: data.user.id,
+          loginTime: Date.now()
+        };
+        sessionStorage.setItem("umang_admin_user", JSON.stringify(userData));
+        localStorage.setItem("umang_admin_user", JSON.stringify(userData));
+
+        if (data.session) {
+          try {
+            sessionStorage.setItem("umang_supabase_session", JSON.stringify(data.session));
+            localStorage.setItem("umang_supabase_session", JSON.stringify(data.session));
+          } catch(_) {}
+        }
+
+        showMsg("✓ Login successful! Redirecting to Dashboard…", "success");
+
+        setTimeout(() => {
+          window.location.href = "dashboard.html";
+        }, 500);
+
+      } catch (err) {
+        console.warn("Supabase auth response:", err);
+        showMsg(err.message || "Invalid credentials. Please verify your email and password.");
+        loginSubmitBtn.disabled = false;
+        loginBtnText.textContent = "Sign In to Dashboard";
+      }
+    });
+
+    // HANDLE FORGOT PASSWORD
+    forgotForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      clearMsg();
+      const fEmail = document.getElementById("forgotEmail").value.trim();
+      const fBtn = document.getElementById("forgotSubmitBtn");
+
+      fBtn.disabled = true;
+      fBtn.textContent = "Sending link…";
+
+      try {
+        const client = getSb();
+        if (!client) throw new Error("Database client offline.");
+        const { error } = await client.auth.resetPasswordForEmail(fEmail, {
+          redirectTo: window.location.origin + window.location.pathname
+        });
+        if (error) throw error;
+        showMsg("✓ Password reset email sent! Please check your Inbox and Spam folder.", "success");
+      } catch (err) {
+        showMsg(err.message || "Could not send reset link. Try again later.");
+      } finally {
+        fBtn.disabled = false;
+        fBtn.textContent = "Send Reset Email";
+      }
+    });
+
+    // Initialize session banner check
+    
+  </script>
+</body>
+</html>

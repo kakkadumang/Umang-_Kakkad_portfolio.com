@@ -1,0 +1,1824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login | Umang Kakkad Portfolio</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#072566">
+  <meta name="description" content="Secure administration login portal for Umang Kakkad portfolio.">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/icons/apple-touch-icon.png">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
+  <!-- Supabase JS Library -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    :root {
+      --navy: #072566;
+      --blue: #003399;
+      --blue-hover: #002266;
+      --blue-soft: #e8f0fe;
+      --orange: #ff9900;
+      --orange-hover: #e68a00;
+      --ink: #0f172a;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --card-bg: #ffffff;
+      --page-bg: #f4f7fc;
+      --success: #059669;
+      --danger: #dc2626;
+      --shadow-sm: 0 4px 12px rgba(7, 37, 102, 0.06);
+      --shadow-lg: 0 25px 60px -15px rgba(7, 37, 102, 0.16);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse at 10% 15%, rgba(0, 51, 153, 0.08) 0%, transparent 40%),
+        radial-gradient(ellipse at 90% 85%, rgba(255, 153, 0, 0.08) 0%, transparent 40%),
+        var(--page-bg);
+      padding: clamp(16px, 3.5vw, 40px);
+    }
+
+    /* TOP BAR */
+    .topbar {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--blue);
+      border: 2.5px solid var(--orange);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.5px;
+      box-shadow: 0 4px 14px rgba(0, 51, 153, 0.22);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .brand-link:hover .brand-avatar {
+      transform: scale(1.05);
+      box-shadow: 0 6px 18px rgba(0, 51, 153, 0.32);
+    }
+
+    .brand-info h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.3px;
+    }
+
+    .brand-info span {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.2px;
+    }
+
+    .back-home-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 16px;
+      border-radius: 10px;
+      background: #fff;
+      border: 1px solid var(--line);
+      color: var(--navy);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+
+    .back-home-btn:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(0, 51, 153, 0.12);
+    }
+
+    /* MAIN CONTAINER */
+    .main-wrap {
+      flex: 1;
+      display: grid;
+      place-items: center;
+      padding: clamp(24px, 4vh, 50px) 0;
+    }
+
+    .login-box {
+      width: min(1020px, 100%);
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      background: var(--card-bg);
+      border-radius: 24px;
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .login-box::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--navy) 0%, var(--blue) 50%, var(--orange) 100%);
+      z-index: 10;
+    }
+
+    /* LEFT HERO PANEL */
+    .hero-panel {
+      padding: clamp(36px, 4.5vw, 54px);
+      background: linear-gradient(155deg, #f8faff 0%, #f0f4fc 100%);
+      border-right: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .hero-panel::after {
+      content: "";
+      position: absolute;
+      bottom: -60px;
+      right: -60px;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 153, 0, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .security-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(0, 51, 153, 0.08);
+      border: 1px solid rgba(0, 51, 153, 0.15);
+      color: var(--blue);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      width: fit-content;
+    }
+
+    .security-badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--orange);
+      box-shadow: 0 0 8px rgba(255, 153, 0, 0.6);
+      animation: pulseDot 2s infinite;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    .hero-panel h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(30px, 3.4vw, 42px);
+      line-height: 1.15;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -1.2px;
+      margin: 20px 0 14px;
+    }
+
+    .hero-panel h2 em {
+      font-style: normal;
+      color: var(--orange);
+    }
+
+    .hero-copy {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.75;
+      max-width: 420px;
+    }
+
+    .feature-points {
+      list-style: none;
+      display: grid;
+      gap: 14px;
+      margin: 28px 0;
+    }
+
+    .feature-point {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .feature-icon-box {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid #cbd5e1;
+      display: grid;
+      place-items: center;
+      color: var(--blue);
+      box-shadow: 0 2px 6px rgba(0, 51, 153, 0.08);
+      flex-shrink: 0;
+    }
+
+    /* SIGNATURE BADGE */
+    .signature-card {
+      padding-top: 18px;
+      border-top: 1px dashed rgba(100, 116, 139, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .signature-img-wrap {
+      max-width: 170px;
+    }
+
+    .signature-img {
+      width: 100%;
+      height: auto;
+      max-height: 58px;
+      object-fit: contain;
+      filter: contrast(1.1);
+    }
+
+    .signature-meta {
+      text-align: right;
+    }
+
+    .signature-meta strong {
+      display: block;
+      font-size: 13px;
+      color: var(--navy);
+    }
+
+    .signature-meta span {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+    }
+
+    /* RIGHT FORM PANEL */
+    .form-panel {
+      padding: clamp(36px, 4.5vw, 54px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: #fff;
+    }
+
+    .form-header {
+      margin-bottom: 26px;
+    }
+
+    .form-header-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--blue-soft);
+      color: var(--blue);
+      display: grid;
+      place-items: center;
+      margin-bottom: 16px;
+      border: 1px solid #bfdbfe;
+    }
+
+    .form-header h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.6px;
+      margin-bottom: 6px;
+    }
+
+    .form-header p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* FORM STYLING */
+    form {
+      display: grid;
+      gap: 18px;
+    }
+
+    .form-group {
+      display: grid;
+      gap: 7px;
+    }
+
+    .form-group label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #334155;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+
+    .input-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 14px;
+      color: #94a3b8;
+      pointer-events: none;
+      display: grid;
+      place-items: center;
+    }
+
+    .input-field {
+      width: 100%;
+      min-height: 48px;
+      padding: 12px 14px 12px 44px;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      background: #f8fafc;
+      color: var(--ink);
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .input-field::placeholder {
+      color: #94a3b8;
+    }
+
+    .input-field:focus {
+      background: #fff;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(0, 51, 153, 0.12);
+    }
+
+    /* PASSWORD TOGGLE EYE */
+    .password-toggle-btn {
+      position: absolute;
+      right: 12px;
+      background: transparent;
+      border: none;
+      padding: 6px;
+      color: #64748b;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      border-radius: 6px;
+      transition: color 0.15s ease;
+    }
+
+    .password-toggle-btn:hover {
+      color: var(--blue);
+      background: #f1f5f9;
+    }
+
+    /* OPTIONS ROW */
+    .form-options {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 12px;
+    }
+
+    .remember-me {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: #475569;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .remember-me input {
+      accent-color: var(--blue);
+      cursor: pointer;
+    }
+
+    .forgot-link-btn {
+      background: none;
+      border: none;
+      color: var(--blue);
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .forgot-link-btn:hover {
+      color: var(--navy);
+      text-decoration: underline;
+    }
+
+    /* SUBMIT BUTTON */
+    .submit-btn {
+      min-height: 50px;
+      margin-top: 4px;
+      background: linear-gradient(135deg, var(--blue) 0%, #002777 100%);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 8px 20px rgba(0, 51, 153, 0.24);
+      transition: all 0.2s ease;
+    }
+
+    .submit-btn:hover:not(:disabled) {
+      background: linear-gradient(135deg, #0940b3 0%, var(--blue) 100%);
+      box-shadow: 0 10px 25px rgba(0, 51, 153, 0.32);
+      transform: translateY(-1px);
+    }
+
+    .submit-btn:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.7;
+      cursor: wait;
+      transform: none;
+    }
+
+    /* NOTIFICATION / STATUS MESSAGE */
+    .status-msg {
+      display: none;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    .status-msg.show {
+      display: block;
+    }
+
+    .status-msg.error {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: var(--danger);
+    }
+
+    .status-msg.success {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      color: var(--success);
+    }
+
+    .status-msg.info {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: var(--blue);
+    }
+
+    /* VIEW SWITCHING (Forgot Password) */
+    .view-card[hidden] {
+      display: none !important;
+    }
+
+    /* FOOTER */
+    .page-footer {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .page-footer a {
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .page-footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* RESPONSIVE - MOBILE FIRST FORM ORDER */
+    @media (max-width: 860px) {
+      body {
+        padding: 12px 10px;
+        overflow-x: hidden;
+        width: 100%;
+      }
+
+      .topbar {
+        padding: 0 4px;
+        margin-bottom: 14px;
+        width: 100%;
+        gap: 10px;
+      }
+
+      .brand-info h1 {
+        font-size: 14px;
+      }
+
+      .brand-info span {
+        font-size: 9.5px;
+      }
+
+      .brand-avatar {
+        width: 38px;
+        height: 38px;
+        font-size: 13px;
+      }
+
+      .back-home-btn {
+        padding: 7px 12px;
+        font-size: 11px;
+        white-space: nowrap;
+      }
+
+      .main-wrap {
+        padding: 6px 0 20px;
+        width: 100%;
+      }
+
+      .login-box {
+        display: flex;
+        flex-direction: column;
+        max-width: 440px;
+        width: 100%;
+        border-radius: 18px;
+        box-shadow: 0 10px 30px rgba(7, 37, 102, 0.1);
+        margin: 0 auto;
+      }
+
+      /* LOGIN FORM COMES FIRST ON MOBILE SO USER ENTERS CREDENTIALS IMMEDIATELY! */
+      .form-panel {
+        order: 1;
+        padding: 26px 20px;
+        width: 100%;
+      }
+
+      .form-header h3 {
+        font-size: 20px;
+      }
+
+      .form-header p {
+        font-size: 12px;
+      }
+
+      .form-group {
+        margin-bottom: 14px;
+      }
+
+      .input-field {
+        height: 46px;
+        font-size: 13px;
+      }
+
+      .submit-btn {
+        height: 46px;
+        font-size: 13px;
+      }
+
+      /* EXECUTIVE WORKSPACE / INFO PANEL COMES SECOND ON MOBILE */
+      .hero-panel {
+        order: 2;
+        border-right: none;
+        border-top: 1px solid var(--line);
+        padding: 22px 20px;
+        width: 100%;
+      }
+
+      .hero-panel h2 {
+        font-size: 20px;
+        line-height: 1.25;
+      }
+
+      .hero-copy {
+        font-size: 12px;
+        margin-top: 6px;
+        line-height: 1.5;
+      }
+
+      .feature-points {
+        margin: 12px 0;
+        gap: 8px;
+      }
+
+      .feature-point {
+        font-size: 11.5px;
+      }
+
+      .signature-card {
+        padding-top: 12px;
+        margin-top: 10px;
+      }
+
+      .admin-signature-img {
+        height: 28px;
+      }
+
+      .page-footer {
+        flex-direction: column;
+        text-align: center;
+        gap: 6px;
+        margin-top: 14px;
+        font-size: 11px;
+      }
+    }
+  </style>
+
+<!-- Umang Kakkad Portfolio - Offline Screen Styles -->
+<!-- Umang Kakkad Portfolio - Microsoft/Windows Inspired Professional Offline Screen Styles -->
+<!-- Umang Kakkad Portfolio - 100% Solid Full-Screen Offline Screen (Zero website peek-through) -->
+<style id="uk-offline-screen-styles">
+.uk-offline-screen {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 2147483647 !important;
+    display: none;
+    background-color: #f8fafc !important; /* 100% Solid - Zero transparency - Website is completely hidden */
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    padding: 32px 16px;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+html.uk-is-offline .uk-offline-screen {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 100% Guarantee: Hide all website contents behind offline screen */
+html.uk-is-offline body > *:not(#uk-offline-screen) {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+.uk-offline-container {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    padding: 34px 30px;
+    max-width: 660px;
+    width: 100%;
+    box-shadow: 0 15px 40px -10px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(226, 232, 240, 0.8);
+    box-sizing: border-box;
+    margin: auto;
+}
+
+/* 1. Connection Path Diagram */
+.uk-net-diagram {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 4px 0 24px 0;
+    padding: 18px 14px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+}
+
+.uk-diagram-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    flex: 0 0 auto;
+}
+
+.uk-node-icon-box {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    border: 1.5px solid #cbd5e1;
+    color: #475569;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+
+.uk-node-icon-box svg {
+    width: 28px;
+    height: 28px;
+}
+
+.uk-svg-mobile { display: none; }
+.uk-svg-laptop { display: block; }
+
+@media (max-width: 640px) {
+    .uk-svg-mobile { display: block; }
+    .uk-svg-laptop { display: none; }
+    .uk-offline-screen { padding: 16px 12px !important; }
+    .uk-offline-container { padding: 22px 14px; border-radius: 16px; border: 1px solid #e2e8f0; box-shadow: 0 4px 15px rgba(0,0,0,0.04); background: #ffffff; }
+    .uk-node-icon-box { width: 46px; height: 46px; border-radius: 12px; }
+    .uk-node-icon-box svg { width: 22px; height: 22px; }
+    .uk-net-diagram { gap: 6px; padding: 14px 8px; }
+    .uk-offline-main-title { font-size: 19px !important; }
+    .uk-offline-hindi-lead { font-size: 14px !important; }
+    .uk-offline-actions-row { flex-direction: column !important; }
+    .uk-action-troubleshoot-btn { justify-content: center !important; }
+    .uk-acc-body { padding-left: 14px !important; }
+}
+
+.uk-node-active .uk-node-icon-box {
+    border-color: #003399;
+    color: #003399;
+    background: #eff6ff;
+}
+
+.uk-node-disconnected .uk-node-icon-box {
+    border-color: #fca5a5;
+    color: #dc2626;
+    background: #fef2f2;
+}
+
+.uk-node-connected .uk-node-icon-box {
+    border-color: #86efac;
+    color: #16a34a;
+    background: #f0fdf4;
+}
+
+.uk-node-label {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #475569;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+}
+
+.uk-diagram-connector {
+    flex: 1 1 auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    max-width: 90px;
+}
+
+.uk-connector-line {
+    width: 100%;
+    height: 2px;
+    border-top: 2px dashed #cbd5e1;
+}
+
+.uk-connector-badge {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #fee2e2;
+    color: #dc2626;
+    font-size: 12px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid #fca5a5;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 0.3s ease;
+}
+
+.uk-diagram-connector.connected .uk-connector-line {
+    border-top: 2px solid #22c55e;
+}
+.uk-diagram-connector.connected .uk-connector-badge {
+    background: #dcfce7;
+    color: #16a34a;
+    border-color: #86efac;
+}
+
+/* 2. Yellow Status Alert Banner */
+.uk-offline-alert-banner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #fef9c3;
+    border: 1px solid #fde047;
+    color: #854d0e;
+    padding: 13px 18px;
+    border-radius: 12px;
+    margin-bottom: 22px;
+    text-align: left;
+    transition: all 0.3s ease;
+}
+
+.uk-offline-alert-banner.connected {
+    background: #dcfce7;
+    border-color: #86efac;
+    color: #15803d;
+}
+
+.uk-alert-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+}
+
+.uk-alert-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.uk-alert-content strong {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.uk-alert-content span {
+    font-size: 12.5px;
+    opacity: 0.9;
+}
+
+/* 3. Text & Titles */
+.uk-offline-text-header {
+    text-align: center;
+    margin-bottom: 22px;
+}
+
+.uk-offline-main-title {
+    margin: 0 0 6px 0;
+    font-size: 23px;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.3;
+}
+
+.uk-offline-hindi-lead {
+    margin: 0 0 8px 0;
+    font-size: 15.5px;
+    font-weight: 600;
+    color: #d97706;
+}
+
+.uk-offline-sub-message {
+    margin: 0 0 12px 0;
+    font-size: 14px;
+    color: #475569;
+    line-height: 1.5;
+}
+
+.uk-error-code-chip {
+    display: inline-block;
+    padding: 4px 12px;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 11.5px;
+    font-family: monospace;
+    color: #64748b;
+    font-weight: 600;
+}
+
+/* 4. Action Row */
+.uk-offline-actions-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.uk-action-primary-btn {
+    flex: 1 1 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 22px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+    background: linear-gradient(135deg, #003399 0%, #002266 100%);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0, 51, 153, 0.35);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    outline: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.uk-action-primary-btn:hover {
+    background: linear-gradient(135deg, #FF9900 0%, #e68a00 100%);
+    box-shadow: 0 4px 16px rgba(255, 153, 0, 0.45);
+    transform: translateY(-1px);
+}
+
+.uk-action-primary-btn:active {
+    transform: translateY(1px);
+}
+
+.uk-action-primary-btn.connected {
+    background: linear-gradient(135deg, #16a34a 0%, #15803d 100%) !important;
+    box-shadow: 0 4px 14px rgba(22, 163, 74, 0.4) !important;
+}
+
+.uk-action-primary-btn.is-loading .uk-btn-icon {
+    animation: ukSpin 1s linear infinite;
+}
+
+.uk-btn-icon {
+    width: 18px;
+    height: 18px;
+}
+
+.uk-action-troubleshoot-btn {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 14px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #334155;
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.uk-action-troubleshoot-btn:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+}
+
+/* Toast message */
+.uk-offline-toast {
+    margin-bottom: 18px;
+    padding: 11px 16px;
+    font-size: 13.5px;
+    font-weight: 600;
+    border-radius: 10px;
+    text-align: center;
+    animation: ukShake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.uk-offline-toast.error {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #f87171;
+}
+
+.uk-offline-toast.success {
+    background: #f0fdf4;
+    color: #166534;
+    border: 1px solid #4ade80;
+}
+
+/* 5. Recommendations Accordion */
+.uk-recommendations-wrapper {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 16px;
+    text-align: left;
+    margin-bottom: 18px;
+}
+
+.uk-rec-header strong {
+    font-size: 14.5px;
+    color: #0f172a;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.uk-rec-header p {
+    margin: 0 0 12px 0;
+    font-size: 12.5px;
+    color: #64748b;
+}
+
+.uk-accordion-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.uk-acc-item {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.uk-acc-item:hover {
+    border-color: #cbd5e1;
+}
+
+.uk-acc-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    user-select: none;
+}
+
+.uk-acc-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.uk-acc-num {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #eff6ff;
+    color: #003399;
+    font-size: 11px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.uk-acc-title strong {
+    font-size: 13px;
+    color: #1e293b;
+}
+
+.uk-acc-chevron {
+    font-size: 14px;
+    color: #94a3b8;
+    transition: transform 0.2s ease;
+}
+
+.uk-acc-item.active .uk-acc-chevron {
+    transform: rotate(180deg);
+    color: #003399;
+}
+
+.uk-acc-body {
+    display: none;
+    padding: 0 14px 14px 46px;
+    font-size: 12.5px;
+    color: #64748b;
+    line-height: 1.5;
+}
+
+.uk-acc-item.active .uk-acc-body {
+    display: block;
+}
+
+.uk-mini-action-btn {
+    margin-top: 8px;
+    padding: 6px 12px;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #003399;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.uk-mini-action-btn:hover {
+    background: #dbeafe;
+}
+
+/* 6. Card Footer */
+.uk-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 11.5px;
+    color: #94a3b8;
+    padding-top: 14px;
+    border-top: 1px solid #f1f5f9;
+}
+
+.uk-live-dot-pulse {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: #059669;
+    font-weight: 600;
+}
+
+@keyframes ukSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes ukShake {
+    10%, 90% { transform: translate3d(-1px, 0, 0); }
+    20%, 80% { transform: translate3d(2px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-3px, 0, 0); }
+    40%, 60% { transform: translate3d(3px, 0, 0); }
+}
+</style>
+<script>
+if (typeof navigator !== 'undefined' && navigator.onLine === false) {
+    document.documentElement.classList.add('uk-is-offline');
+}
+</script>
+
+</head>
+<body>
+<!-- ============================================================== -->
+    <!-- 100% SOLID FULL-SCREEN OFFLINE DETECTION & ERROR SYSTEM        -->
+    <!-- (ZERO WEBSITE VISIBLE BEHIND - DIRECT OPEN ON RECONNECT)       -->
+    <!-- ============================================================== -->
+    <div id="uk-offline-screen" class="uk-offline-screen" role="alertdialog" aria-modal="true" aria-labelledby="uk-offline-title" aria-describedby="uk-offline-desc">
+        <div class="uk-offline-container">
+            <!-- 1. Connection Path Diagram (Desktop Laptop vs Mobile Phone) -->
+            <div class="uk-net-diagram">
+                <div class="uk-diagram-node uk-node-active" id="uk-node-device">
+                    <div class="uk-node-icon-box">
+                        <svg class="uk-svg-laptop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="4" width="18" height="12" rx="2"></rect>
+                            <line x1="2" y1="20" x2="22" y2="20"></line>
+                        </svg>
+                        <svg class="uk-svg-mobile" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="5" y="2" width="14" height="20" rx="2"></rect>
+                            <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                        </svg>
+                    </div>
+                    <span class="uk-node-label" id="uk-device-label">Your Device</span>
+                </div>
+
+                <div class="uk-diagram-connector" id="uk-connector-1">
+                    <div class="uk-connector-line"></div>
+                    <div class="uk-connector-badge" id="uk-badge-cross-1">✕</div>
+                </div>
+
+                <div class="uk-diagram-node uk-node-disconnected" id="uk-node-wifi">
+                    <div class="uk-node-icon-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+                            <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+                            <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+                            <line x1="12" y1="20" x2="12.01" y2="20"></line>
+                        </svg>
+                    </div>
+                    <span class="uk-node-label">Wi-Fi / Data</span>
+                </div>
+
+                <div class="uk-diagram-connector" id="uk-connector-2">
+                    <div class="uk-connector-line"></div>
+                    <div class="uk-connector-badge" id="uk-badge-cross-2">✕</div>
+                </div>
+
+                <div class="uk-diagram-node uk-node-disconnected" id="uk-node-web">
+                    <div class="uk-node-icon-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
+                    </div>
+                    <span class="uk-node-label">Internet</span>
+                </div>
+            </div>
+
+            <!-- 2. Yellow Status Alert Banner -->
+            <div class="uk-offline-alert-banner" id="uk-offline-banner">
+                <div class="uk-alert-icon" id="uk-alert-emoji">⚠️</div>
+                <div class="uk-alert-content">
+                    <strong id="uk-alert-main-title">Wi-Fi or Mobile Data is disconnected.</strong>
+                    <span id="uk-alert-sub-title">Your device cannot reach the network right now.</span>
+                </div>
+            </div>
+
+            <!-- 3. Titles -->
+            <div class="uk-offline-text-header">
+                <h2 class="uk-offline-main-title" id="uk-offline-title">Looks like you're not connected to the internet</h2>
+                <p class="uk-offline-hindi-lead">इंटरनेट कनेक्शन उपलब्ध नहीं है</p>
+                <p class="uk-offline-sub-message" id="uk-offline-desc">
+                    Please check your network connection below or tap Refresh once you are back online.
+                </p>
+                <div class="uk-error-code-chip">ERR_INTERNET_DISCONNECTED</div>
+            </div>
+
+            <!-- 4. Action Row -->
+            <div class="uk-offline-actions-row">
+                <button id="uk-offline-btn" class="uk-action-primary-btn" onclick="window.ukRetryConnection()" type="button">
+                    <svg id="uk-offline-btn-icon" class="uk-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M23 4v6h-6"></path>
+                        <path d="M1 20v-6h6"></path>
+                        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                    </svg>
+                    <span id="uk-offline-btn-text">Refresh / Try Again</span>
+                </button>
+                <button class="uk-action-troubleshoot-btn" onclick="window.ukToggleRecommendations()" type="button" id="uk-troubleshoot-btn">
+                    <span>🛠️ Recommendations</span>
+                    <span class="uk-arrow" id="uk-rec-arrow">▾</span>
+                </button>
+            </div>
+
+            <!-- Error Toast -->
+            <div id="uk-offline-toast" class="uk-offline-toast" style="display: none;"></div>
+
+            <!-- 5. Expandable Recommendations -->
+            <div class="uk-recommendations-wrapper" id="uk-recommendations-box">
+                <div class="uk-rec-header">
+                    <strong>Recommendations</strong>
+                    <p>To try to fix the problem, try the recommendations in the order below:</p>
+                </div>
+                
+                <div class="uk-accordion-list">
+                    <div class="uk-acc-item active" onclick="window.ukToggleAccordion(this)">
+                        <div class="uk-acc-head">
+                            <div class="uk-acc-title">
+                                <span class="uk-acc-num">1</span>
+                                <strong>Turn on Wi-Fi or Mobile Data</strong>
+                            </div>
+                            <span class="uk-acc-chevron">▾</span>
+                        </div>
+                        <div class="uk-acc-body">
+                            <p>Wi-Fi or cellular data appears to be turned off. Turn on Wi-Fi or Mobile Data in your device settings.</p>
+                            <button type="button" class="uk-mini-action-btn" onclick="event.stopPropagation(); window.ukRetryConnection();">Check Connection Now</button>
+                        </div>
+                    </div>
+
+                    <div class="uk-acc-item" onclick="window.ukToggleAccordion(this)">
+                        <div class="uk-acc-head">
+                            <div class="uk-acc-title">
+                                <span class="uk-acc-num">2</span>
+                                <strong>Turn off Airplane Mode</strong>
+                            </div>
+                            <span class="uk-acc-chevron">▾</span>
+                        </div>
+                        <div class="uk-acc-body">
+                            <p>If Airplane (Flight) mode is enabled on your phone or PC, all network signals are disabled. Turn it off to reconnect.</p>
+                        </div>
+                    </div>
+
+                    <div class="uk-acc-item" onclick="window.ukToggleAccordion(this)">
+                        <div class="uk-acc-head">
+                            <div class="uk-acc-title">
+                                <span class="uk-acc-num">3</span>
+                                <strong>Check Router, Hotspot or Modem</strong>
+                            </div>
+                            <span class="uk-acc-chevron">▾</span>
+                        </div>
+                        <div class="uk-acc-body">
+                            <p>If you are connected to a router with no internet access, restart your router or check your internet service provider.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <a href="../index.html" class="brand-link" title="Return to public portfolio website">
+      <div class="brand-avatar">UK</div>
+      <div class="brand-info">
+        <h1>Umang Kakkad</h1>
+        <span>Official Academic &amp; Developer Portfolio</span>
+      </div>
+    </a>
+
+    <a href="../index.html" class="back-home-btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <span>Back to Portfolio</span>
+    </a>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="main-wrap">
+    <div class="login-box">
+
+      <!-- LEFT HERO / IDENTITY PANEL -->
+      <section class="hero-panel" aria-label="Umang Kakkad Administration Portal">
+        <div>
+          <div class="security-badge">
+            <span class="security-badge-dot"></span>
+            <span>Executive Workspace</span>
+          </div>
+
+          <h2>Admin Control<br><em>New Experience</em>.</h2>
+
+          <p class="hero-copy">
+            Authorized administrative gateway for managing profile data, updating project showcases, monitoring real-time visitor traffic, and moderating public feedback.
+          </p>
+
+          <ul class="feature-points">
+            <li class="feature-point">
+              <div class="feature-icon-box">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <span>Instant Portfolio Content &amp; Degree Management</span>
+            </li>
+            <li class="feature-point">
+              <div class="feature-icon-box">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <span>Live Visitor Traffic &amp; Accurate Page Count</span>
+            </li>
+            <li class="feature-point">
+              <div class="feature-icon-box">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <span>Direct Supabase Database Synchronization</span>
+            </li>
+            <li class="feature-point">
+              <div class="feature-icon-box">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <span>Visitor Review &amp; Wish Moderation Desk</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="signature-card">
+          <div class="signature-img-wrap">
+            <img src="../assets/images/umang-signature.png" alt="Umang Kakkad handwritten signature" class="signature-img" onerror="this.style.display='none'">
+          </div>
+          <div class="signature-meta">
+            <strong>Umang Kakkad</strong>
+            <span>Portfolio Administrator</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT FORM PANEL -->
+      <section class="form-panel" aria-label="Sign in form">
+
+        
+
+        <!-- 1. LOGIN VIEW -->
+        <div id="loginView" class="view-card">
+          <div class="form-header">
+            <div class="form-header-badge">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <h3>Admin Sign In</h3>
+            <p>Enter your administrator credentials to unlock the dashboard.</p>
+          </div>
+
+          <form id="loginForm" autocomplete="on">
+            <div class="form-group">
+              <label for="loginEmail">Administrator Email</label>
+              <div class="input-box">
+                <span class="input-icon">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </span>
+                <input
+                  id="loginEmail"
+                  type="email"
+                  class="input-field"
+                  placeholder="sample@gmail.com"
+                  autocomplete="username"
+                  required
+                >
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="loginPassword">Security Password</label>
+              <div class="input-box">
+                <span class="input-icon">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                </span>
+                <input
+                  id="loginPassword"
+                  type="password"
+                  class="input-field"
+                  placeholder="Enter your admin password"
+                  autocomplete="current-password"
+                  required
+                >
+                <button type="button" id="togglePasswordBtn" class="password-toggle-btn" aria-label="Show password" title="Toggle password visibility">
+                  <svg id="eyeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-options">
+              <label class="remember-me">
+                <input type="checkbox" id="rememberMe" checked>
+                <span>Remember me</span>
+              </label>
+              <button type="button" id="openForgotBtn" class="forgot-link-btn">Forgot password?</button>
+            </div>
+
+            <button type="submit" id="loginSubmitBtn" class="submit-btn">
+              <span id="loginBtnText">Sign In to Dashboard</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </form>
+        </div>
+
+        <!-- 2. FORGOT PASSWORD VIEW -->
+        <div id="forgotView" class="view-card" hidden>
+          <div class="form-header">
+            <div class="form-header-badge">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            </div>
+            <h3>Reset Password</h3>
+            <p>Enter your registered administrator email to receive a secure recovery link.</p>
+          </div>
+
+          <form id="forgotForm">
+            <div class="form-group">
+              <label for="forgotEmail">Admin Email</label>
+              <div class="input-box">
+                <span class="input-icon">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </span>
+                <input
+                  id="forgotEmail"
+                  type="email"
+                  class="input-field"
+                  placeholder="sample@gmail.com"
+                  required
+                >
+              </div>
+            </div>
+
+            <button type="submit" id="forgotSubmitBtn" class="submit-btn">
+              <span>Send Reset Email</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+
+            <button type="button" id="backToLoginBtn" class="forgot-link-btn" style="margin-top:10px;text-align:center;">
+              ← Back to Sign In
+            </button>
+          </form>
+        </div>
+
+        <!-- STATUS MESSAGE ALERT -->
+        <div id="statusMessage" class="status-msg" role="status" aria-live="polite"></div>
+
+      </section>
+    </div>
+  </main>
+
+  <!-- PAGE FOOTER -->
+  <footer class="page-footer">
+    <span>© <span id="yearVal">2026</span> Umang Kakkad. Official Portfolio Control Center.</span>
+    <span>Protected by Supabase Authentication · Authorized Access Only</span>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+    // Supabase Configuration
+    const SUPABASE_URL = "https://rxbggmwzgbshmpjareav.supabase.co";
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_ptDO2uplwLjlJ2i-KCvkmA_1rcvyeGY";
+
+    let supabaseClient = null;
+    function getSb() {
+      if (!supabaseClient && window.supabase) {
+        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+          auth: {
+            persistSession: true,
+            autoRefreshToken: true,
+            detectSessionInUrl: true
+          }
+        });
+      }
+      return supabaseClient;
+    }
+
+    // Elements
+    const loginView = document.getElementById("loginView");
+    const forgotView = document.getElementById("forgotView");
+    const loginForm = document.getElementById("loginForm");
+    const forgotForm = document.getElementById("forgotForm");
+    const loginEmail = document.getElementById("loginEmail");
+    const loginPassword = document.getElementById("loginPassword");
+    const loginSubmitBtn = document.getElementById("loginSubmitBtn");
+    const loginBtnText = document.getElementById("loginBtnText");
+    const togglePasswordBtn = document.getElementById("togglePasswordBtn");
+    const eyeIcon = document.getElementById("eyeIcon");
+    const statusMessage = document.getElementById("statusMessage");
+    const backToLoginBtn = document.getElementById("backToLoginBtn");
+
+    document.getElementById("yearVal").textContent = new Date().getFullYear();
+
+
+
+
+    // Show / Hide Password toggle
+    togglePasswordBtn.addEventListener("click", () => {
+      const isPassword = loginPassword.type === "password";
+      loginPassword.type = isPassword ? "text" : "password";
+      eyeIcon.innerHTML = isPassword
+        ? '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>'
+        : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+    });
+
+    // Toggle views
+    openForgotBtn.addEventListener("click", () => {
+      loginView.hidden = true;
+      forgotView.hidden = false;
+      document.getElementById("forgotEmail").value = loginEmail.value.trim();
+      clearMsg();
+    });
+
+    backToLoginBtn.addEventListener("click", () => {
+      forgotView.hidden = true;
+      loginView.hidden = false;
+      clearMsg();
+    });
+
+    function showMsg(text, type = "error") {
+      statusMessage.textContent = text;
+      statusMessage.className = "status-msg show " + type;
+    }
+
+    function clearMsg() {
+      statusMessage.textContent = "";
+      statusMessage.className = "status-msg";
+    }
+
+    
+
+    // HANDLE LOGIN SUBMIT
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      clearMsg();
+
+      const email = loginEmail.value.trim();
+      const password = loginPassword.value;
+
+      if (!email || !password) {
+        showMsg("Please enter both admin email and password.");
+        return;
+      }
+
+      loginSubmitBtn.disabled = true;
+      loginBtnText.textContent = "Verifying Credentials…";
+
+      try {
+        const client = getSb();
+        if (!client) throw new Error("Supabase client is not available.");
+
+        // Attempt Supabase Auth login
+        const { data, error } = await client.auth.signInWithPassword({
+          email: email,
+          password: password
+        });
+
+        if (error) {
+          throw error;
+        }
+
+        // Store session for smooth multi-page navigation across file:// and web
+        const userData = {
+          email: email,
+          userId: data.user.id,
+          loginTime: Date.now()
+        };
+        sessionStorage.setItem("umang_admin_user", JSON.stringify(userData));
+        localStorage.setItem("umang_admin_user", JSON.stringify(userData));
+
+        if (data.session) {
+          try {
+            sessionStorage.setItem("umang_supabase_session", JSON.stringify(data.session));
+            localStorage.setItem("umang_supabase_session", JSON.stringify(data.session));
+          } catch(_) {}
+        }
+
+        showMsg("✓ Login successful! Redirecting to Dashboard…", "success");
+
+        setTimeout(() => {
+          window.location.href = "dashboard.html";
+        }, 500);
+
+      } catch (err) {
+        console.warn("Supabase auth response:", err);
+        showMsg(err.message || "Invalid credentials. Please verify your email and password.");
+        loginSubmitBtn.disabled = false;
+        loginBtnText.textContent = "Sign In to Dashboard";
+      }
+    });
+
+    // HANDLE FORGOT PASSWORD
+    forgotForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      clearMsg();
+      const fEmail = document.getElementById("forgotEmail").value.trim();
+      const fBtn = document.getElementById("forgotSubmitBtn");
+
+      fBtn.disabled = true;
+      fBtn.textContent = "Sending link…";
+
+      try {
+        const client = getSb();
+        if (!client) throw new Error("Database client offline.");
+        const { error } = await client.auth.resetPasswordForEmail(fEmail, {
+          redirectTo: window.location.origin + window.location.pathname
+        });
+        if (error) throw error;
+        showMsg("✓ Password reset email sent! Please check your Inbox and Spam folder.", "success");
+      } catch (err) {
+        showMsg(err.message || "Could not send reset link. Try again later.");
+      } finally {
+        fBtn.disabled = false;
+        fBtn.textContent = "Send Reset Email";
+      }
+    });
+
+    // Initialize session banner check
+    
+  </script>
+
+<!-- Offline Connection Manager Controller -->
+<script id="uk-offline-manager-script">
+(function() {
+    'use strict';
+
+    function getEl(id) { return document.getElementById(id); }
+
+    const overlay = getEl('uk-offline-screen');
+    const retryBtn = getEl('uk-offline-btn');
+    const btnText = getEl('uk-offline-btn-text');
+    const toast = getEl('uk-offline-toast');
+
+    window.ukToggleAccordion = function(item) {
+        if (item) item.classList.toggle('active');
+    };
+
+    window.ukToggleRecommendations = function() {
+        const box = getEl('uk-recommendations-box');
+        const arrow = getEl('uk-rec-arrow');
+        if (!box) return;
+        if (box.style.display === 'none') {
+            box.style.display = 'block';
+            if (arrow) arrow.textContent = '▾';
+        } else {
+            box.style.display = 'none';
+            if (arrow) arrow.textContent = '▸';
+        }
+    };
+
+    async function testActualConnection(timeoutMs = 2500) {
+        if (!navigator.onLine) return false;
+        if (window.location.protocol === 'file:') return true;
+
+        try {
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), timeoutMs);
+            await fetch('https://cdn.jsdelivr.net/favicon.ico?_ping=' + Date.now(), {
+                method: 'HEAD',
+                mode: 'no-cors',
+                cache: 'no-store',
+                signal: controller.signal
+            });
+            clearTimeout(timer);
+            return true;
+        } catch (_) {
+            return navigator.onLine;
+        }
+    }
+
+    function showOfflineScreen() {
+        document.documentElement.classList.add('uk-is-offline');
+        if (overlay) overlay.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+
+        if (retryBtn) {
+            retryBtn.classList.remove('is-loading', 'connected');
+        }
+        if (btnText) btnText.textContent = 'Refresh / Try Again';
+        if (toast) toast.style.display = 'none';
+    }
+
+    // Direct site open with NO delays, NO lingering banners
+    function hideOfflineScreen(reload = false) {
+        document.documentElement.classList.remove('uk-is-offline');
+        document.body.style.overflow = '';
+        if (overlay) overlay.style.display = 'none';
+        if (reload) {
+            window.location.reload();
+        }
+    }
+
+    // Direct immediate site open when connection is restored
+    function handleOnlineRestored() {
+        hideOfflineScreen(true);
+    }
+
+    window.ukRetryConnection = async function() {
+        if (!retryBtn) return;
+        retryBtn.classList.add('is-loading');
+        if (btnText) btnText.textContent = 'Checking...';
+        if (toast) toast.style.display = 'none';
+
+        const isOnline = await testActualConnection(2500);
+
+        if (isOnline) {
+            // Direct open immediately!
+            handleOnlineRestored();
+        } else {
+            retryBtn.classList.remove('is-loading');
+            if (btnText) btnText.textContent = 'Refresh / Try Again';
+            if (toast) {
+                toast.className = 'uk-offline-toast error';
+                toast.textContent = '⚠️ Still offline! Please turn on Wi-Fi or Mobile Data, then try again.';
+                toast.style.display = 'block';
+            }
+        }
+    };
+
+    window.addEventListener('offline', () => {
+        showOfflineScreen();
+    });
+
+    window.addEventListener('online', async () => {
+        const reallyOnline = await testActualConnection(2000);
+        if (reallyOnline) {
+            handleOnlineRestored();
+        } else {
+            showOfflineScreen();
+        }
+    });
+
+    // Boot state: If online, DIRECTLY open site (never show offline screen)
+    if (!navigator.onLine) {
+        showOfflineScreen();
+    } else {
+        hideOfflineScreen(false);
+    }
+
+    if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+        window.addEventListener('load', () => {
+            const swPath = window.location.pathname.includes('/admin/') ? '../sw.js' : './sw.js';
+            navigator.serviceWorker.register(swPath).catch(() => {});
+        });
+    }
+})();
+</script>
+
+</body>
+</html>
