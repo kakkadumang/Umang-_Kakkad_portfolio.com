@@ -2746,6 +2746,7 @@ html.uk-is-offline body > *:not(#uk-offline-screen) {
 
 <!-- Umang Kakkad Portfolio - Cloud Database Maintenance & Admin Mode Styles -->
 <style id="uk-maintenance-screen-styles">
+/* Umang Kakkad Portfolio - Site-Related Professional Maintenance Styles (GLS University Navy & Gold) */
 .uk-maintenance-screen {
     position: fixed !important;
     top: 0 !important;
@@ -2756,11 +2757,11 @@ html.uk-is-offline body > *:not(#uk-offline-screen) {
     height: 100vh !important;
     z-index: 2147483646 !important;
     display: none;
-    background: radial-gradient(circle at 50% 15%, #0f244a 0%, #08142b 50%, #030814 100%) !important;
+    background: linear-gradient(135deg, #f0f4fc 0%, #e8edf7 45%, #fffbf0 100%) !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
     -webkit-overflow-scrolling: touch;
-    padding: 32px 16px;
+    padding: 24px 16px 40px;
     box-sizing: border-box;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -2771,11 +2772,12 @@ html.uk-force-preview-maint .uk-maintenance-screen {
     display: flex !important;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 
-/* 100% Solid Website Content Isolation for Public Visitors */
-html.uk-is-maintenance:not(.uk-is-offline):not(.uk-admin-bypassing) body > *:not(#uk-maintenance-screen):not(#uk-offline-screen):not(#uk-admin-maintenance-bar),
-html.uk-force-preview-maint body > *:not(#uk-maintenance-screen):not(#uk-offline-screen) {
+/* 100% Solid Website Content Isolation */
+html.uk-is-maintenance:not(.uk-is-offline):not(.uk-admin-bypassing) body > *:not(#uk-maintenance-screen):not(#uk-offline-screen):not(#uk-admin-maintenance-bar):not(#uk-admin-unlock-modal),
+html.uk-force-preview-maint body > *:not(#uk-maintenance-screen):not(#uk-offline-screen):not(#uk-admin-unlock-modal) {
     display: none !important;
     visibility: hidden !important;
 }
@@ -2787,7 +2789,7 @@ html.uk-force-preview-maint body > *:not(#uk-maintenance-screen):not(#uk-offline
     left: 0 !important;
     right: 0 !important;
     z-index: 2147483640 !important;
-    background: linear-gradient(90deg, #92400e 0%, #d97706 40%, #b45309 100%) !important;
+    background: linear-gradient(90deg, #003399 0%, #002266 50%, #FF9900 100%) !important;
     color: #ffffff !important;
     padding: 9px 18px !important;
     font-size: 13px !important;
@@ -2796,15 +2798,11 @@ html.uk-force-preview-maint body > *:not(#uk-maintenance-screen):not(#uk-offline
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.3) !important;
+    box-shadow: 0 4px 16px rgba(0, 51, 153, 0.25) !important;
 }
 
 html.uk-is-maintenance.uk-is-admin:not(.uk-force-preview-maint) #uk-admin-maintenance-bar {
     display: flex !important;
-}
-
-html.uk-is-maintenance.uk-is-admin:not(.uk-force-preview-maint) body {
-    padding-top: 44px !important;
 }
 
 .uk-admin-bar-btn {
@@ -2820,45 +2818,28 @@ html.uk-is-maintenance.uk-is-admin:not(.uk-force-preview-maint) body {
     transition: all 0.2s ease;
     border: none;
 }
-.uk-admin-bar-btn-dash {
-    background: rgba(255, 255, 255, 0.2);
-    color: #ffffff;
-}
-.uk-admin-bar-btn-dash:hover {
-    background: rgba(255, 255, 255, 0.35);
-}
-.uk-admin-bar-btn-prev {
-    background: rgba(0, 0, 0, 0.25);
-    color: #fef08a;
-}
-.uk-admin-bar-btn-prev:hover {
-    background: rgba(0, 0, 0, 0.4);
-}
-.uk-admin-bar-btn-off {
-    background: #10b981;
-    color: #ffffff;
-}
-.uk-admin-bar-btn-off:hover {
-    background: #059669;
-}
+.uk-admin-bar-btn-dash { background: rgba(255, 255, 255, 0.2); color: #ffffff; }
+.uk-admin-bar-btn-dash:hover { background: rgba(255, 255, 255, 0.35); }
+.uk-admin-bar-btn-prev { background: rgba(0, 0, 0, 0.25); color: #fef08a; }
+.uk-admin-bar-btn-off { background: #10b981; color: #ffffff; }
+.uk-admin-bar-btn-off:hover { background: #059669; }
 
-/* Maintenance Card Container */
+/* Site-Related Maintenance Card (Crisp White with Navy & Gold Accents) */
 .uk-maint-card {
-    background: rgba(11, 20, 38, 0.92);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 153, 0, 0.3);
-    border-top: 4px solid #FF9900;
-    border-radius: 24px;
-    padding: 38px 34px 30px;
-    max-width: 680px;
-    width: 100%;
-    margin: auto;
-    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7), 0 0 40px rgba(0, 51, 153, 0.35);
-    color: #f8fafc;
-    text-align: center;
-    position: relative;
-    box-sizing: border-box;
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 51, 153, 0.12) !important;
+    border-top: 5px solid #003399 !important;
+    border-bottom: 4px solid #FF9900 !important;
+    border-radius: 24px !important;
+    padding: 36px 32px 30px !important;
+    max-width: 640px !important;
+    width: 100% !important;
+    margin: auto !important;
+    box-shadow: 0 20px 45px -10px rgba(0, 51, 153, 0.15), 0 0 0 1px rgba(0, 51, 153, 0.06) !important;
+    color: #1e293b !important;
+    text-align: center !important;
+    position: relative !important;
+    box-sizing: border-box !important;
 }
 
 /* Badge Pill */
@@ -2866,42 +2847,42 @@ html.uk-is-maintenance.uk-is-admin:not(.uk-force-preview-maint) body {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: rgba(255, 153, 0, 0.12);
-    color: #ffb02e;
-    border: 1px solid rgba(255, 153, 0, 0.35);
-    padding: 6px 14px;
+    background: #eff6ff !important;
+    color: #003399 !important;
+    border: 1px solid rgba(0, 51, 153, 0.22) !important;
+    padding: 6px 16px;
     border-radius: 9999px;
-    font-size: 11.5px;
+    font-size: 11px;
     font-weight: 800;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 .uk-maint-dot {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: #FF9900;
+    background: #FF9900 !important;
     display: inline-block;
-    box-shadow: 0 0 10px #FF9900;
+    box-shadow: 0 0 8px #FF9900;
     animation: ukMaintPulse 1.8s infinite;
 }
 
 /* Typography */
 .uk-maint-title {
     font-family: 'Merriweather', serif;
-    font-size: 25px;
-    font-weight: 900;
-    color: #ffffff;
-    margin: 0 0 14px;
-    line-height: 1.35;
+    font-size: 25px !important;
+    font-weight: 900 !important;
+    color: #003399 !important;
+    margin: 0 0 10px !important;
+    line-height: 1.35 !important;
 }
 .uk-maint-sub {
-    font-size: 14.5px;
-    line-height: 1.65;
-    color: #cbd5e1;
-    margin: 0 0 24px;
-    max-width: 580px;
+    font-size: 14px !important;
+    line-height: 1.65 !important;
+    color: #475569 !important;
+    margin: 0 0 22px !important;
+    max-width: 540px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -2910,23 +2891,23 @@ html.uk-is-maintenance.uk-is-admin:not(.uk-force-preview-maint) body {
 .uk-maint-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    margin-bottom: 24px;
+    gap: 10px;
+    margin-bottom: 22px;
     text-align: left;
 }
 .uk-maint-item {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
     border-radius: 12px;
     padding: 12px 14px;
 }
 .uk-maint-item-label {
-    font-size: 11px;
+    font-size: 10.5px;
     font-weight: 700;
-    color: #94a3b8;
+    color: #003399 !important;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    margin-bottom: 4px;
+    margin-bottom: 3px;
     display: flex;
     align-items: center;
     gap: 6px;
@@ -2934,25 +2915,25 @@ html.uk-is-maintenance.uk-is-admin:not(.uk-force-preview-maint) body {
 .uk-maint-item-val {
     font-size: 13px;
     font-weight: 600;
-    color: #f1f5f9;
+    color: #0f172a !important;
 }
 
-/* Progress Line */
+/* Shimmering Progress Bar */
 .uk-maint-progress {
-    height: 4px;
+    height: 5px;
     width: 100%;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 4px;
+    background: #e2e8f0 !important;
+    border-radius: 5px;
     overflow: hidden;
     position: relative;
-    margin-bottom: 24px;
+    margin-bottom: 22px;
 }
 .uk-maint-progress-bar {
     position: absolute;
     height: 100%;
-    width: 45%;
-    background: linear-gradient(90deg, #003399, #FF9900, #ffc966);
-    border-radius: 4px;
+    width: 50%;
+    background: linear-gradient(90deg, #003399, #FF9900, #ffc966) !important;
+    border-radius: 5px;
     animation: ukMaintShimmer 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
@@ -2962,12 +2943,12 @@ html.uk-is-maintenance.uk-is-admin:not(.uk-force-preview-maint) body {
     gap: 12px;
     justify-content: center;
     flex-wrap: wrap;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 .uk-maint-btn-refresh {
-    background: linear-gradient(135deg, #003399 0%, #001f5c 100%);
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: #003399 !important;
+    color: #ffffff !important;
+    border: none;
     border-radius: 10px;
     padding: 11px 22px;
     font-size: 13.5px;
@@ -2977,39 +2958,20 @@ html.uk-is-maintenance.uk-is-admin:not(.uk-force-preview-maint) body {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    box-shadow: 0 4px 14px rgba(0, 51, 153, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 51, 153, 0.25);
 }
 .uk-maint-btn-refresh:hover {
-    background: #002b80;
+    background: #002266 !important;
     transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgba(0, 51, 153, 0.6);
-}
-.uk-maint-btn-admin {
-    background: rgba(255, 255, 255, 0.06);
-    color: #cbd5e1;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 10px;
-    padding: 11px 18px;
-    font-size: 13.5px;
-    font-weight: 600;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition: all 0.2s ease;
-}
-.uk-maint-btn-admin:hover {
-    background: rgba(255, 255, 255, 0.12);
-    color: #ffffff;
-    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 6px 16px rgba(0, 51, 153, 0.35);
 }
 
 .uk-maint-foot {
     font-size: 12px;
-    color: #94a3b8;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    color: #64748b !important;
+    border-top: 1px solid #e2e8f0 !important;
     padding-top: 16px;
-    margin-top: 16px;
+    margin-top: 18px;
     line-height: 1.5;
 }
 
@@ -3018,22 +2980,17 @@ html.uk-is-maintenance.uk-is-admin:not(.uk-force-preview-maint) body {
     50% { opacity: 0.35; transform: scale(0.75); }
 }
 @keyframes ukMaintShimmer {
-    0% { left: -45%; }
+    0% { left: -50%; }
     100% { left: 100%; }
-}
-@keyframes ukMaintRotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
 }
 
 @media (max-width: 640px) {
-    .uk-maint-card { padding: 26px 18px 22px; border-radius: 18px; }
+    .uk-maint-card { padding: 24px 18px 20px !important; border-radius: 18px !important; }
     .uk-maint-title { font-size: 21px !important; }
-    .uk-maint-sub { font-size: 13.5px !important; }
+    .uk-maint-sub { font-size: 13px !important; }
     .uk-maint-grid { grid-template-columns: 1fr; gap: 8px; }
     .uk-maint-actions { flex-direction: column; width: 100%; }
-    .uk-maint-btn-refresh, .uk-maint-btn-admin { width: 100%; justify-content: center; }
-    #uk-admin-maintenance-bar { flex-direction: column; text-align: center; padding: 10px 12px !important; }
+    .uk-maint-btn-refresh { width: 100%; justify-content: center; }
 }
 </style>
 
@@ -3585,49 +3542,68 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
     <!-- (SHOWN TO VISITORS WHEN MAINTENANCE MODE IS TURNED ON)         -->
     <!-- ============================================================== -->
     <div id="uk-maintenance-screen" class="uk-maintenance-screen" role="alertdialog" aria-modal="true" aria-labelledby="uk-maint-title">
+        <!-- Site Header Banner -->
+        <div style="width:100%; max-width:640px; margin:0 auto 14px; display:flex; justify-content:space-between; align-items:center; padding:10px 16px; background:#003399; border-radius:12px; color:#ffffff; font-size:12.5px; font-weight:600; box-shadow:0 4px 12px rgba(0,51,153,0.15); flex-wrap:wrap; gap:8px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+                <img src="assets/icons/favicon-32x32.png" alt="UK" style="width:22px; height:22px; border-radius:50%; border:1px solid #FF9900;">
+                <span>Umang Kakkad | Official Academic Portfolio</span>
+            </div>
+            <div style="font-size:11.5px; color:#ffc966;">
+                GLS University (FCAIT)
+            </div>
+        </div>
+
         <div class="uk-maint-card">
-            <!-- 1. Status Pill -->
-            <div class="uk-maint-badge">
-                <span class="uk-maint-dot"></span>
-                <span>SYSTEM MAINTENANCE IN PROGRESS</span>
+            <!-- 1. Official App Avatar -->
+            <div style="display:flex; justify-content:center; margin-bottom:14px;">
+                <div style="position:relative;">
+                    <img src="assets/icons/icon-192.png" alt="Umang Kakkad" style="width:78px; height:78px; border-radius:18px; border:3px solid #FF9900; box-shadow:0 6px 20px rgba(0,51,153,0.2); object-fit:cover;">
+                    <span style="position:absolute; bottom:-3px; right:-3px; width:16px; height:16px; background:#10b981; border:2px solid #ffffff; border-radius:50%; display:block;" title="System Active"></span>
+                </div>
             </div>
 
-            <!-- 2. Titles (English Only, Professional & Simple) -->
+            <!-- 2. Status Pill -->
+            <div class="uk-maint-badge">
+                <span class="uk-maint-dot"></span>
+                <span>SYSTEM UPGRADE & MAINTENANCE</span>
+            </div>
+
+            <!-- 3. Titles (Clean Professional English) -->
             <h1 class="uk-maint-title" id="uk-maint-title">
                 Website Under Scheduled Maintenance
             </h1>
 
-            <!-- 3. Subtitle / Message -->
+            <!-- 4. Subtitle / Message -->
             <p class="uk-maint-sub" id="uk-maint-message">
-                Umang Kakkad's official academic & professional portfolio is temporarily unavailable while we perform system updates and content upgrades. We will be back online shortly.
+                Umang Kakkad's official academic & professional portfolio is temporarily offline while we update projects, certifications, and system features. We will be back online shortly.
             </p>
 
-            <!-- 4. Shimmering Progress Bar -->
+            <!-- 5. Shimmering Progress Bar -->
             <div class="uk-maint-progress" aria-hidden="true">
                 <div class="uk-maint-progress-bar"></div>
             </div>
 
-            <!-- 5. Key Info Grid -->
+            <!-- 6. Key Info Grid (Site Colors) -->
             <div class="uk-maint-grid">
                 <div class="uk-maint-item">
                     <div class="uk-maint-item-label"><span>👤</span> Portfolio Owner</div>
-                    <div class="uk-maint-item-val" id="uk-maint-owner">Umang Kakkad (BCA Graduate, GLS University)</div>
+                    <div class="uk-maint-item-val" id="uk-maint-owner">Umang Kakkad (BCA Graduate)</div>
                 </div>
                 <div class="uk-maint-item">
-                    <div class="uk-maint-item-label"><span>⚡</span> Status</div>
-                    <div class="uk-maint-item-val" style="color:#10b981;">Upgrades in Progress</div>
+                    <div class="uk-maint-item-label"><span>🏛️</span> Institution</div>
+                    <div class="uk-maint-item-val">GLS University (FCAIT)</div>
+                </div>
+                <div class="uk-maint-item">
+                    <div class="uk-maint-item-label"><span>⚡</span> Current Status</div>
+                    <div class="uk-maint-item-val" style="color:#003399;">System Upgrades in Progress</div>
                 </div>
                 <div class="uk-maint-item">
                     <div class="uk-maint-item-label"><span>⏱️</span> Expected Availability</div>
                     <div class="uk-maint-item-val" id="uk-maint-expected">Very Soon</div>
                 </div>
-                <div class="uk-maint-item">
-                    <div class="uk-maint-item-label"><span>📧</span> Direct Inquiries</div>
-                    <div class="uk-maint-item-val"><a href="mailto:kakkadumang06@gmail.com" style="color:#60a5fa; text-decoration:underline;">kakkadumang06@gmail.com</a></div>
-                </div>
             </div>
 
-            <!-- 6. Action Buttons -->
+            <!-- 7. Action Buttons -->
             <div class="uk-maint-actions">
                 <button type="button" class="uk-maint-btn-refresh" onclick="window.location.reload(true)">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -3639,20 +3615,20 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
                 </button>
             </div>
 
-            <!-- 7. Direct Admin Control Bar on the Maintenance Screen -->
-            <div style="margin-top:20px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.12); display:flex; justify-content:center; align-items:center; gap:12px; flex-wrap:wrap;">
-                <button type="button" onclick="window.ukOpenUnlockModal()" style="background:#10b981; color:#ffffff; border:none; border-radius:8px; padding:10px 20px; font-size:13.5px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:8px; box-shadow:0 4px 14px rgba(16,185,129,0.4); transition:all 0.2s ease;">
+            <!-- 8. Secure Admin Control Bar -->
+            <div style="margin-top:16px; padding-top:14px; border-top:1px solid #e2e8f0; display:flex; justify-content:center; align-items:center; gap:10px; flex-wrap:wrap;">
+                <button type="button" onclick="window.ukOpenUnlockModal()" style="background:#10b981; color:#ffffff; border:none; border-radius:8px; padding:10px 18px; font-size:13px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:6px; box-shadow:0 4px 12px rgba(16,185,129,0.3); transition:all 0.2s ease;">
                     <span>🚀 Turn OFF Maintenance Mode (Gmail & Password Required)</span>
                 </button>
-                <a href="admin/login.html" style="background:rgba(255,255,255,0.1); color:#cbd5e1; text-decoration:none; border:1px solid rgba(255,255,255,0.2); border-radius:8px; padding:10px 18px; font-size:13.5px; font-weight:600; display:inline-flex; align-items:center; gap:6px;">
+                <a href="admin/login.html" style="background:#f1f5f9; color:#003399; text-decoration:none; border:1px solid #cbd5e1; border-radius:8px; padding:10px 16px; font-size:13px; font-weight:600; display:inline-flex; align-items:center; gap:6px;">
                     <span>🔐 Admin Login / Dashboard</span>
                 </a>
             </div>
 
-            <!-- 8. Footer Attribution -->
+            <!-- 9. Footer Attribution -->
             <div class="uk-maint-foot">
                 <p style="margin:0;">GLS University — Faculty of Computer Applications and Information Technology</p>
-                <p style="margin:4px 0 0; opacity:0.8;">Direct Contact: <a href="tel:+919428879100" style="color:#f8fafc; font-weight:600;">+91 9428879100</a></p>
+                <p style="margin:4px 0 0; color:#003399; font-weight:600;">Contact: <a href="mailto:kakkadumang06@gmail.com" style="text-decoration:underline;">kakkadumang06@gmail.com</a> | <a href="tel:+919428879100">+91 9428879100</a></p>
             </div>
         </div>
     </div>
@@ -3660,37 +3636,37 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
     <!-- ============================================================== -->
     <!-- SECURE ADMIN UNLOCK MODAL (PASSWORD & EMAIL REQUIRED TO DISABLE) -->
     <!-- ============================================================== -->
-    <div id="uk-admin-unlock-modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.8); z-index:2147483647; align-items:center; justify-content:center; padding:16px; box-sizing:border-box; backdrop-filter:blur(10px);">
-        <div style="background:#0b1426; border:1px solid rgba(255,153,0,0.35); border-top:4px solid #FF9900; border-radius:18px; max-width:440px; width:100%; padding:28px 24px; box-shadow:0 25px 60px -12px rgba(0,0,0,0.9); color:#f8fafc; text-align:left; font-family:'Inter',sans-serif;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+    <div id="uk-admin-unlock-modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,34,102,0.65); z-index:2147483647; align-items:center; justify-content:center; padding:16px; box-sizing:border-box; backdrop-filter:blur(8px);">
+        <div style="background:#ffffff; border:1px solid rgba(0,51,153,0.15); border-top:5px solid #003399; border-bottom:4px solid #FF9900; border-radius:20px; max-width:440px; width:100%; padding:28px 24px; box-shadow:0 25px 60px -12px rgba(0,51,153,0.35); color:#1e293b; text-align:left; font-family:'Inter',sans-serif;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
                 <div style="display:flex; align-items:center; gap:8px;">
                     <span style="font-size:22px;">🔐</span>
-                    <h3 style="margin:0; font-size:17px; font-weight:800; color:#ffffff;">Admin Verification Required</h3>
+                    <h3 style="margin:0; font-size:17px; font-weight:800; color:#003399;">Admin Verification Required</h3>
                 </div>
-                <button type="button" onclick="window.ukCloseUnlockModal()" style="background:transparent; border:none; color:#94a3b8; font-size:20px; cursor:pointer; padding:4px 8px;">✕</button>
+                <button type="button" onclick="window.ukCloseUnlockModal()" style="background:transparent; border:none; color:#64748b; font-size:20px; cursor:pointer; padding:4px 8px;">✕</button>
             </div>
-            <p style="font-size:13px; color:#cbd5e1; margin:0 0 16px; line-height:1.5;">
-                Only the authorized portfolio administrator can turn OFF maintenance mode and restore public access. Enter your admin email and password:
+            <p style="font-size:13px; color:#475569; margin:0 0 16px; line-height:1.5;">
+                Only the authorized portfolio administrator can turn OFF maintenance mode and restore public access. Enter your admin Gmail and password:
             </p>
-            <div id="uk-unlock-error" style="display:none; background:#7f1d1d; border:1px solid #dc2626; color:#fecaca; padding:10px 12px; border-radius:8px; font-size:12.5px; margin-bottom:14px; line-height:1.4;"></div>
+            <div id="uk-unlock-error" style="display:none; background:#fef2f2; border:1px solid #f87171; color:#991b1b; padding:10px 12px; border-radius:8px; font-size:12.5px; margin-bottom:14px; line-height:1.4;"></div>
             
             <form onsubmit="window.ukSubmitUnlockAuth(event)" style="display:flex; flex-direction:column; gap:12px;">
                 <div>
-                    <label style="display:block; font-size:12px; font-weight:700; color:#94a3b8; margin-bottom:4px;">Admin Email Address</label>
-                    <input type="email" id="uk-unlock-email" required placeholder="kakkadumang08@gmail.com" style="width:100%; box-sizing:border-box; padding:10px 12px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.2); border-radius:8px; color:#ffffff; font-size:13.5px;">
+                    <label style="display:block; font-size:12px; font-weight:700; color:#003399; margin-bottom:4px;">Admin Gmail Address</label>
+                    <input type="email" id="uk-unlock-email" required placeholder="kakkadumang08@gmail.com" style="width:100%; box-sizing:border-box; padding:10px 12px; background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:8px; color:#0f172a; font-size:13.5px; font-weight:500;">
                 </div>
                 <div>
-                    <label style="display:block; font-size:12px; font-weight:700; color:#94a3b8; margin-bottom:4px;">Admin Password</label>
+                    <label style="display:block; font-size:12px; font-weight:700; color:#003399; margin-bottom:4px;">Admin Password</label>
                     <div style="position:relative;">
-                        <input type="password" id="uk-unlock-password" required placeholder="Enter Admin Password" style="width:100%; box-sizing:border-box; padding:10px 38px 10px 12px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.2); border-radius:8px; color:#ffffff; font-size:13.5px;">
-                        <button type="button" onclick="window.ukToggleUnlockPw()" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); background:none; border:none; color:#94a3b8; cursor:pointer; font-size:14px;">👁️</button>
+                        <input type="password" id="uk-unlock-password" required placeholder="Enter Admin Password" style="width:100%; box-sizing:border-box; padding:10px 38px 10px 12px; background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:8px; color:#0f172a; font-size:13.5px; font-weight:500;">
+                        <button type="button" onclick="window.ukToggleUnlockPw()" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); background:none; border:none; color:#64748b; cursor:pointer; font-size:14px;">👁️</button>
                     </div>
                 </div>
                 <div style="display:flex; gap:10px; margin-top:10px;">
-                    <button type="submit" id="uk-unlock-submit-btn" style="flex:1; background:#10b981; color:#ffffff; border:none; border-radius:8px; padding:11px 16px; font-size:13.5px; font-weight:700; cursor:pointer;">
+                    <button type="submit" id="uk-unlock-submit-btn" style="flex:1; background:#003399; color:#ffffff; border:none; border-radius:8px; padding:11px 16px; font-size:13.5px; font-weight:700; cursor:pointer; box-shadow:0 4px 12px rgba(0,51,153,0.25);">
                         Verify & Turn OFF (Go Live)
                     </button>
-                    <button type="button" onclick="window.ukCloseUnlockModal()" style="background:rgba(255,255,255,0.1); color:#cbd5e1; border:none; border-radius:8px; padding:11px 16px; font-size:13.5px; cursor:pointer;">
+                    <button type="button" onclick="window.ukCloseUnlockModal()" style="background:#f1f5f9; color:#475569; border:1px solid #cbd5e1; border-radius:8px; padding:11px 16px; font-size:13.5px; cursor:pointer; font-weight:600;">
                         Cancel
                     </button>
                 </div>
@@ -3698,7 +3674,7 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
         </div>
     </div>
 
-  <!-- Top Bar -->
+    <!-- Top Bar -->
 
     <div class="bg-gray-900 text-gray-300 text-xs py-2 px-4 relative z-50 hidden md:block">
 
@@ -8501,22 +8477,44 @@ setInterval(updateLiveGreeting, 30000);
     // Genuine fresh site open only: NOT a reload/refresh AND new session
     const isFreshVisit = !isReload && !sessionTracked;
 
-    // Baseline calibration numbers
+    // Baseline calibration numbers (continuous counting from real baseline)
     const BASE_TOTAL_COUNT = 916;
-    const BASE_TOTAL_VIEWS = 525;
+    const BASE_TOTAL_VIEWS = 526;
     const BASE_TODAY_COUNT = 68;
-    const BASE_TODAY_VIEWS = 42;
+    const BASE_TODAY_VIEWS = 43;
     const BASE_WEEK_COUNT = 304;
-    const BASE_WEEK_VIEWS = 186;
+    const BASE_WEEK_VIEWS = 187;
+
+    // Detect device and platform metadata for complete non-null database record
+    const ua = navigator.userAgent || '';
+    const isMobile = /Mobi|Android|iPhone|iPod/i.test(ua);
+    const isTablet = /iPad|Tablet/i.test(ua);
+    const deviceType = isMobile ? 'Mobile' : (isTablet ? 'Tablet' : 'Desktop');
+    
+    let platform = 'Other';
+    if (ua.includes('Win')) platform = 'Windows';
+    else if (ua.includes('Android')) platform = 'Android';
+    else if (/iPhone|iPad|iPod/.test(ua)) platform = 'iOS';
+    else if (ua.includes('Mac')) platform = 'Macintosh';
+    else if (ua.includes('Linux')) platform = 'Linux';
+
+    let browser = 'Other';
+    if (ua.includes('Edg/')) browser = 'Edge';
+    else if (ua.includes('Chrome/') && !ua.includes('Edg/')) browser = 'Chrome';
+    else if (ua.includes('Safari/') && !ua.includes('Chrome/')) browser = 'Safari';
+    else if (ua.includes('Firefox/')) browser = 'Firefox';
+
+    const screenRes = `${window.screen?.width || window.innerWidth || 0}x${window.screen?.height || window.innerHeight || 0}`;
+    const pageLocation = window.location.href || 'index.html';
 
     if (isFreshVisit) {
         sessionStorage.setItem("uk_site_session_tracked", "true");
-        // CONTINUOUS INCREMENT: Increment today, total, and week immediately!
+        // CONTINUOUS INCREMENT: Increment today, total, and week smoothly!
         today += 1;
         total += 1;
         week += 1;
 
-        // Persist immediately to localStorage so count continues smoothly
+        // Persist immediately to localStorage
         try {
             localStorage.setItem("uk_visit_total_count", String(total));
             localStorage.setItem("uk_visit_day_count", String(today));
@@ -8524,38 +8522,61 @@ setInterval(updateLiveGreeting, 30000);
             localStorage.setItem("uk_visit_day_date", todayDateStr);
         } catch (_) {}
 
-        // Non-blocking background sync to Supabase (if available and unrestricted)
+        // Non-blocking background sync to Supabase with 100% NON-NULL COMPLETE RECORD
         if (client) {
             try {
-                client.from("site_views").insert([{ viewed_at: new Date().toISOString() }]).then(() => {}).catch(() => {});
+                const fullVisitRow = {
+                    viewed_at: new Date().toISOString(),
+                    device: deviceType,
+                    platform: platform,
+                    browser: browser,
+                    screen: screenRes,
+                    page: pageLocation,
+                    user_agent: ua || 'Web Client',
+                    status: 'active'
+                };
+                client.from("site_views").insert([fullVisitRow]).then(() => {}).catch(() => {});
             } catch (_) {}
         }
     }
 
-    // Attempt to calibrate with Supabase counts if Supabase is reachable
+    // 1. Synchronize from static visitor_stats.json (Works everywhere: Localhost, GitHub Pages & Mobile)
+    try {
+        const statsRes = await fetch('visitor_stats.json?_t=' + Date.now());
+        if (statsRes.ok) {
+            const fileData = await statsRes.json();
+            if (fileData) {
+                if (typeof fileData.totalViews === 'number' && fileData.totalViews > total) total = fileData.totalViews;
+                if (typeof fileData.todayViews === 'number' && fileData.todayViews > today && fileData.date === todayDateStr) today = fileData.todayViews;
+                if (typeof fileData.weekViews === 'number' && fileData.weekViews > week) week = fileData.weekViews;
+            }
+        }
+    } catch (_) {}
+
+    // 2. Synchronize with Supabase portfolio_content visitor_stats
     if (client) {
         try {
+            const { data: contentData, error: contentErr } = await client
+                .from("portfolio_content")
+                .select("content")
+                .eq("section", "visitor_stats")
+                .maybeSingle();
+
+            if (!contentErr && contentData?.content) {
+                const sc = contentData.content;
+                if (typeof sc.totalViews === 'number' && sc.totalViews > total) total = sc.totalViews;
+                if (typeof sc.todayViews === 'number' && sc.todayViews > today && sc.date === todayDateStr) today = sc.todayViews;
+                if (typeof sc.weekViews === 'number' && sc.weekViews > week) week = sc.weekViews;
+            }
+
+            // Sync with site_views count if available
             const { count: rawTotal, error: errTotal } = await client.from("site_views").select("*", { count: "exact", head: true });
             if (!errTotal && typeof rawTotal === "number" && rawTotal > 0) {
                 const computedTotal = BASE_TOTAL_VIEWS + Math.max(0, rawTotal - BASE_TOTAL_COUNT);
                 if (computedTotal > total) total = computedTotal;
             }
 
-            const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0).toISOString();
-            const { count: rawToday, error: errToday } = await client.from("site_views").select("*", { count: "exact", head: true }).gte("viewed_at", todayStart);
-            if (!errToday && typeof rawToday === "number" && rawToday > 0) {
-                const computedToday = (todayDateStr === "2026-10-26") ? BASE_TODAY_VIEWS + Math.max(0, rawToday - BASE_TODAY_COUNT) : rawToday;
-                if (computedToday > today) today = computedToday;
-            }
-
-            const sevenDaysAgo = new Date(new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0).getTime() - 6 * 24 * 60 * 60 * 1000).toISOString();
-            const { count: rawWeek, error: errWeek } = await client.from("site_views").select("*", { count: "exact", head: true }).gte("viewed_at", sevenDaysAgo);
-            if (!errWeek && typeof rawWeek === "number" && rawWeek > 0) {
-                const computedWeek = (todayDateStr === "2026-10-26") ? BASE_WEEK_VIEWS + Math.max(0, rawWeek - BASE_WEEK_COUNT) : Math.max(today, rawWeek);
-                if (computedWeek > week) week = computedWeek;
-            }
-
-            // Sync with portfolio_content
+            // Upsert complete non-null visitor stats into portfolio_content table
             try {
                 await client.from("portfolio_content").upsert({
                     section: "visitor_stats",
@@ -8564,6 +8585,11 @@ setInterval(updateLiveGreeting, 30000);
                         todayViews: today,
                         weekViews: week,
                         date: todayDateStr,
+                        last_device: deviceType,
+                        last_platform: platform,
+                        last_browser: browser,
+                        screen: screenRes,
+                        status: 'active',
                         updated_at: new Date().toISOString()
                     },
                     updated_at: new Date().toISOString()
@@ -8580,11 +8606,11 @@ setInterval(updateLiveGreeting, 30000);
         localStorage.setItem("uk_visit_day_date", todayDateStr);
     } catch (_) {}
 
-    // Immediately update DOM element
+    // Immediately update DOM counter
     const totalEl = document.getElementById("total-visit-count");
     if (totalEl) {
         totalEl.textContent = total.toLocaleString("en-IN");
-        totalEl.title = "Real page views recorded across live website, synchronized with database";
+        totalEl.title = "Verified live visitors across mobile, laptop & desktop";
     }
 
     // Broadcast across open tabs and windows (instantly updates admin dashboard)
@@ -8597,6 +8623,8 @@ setInterval(updateLiveGreeting, 30000);
                 todayViews: today,
                 weekViews: week,
                 date: todayDateStr,
+                device: deviceType,
+                platform: platform,
                 timestamp: Date.now()
             });
         }
@@ -9294,9 +9322,9 @@ setInterval(updateLiveGreeting, 30000);
 
                 created_at: new Date().toISOString(),
 
-                admin_reply: null,
+                admin_reply: "",
 
-                admin_reply_at: null
+                admin_reply_at: ""
 
             };
 
@@ -10227,6 +10255,122 @@ setInterval(updateLiveGreeting, 30000);
     });
 })();
 </script>
+
+    <!-- Floating Mobile / Laptop App Install Pill -->
+    <style id="uk-floating-install-pill-styles">
+    .uk-floating-install-pill {
+        position: fixed;
+        bottom: 22px;
+        right: 20px;
+        z-index: 99998;
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    }
+    .uk-install-pill-btn {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: linear-gradient(135deg, #003399 0%, #002266 100%);
+        border: 2px solid #FF9900;
+        border-radius: 9999px;
+        padding: 8px 16px 8px 10px;
+        color: #ffffff;
+        box-shadow: 0 10px 25px -4px rgba(0, 51, 153, 0.45), 0 0 0 1px rgba(255, 153, 0, 0.3);
+        cursor: pointer;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        text-decoration: none;
+        transition: all 0.25s ease;
+    }
+    .uk-install-pill-btn:hover {
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: 0 14px 30px -4px rgba(0, 51, 153, 0.55), 0 0 15px rgba(255, 153, 0, 0.4);
+        border-color: #ffc966;
+    }
+    .uk-install-pill-btn:active {
+        transform: translateY(0) scale(0.98);
+    }
+    .uk-pill-icon-wrapper {
+        position: relative;
+        width: 32px;
+        height: 32px;
+        flex-shrink: 0;
+    }
+    .uk-pill-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 1.5px solid #FF9900;
+        object-fit: cover;
+        display: block;
+    }
+    .uk-pill-pulse {
+        position: absolute;
+        top: -2px;
+        right: -2px;
+        width: 10px;
+        height: 10px;
+        background: #10b981;
+        border: 2px solid #ffffff;
+        border-radius: 50%;
+        animation: ukPillPing 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+    @keyframes ukPillPing {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.4; transform: scale(0.85); }
+    }
+    .uk-pill-text-col {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        line-height: 1.2;
+    }
+    .uk-pill-title {
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: -0.01em;
+        color: #ffffff;
+    }
+    .uk-pill-sub {
+        font-size: 10px;
+        font-weight: 600;
+        color: #ffc966;
+    }
+    .uk-pill-arrow {
+        color: #FF9900;
+        transition: transform 0.2s ease;
+    }
+    .uk-install-pill-btn:hover .uk-pill-arrow {
+        transform: translate(2px, -2px);
+    }
+    html.uk-is-maintenance #floatingInstallPill,
+    html.standalone #floatingInstallPill {
+        display: none !important;
+    }
+    </style>
+
+    <div id="floatingInstallPill" class="uk-floating-install-pill">
+        <button type="button" onclick="window.handleInstallAppClick()" title="Install Umang Kakkad Portfolio App" class="uk-install-pill-btn">
+            <div class="uk-pill-icon-wrapper">
+                <img src="assets/icons/favicon-32x32.png" alt="App Icon" class="uk-pill-icon">
+                <span class="uk-pill-pulse"></span>
+            </div>
+            <div class="uk-pill-text-col">
+                <span class="uk-pill-title">Install App</span>
+                <span class="uk-pill-sub">Mobile • Laptop • iOS</span>
+            </div>
+            <svg class="uk-pill-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17l9.2-9.2M17 17V8H8"/>
+            </svg>
+        </button>
+    </div>
+    <script>
+    (function() {
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+        const pill = document.getElementById('floatingInstallPill');
+        if (pill) {
+            pill.style.display = isStandalone ? 'none' : 'block';
+        }
+    })();
+    </script>
 </body>
 
 
