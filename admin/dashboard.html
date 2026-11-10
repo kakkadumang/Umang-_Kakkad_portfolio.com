@@ -4866,46 +4866,62 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
 
     async function refreshVisitorStats() {
       try {
-        const now = new Date();
-        const todayDateStr = now.toLocaleDateString("en-CA"); // YYYY-MM-DD local time
-        const cachedDate = localStorage.getItem("uk_visit_day_date");
+        let total = Number(localStorage.getItem("uk_visit_total_count") || "526");
+        if (isNaN(total) || total < 526) total = 526;
 
-        // Dynamic 12:00:00 AM Midnight Reset check
-        let today = Number(localStorage.getItem("uk_visit_day_count") || "42");
-        if (isNaN(today) || today < 0) today = 42;
+        let today = Number(localStorage.getItem("uk_visit_day_count") || "43");
+        if (isNaN(today) || today < 1) today = 43;
 
-        if (cachedDate && cachedDate !== todayDateStr) {
-          today = 0;
-          localStorage.setItem("uk_visit_day_date", todayDateStr);
-          localStorage.setItem("uk_visit_day_count", "0");
-        } else if (!cachedDate) {
-          localStorage.setItem("uk_visit_day_date", todayDateStr);
-          localStorage.setItem("uk_visit_day_count", String(today));
-        }
-
-        let total = Number(localStorage.getItem("uk_visit_total_count") || "525");
-        if (isNaN(total) || total < 525) total = 525;
-
-        let week = Number(localStorage.getItem("uk_visit_week_count") || "186");
-        if (isNaN(week) || week < 186) week = 186;
+        let week = Number(localStorage.getItem("uk_visit_week_count") || "187");
+        if (isNaN(week) || week < 187) week = 187;
 
         const BASE_TOTAL_COUNT = 916;
-        const BASE_TOTAL_VIEWS = 525;
+        const BASE_TOTAL_VIEWS = 526;
         const BASE_TODAY_COUNT = 68;
-        const BASE_TODAY_VIEWS = 42;
+        const BASE_TODAY_VIEWS = 43;
         const BASE_WEEK_COUNT = 304;
-        const BASE_WEEK_VIEWS = 186;
+        const BASE_WEEK_VIEWS = 187;
 
+        const now = new Date();
+        const todayDateStr = now.toLocaleDateString('en-CA');
+
+        // 1. Synchronize from visitor_stats.json (Works everywhere: Localhost, GitHub Pages & Mobile)
+        try {
+          const statsRes = await fetch('../visitor_stats.json?_t=' + Date.now());
+          if (statsRes.ok) {
+            const fileData = await statsRes.json();
+            if (fileData) {
+              if (typeof fileData.totalViews === 'number' && fileData.totalViews > total) total = fileData.totalViews;
+              if (typeof fileData.todayViews === 'number' && fileData.todayViews > today && fileData.date === todayDateStr) today = fileData.todayViews;
+              if (typeof fileData.weekViews === 'number' && fileData.weekViews > week) week = fileData.weekViews;
+            }
+          }
+        } catch (_) {}
+
+        // 2. Synchronize with Supabase portfolio_content visitor_stats
         if (client) {
           try {
-            // A. Exact Total Page Views count from site_views
+            const { data: contentData, error: contentErr } = await client
+              .from("portfolio_content")
+              .select("content")
+              .eq("section", "visitor_stats")
+              .maybeSingle();
+
+            if (!contentErr && contentData?.content) {
+              const sc = contentData.content;
+              if (typeof sc.totalViews === 'number' && sc.totalViews > total) total = sc.totalViews;
+              if (typeof sc.todayViews === 'number' && sc.todayViews > today && sc.date === todayDateStr) today = sc.todayViews;
+              if (typeof sc.weekViews === 'number' && sc.weekViews > week) week = sc.weekViews;
+            }
+
+            // Sync with site_views count if available
             const { count: rawTotal, error: errTotal } = await client.from("site_views").select("*", { count: "exact", head: true });
             if (!errTotal && typeof rawTotal === "number" && rawTotal > 0) {
               const compTotal = BASE_TOTAL_VIEWS + Math.max(0, rawTotal - BASE_TOTAL_COUNT);
               if (compTotal > total) total = compTotal;
             }
 
-            // B. Today's Views (from 12:00:00 AM midnight local time to now)
+            // A. Exact Total Page Views count from site_views
             const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0).toISOString();
             const { count: rawToday, error: errToday } = await client.from("site_views").select("*", { count: "exact", head: true }).gte("viewed_at", todayStart);
             if (!errToday && typeof rawToday === "number" && rawToday > 0) {
@@ -4913,7 +4929,6 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
               if (compToday > today) today = compToday;
             }
 
-            // C. Last 7 Days Views (rolling 7 days)
             const sevenDaysAgo = new Date(new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0).getTime() - 6 * 24 * 60 * 60 * 1000).toISOString();
             const { count: rawWeek, error: errWeek } = await client.from("site_views").select("*", { count: "exact", head: true }).gte("viewed_at", sevenDaysAgo);
             if (!errWeek && typeof rawWeek === "number" && rawWeek > 0) {
@@ -4930,14 +4945,13 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
                   todayViews: today,
                   weekViews: week,
                   date: todayDateStr,
+                  status: 'active',
                   updated_at: new Date().toISOString()
                 },
                 updated_at: new Date().toISOString()
               }, { onConflict: "section" });
             } catch (_) {}
-          } catch (err) {
-            // Retain the properly stored incremented counts
-          }
+          } catch (err) {}
         }
 
         // Save back to local storage
@@ -4953,9 +4967,9 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
         if (el("todayViews")) el("todayViews").textContent = today.toLocaleString("en-IN");
         if (el("weekViews")) el("weekViews").textContent = week.toLocaleString("en-IN");
       } catch (_) {
-        const fbTotal = Number(localStorage.getItem("uk_visit_total_count") || "525");
-        const fbToday = Number(localStorage.getItem("uk_visit_day_count") || "42");
-        const fbWeek = Number(localStorage.getItem("uk_visit_week_count") || "186");
+        const fbTotal = Number(localStorage.getItem("uk_visit_total_count") || "526");
+        const fbToday = Number(localStorage.getItem("uk_visit_day_count") || "43");
+        const fbWeek = Number(localStorage.getItem("uk_visit_week_count") || "187");
         if (el("totalViews")) el("totalViews").textContent = fbTotal.toLocaleString("en-IN");
         if (el("todayViews")) el("todayViews").textContent = fbToday.toLocaleString("en-IN");
         if (el("weekViews")) el("weekViews").textContent = fbWeek.toLocaleString("en-IN");
