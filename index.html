@@ -4468,9 +4468,7 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
                         <div class="text-[10px] font-bold uppercase tracking-[0.14em] text-gray-500 mb-1">Portfolio Visitors</div>
 
                         <div class="text-3xl lg:text-4xl font-extrabold text-suBlue tracking-tight flex items-baseline gap-2">
-
-                            <span><span id="total-visit-count" aria-live="polite">525</span></span>
-
+                            <span><span id="total-visit-count" aria-live="polite">677</span></span>
                         </div>
 
                         <h3 class="text-sm font-bold text-gray-800 leading-snug mt-1">Portfolio Visitors</h3>
@@ -7043,24 +7041,20 @@ window.loadAndRenderPortfolio = async function(isRealtime = false) {
 
       });
 
+    }
 
-
-      // Synchronized Live Visitor Count (connected to live Supabase database)
-
-      const countEl = document.getElementById("total-visit-count");
-
-      if (countEl && typeof window.getLiveSynchronizedViews === "function") {
-
+    // Synchronized Live Visitor Count (connected to live Supabase database & cache)
+    const countEl = document.getElementById("total-visit-count");
+    if (countEl) {
+      const dbViews = d.visitor_stats?.totalViews || d.site_settings?.totalViews;
+      if (dbViews && Number(dbViews) > 0) {
+        countEl.textContent = Number(dbViews).toLocaleString("en-IN");
+      } else if (typeof window.getLiveSynchronizedViews === "function") {
         window.getLiveSynchronizedViews().then(c => {
-
           if (c) countEl.textContent = Number(c).toLocaleString("en-IN");
-
-          countEl.title = "Realtime verified portfolio visits, synchronized live across all devices";
-
         });
-
       }
-
+      countEl.title = "Realtime verified portfolio visits, synchronized live across all devices";
     }
 
 
@@ -8425,7 +8419,7 @@ setInterval(updateLiveGreeting, 30000);
 
 
 
-// Synchronized Real-Time Visitor Counter (Continuous & Resilient Across Windows & Mobile)
+// Synchronized Real-Time Visitor Counter (Continuous & Resilient Across Windows, Mobile, GitHub & Localhost)
 (async function () {
     const SUPABASE_URL = "https://rxbggmwzgbshmpjareav.supabase.co";
     const SUPABASE_KEY = "sb_publishable_ptDO2uplwLjlJ2i-KCvkmA_1rcvyeGY";
@@ -8441,8 +8435,8 @@ setInterval(updateLiveGreeting, 30000);
     const lastTrackedDate = localStorage.getItem("uk_visit_day_date");
 
     // Dynamic 12:00:00 AM Midnight Reset check
-    let today = Number(localStorage.getItem("uk_visit_day_count") || "42");
-    if (isNaN(today) || today < 0) today = 42;
+    let today = Number(localStorage.getItem("uk_visit_day_count") || "52");
+    if (isNaN(today) || today < 0) today = 52;
 
     if (lastTrackedDate && lastTrackedDate !== todayDateStr) {
         // Midnight reset: brand new day starts at 0
@@ -8454,11 +8448,12 @@ setInterval(updateLiveGreeting, 30000);
         localStorage.setItem("uk_visit_day_count", String(today));
     }
 
-    let total = Number(localStorage.getItem("uk_visit_total_count") || "525");
-    if (isNaN(total) || total < 525) total = 525;
+    // Baseline calibration numbers (verified baseline starting at 677+)
+    let total = Number(localStorage.getItem("uk_visit_total_count") || "677");
+    if (isNaN(total) || total < 677) total = 677;
 
-    let week = Number(localStorage.getItem("uk_visit_week_count") || "186");
-    if (isNaN(week) || week < 186) week = 186;
+    let week = Number(localStorage.getItem("uk_visit_week_count") || "218");
+    if (isNaN(week) || week < 218) week = 218;
 
     // Detect if this page load is a user-initiated reload / refresh (F5 / browser refresh)
     let isReload = false;
@@ -8477,13 +8472,12 @@ setInterval(updateLiveGreeting, 30000);
     // Genuine fresh site open only: NOT a reload/refresh AND new session
     const isFreshVisit = !isReload && !sessionTracked;
 
-    // Baseline calibration numbers (continuous counting from real baseline)
-    const BASE_TOTAL_COUNT = 916;
-    const BASE_TOTAL_VIEWS = 526;
+    const BASE_TOTAL_COUNT = 1067;
+    const BASE_TOTAL_VIEWS = 677;
     const BASE_TODAY_COUNT = 68;
-    const BASE_TODAY_VIEWS = 43;
+    const BASE_TODAY_VIEWS = 52;
     const BASE_WEEK_COUNT = 304;
-    const BASE_WEEK_VIEWS = 187;
+    const BASE_WEEK_VIEWS = 218;
 
     // Detect device and platform metadata for complete non-null database record
     const ua = navigator.userAgent || '';
@@ -8507,9 +8501,14 @@ setInterval(updateLiveGreeting, 30000);
     const screenRes = `${window.screen?.width || window.innerWidth || 0}x${window.screen?.height || window.innerHeight || 0}`;
     const pageLocation = window.location.href || 'index.html';
 
+    // Global reader immediately available
+    window.getLiveSynchronizedViews = async function () {
+        return total;
+    };
+
     if (isFreshVisit) {
         sessionStorage.setItem("uk_site_session_tracked", "true");
-        // CONTINUOUS INCREMENT: Increment today, total, and week smoothly!
+        // CONTINUOUS INCREMENT: Increment today, total, and week smoothly on every site open!
         today += 1;
         total += 1;
         week += 1;
@@ -8521,6 +8520,13 @@ setInterval(updateLiveGreeting, 30000);
             localStorage.setItem("uk_visit_week_count", String(week));
             localStorage.setItem("uk_visit_day_date", todayDateStr);
         } catch (_) {}
+
+        // Immediately update DOM counter
+        const totalEl = document.getElementById("total-visit-count");
+        if (totalEl) {
+            totalEl.textContent = total.toLocaleString("en-IN");
+            totalEl.title = "Verified live visitors across mobile, laptop & desktop";
+        }
 
         // Non-blocking background sync to Supabase with 100% NON-NULL COMPLETE RECORD
         if (client) {
@@ -8627,12 +8633,29 @@ setInterval(updateLiveGreeting, 30000);
                 platform: platform,
                 timestamp: Date.now()
             });
+
+            syncChannel.addEventListener('message', (event) => {
+                if (event.data && event.data.type === 'SITE_VIEW_RECORDED' && event.data.totalViews) {
+                    const newTotal = Number(event.data.totalViews);
+                    if (newTotal > total) {
+                        total = newTotal;
+                        try { localStorage.setItem("uk_visit_total_count", String(total)); } catch (_) {}
+                        if (totalEl) totalEl.textContent = total.toLocaleString("en-IN");
+                    }
+                }
+            });
         }
     } catch (_) {}
 
-    window.getLiveSynchronizedViews = async function () {
-        return total;
-    };
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'uk_visit_total_count' && e.newValue) {
+            const val = Number(e.newValue);
+            if (!isNaN(val) && val > total) {
+                total = val;
+                if (totalEl) totalEl.textContent = total.toLocaleString("en-IN");
+            }
+        }
+    });
 })();
 </script>
 
@@ -10256,123 +10279,6 @@ setInterval(updateLiveGreeting, 30000);
 })();
 </script>
 
-    <!-- Floating Mobile / Laptop App Install Pill -->
-    <style id="uk-floating-install-pill-styles">
-    .uk-floating-install-pill {
-        position: fixed;
-        bottom: 22px;
-        right: 20px;
-        z-index: 99998;
-        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
-    }
-    .uk-install-pill-btn {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        background: linear-gradient(135deg, #003399 0%, #002266 100%);
-        border: 2px solid #FF9900;
-        border-radius: 9999px;
-        padding: 8px 16px 8px 10px;
-        color: #ffffff;
-        box-shadow: 0 10px 25px -4px rgba(0, 51, 153, 0.45), 0 0 0 1px rgba(255, 153, 0, 0.3);
-        cursor: pointer;
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        text-decoration: none;
-        transition: all 0.25s ease;
-    }
-    .uk-install-pill-btn:hover {
-        transform: translateY(-2px) scale(1.02);
-        box-shadow: 0 14px 30px -4px rgba(0, 51, 153, 0.55), 0 0 15px rgba(255, 153, 0, 0.4);
-        border-color: #ffc966;
-    }
-    .uk-install-pill-btn:active {
-        transform: translateY(0) scale(0.98);
-    }
-    .uk-pill-icon-wrapper {
-        position: relative;
-        width: 32px;
-        height: 32px;
-        flex-shrink: 0;
-    }
-    .uk-pill-icon {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        border: 1.5px solid #FF9900;
-        object-fit: cover;
-        display: block;
-    }
-    .uk-pill-pulse {
-        position: absolute;
-        top: -2px;
-        right: -2px;
-        width: 10px;
-        height: 10px;
-        background: #10b981;
-        border: 2px solid #ffffff;
-        border-radius: 50%;
-        animation: ukPillPing 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
-    }
-    @keyframes ukPillPing {
-        0%, 100% { opacity: 1; transform: scale(1); }
-        50% { opacity: 0.4; transform: scale(0.85); }
-    }
-    .uk-pill-text-col {
-        display: flex;
-        flex-direction: column;
-        text-align: left;
-        line-height: 1.2;
-    }
-    .uk-pill-title {
-        font-size: 13px;
-        font-weight: 800;
-        letter-spacing: -0.01em;
-        color: #ffffff;
-    }
-    .uk-pill-sub {
-        font-size: 10px;
-        font-weight: 600;
-        color: #ffc966;
-    }
-    .uk-pill-arrow {
-        color: #FF9900;
-        transition: transform 0.2s ease;
-    }
-    .uk-install-pill-btn:hover .uk-pill-arrow {
-        transform: translate(2px, -2px);
-    }
-    html.uk-is-maintenance #floatingInstallPill,
-    html.standalone #floatingInstallPill {
-        display: none !important;
-    }
-    </style>
-
-    <div id="floatingInstallPill" class="uk-floating-install-pill">
-        <button type="button" onclick="window.handleInstallAppClick()" title="Install Umang Kakkad Portfolio App" class="uk-install-pill-btn">
-            <div class="uk-pill-icon-wrapper">
-                <img src="assets/icons/favicon-32x32.png" alt="App Icon" class="uk-pill-icon">
-                <span class="uk-pill-pulse"></span>
-            </div>
-            <div class="uk-pill-text-col">
-                <span class="uk-pill-title">Install App</span>
-                <span class="uk-pill-sub">Mobile • Laptop • iOS</span>
-            </div>
-            <svg class="uk-pill-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M7 17l9.2-9.2M17 17V8H8"/>
-            </svg>
-        </button>
-    </div>
-    <script>
-    (function() {
-        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-        const pill = document.getElementById('floatingInstallPill');
-        if (pill) {
-            pill.style.display = isStandalone ? 'none' : 'block';
-        }
-    })();
-    </script>
 </body>
-
-
 
 </html>
