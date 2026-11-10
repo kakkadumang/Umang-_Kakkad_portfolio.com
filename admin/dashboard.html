@@ -3527,6 +3527,25 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
 
       </div>
 
+      <!-- Cloud Database Quota / Sync Status Warning Banner -->
+      <div id="cloudSyncAlertBanner" style="display:none;margin-bottom:20px;background:#fef2f2;border:1px solid #fecaca;color:#991b1b;padding:14px 20px;border-radius:12px;font-size:13.5px;font-weight:600;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,0.04)">
+        <div style="display:flex;align-items:flex-start;gap:10px">
+          <span style="font-size:22px">⚠️</span>
+          <div>
+            <div style="font-size:14px;font-weight:800;color:#7f1d1d">Supabase Cloud Sync Alert (HTTP 402 - Cached Egress Quota Exceeded)</div>
+            <div style="font-size:12.5px;font-weight:500;color:#991b1b;margin-top:2px;line-height:1.4">
+              Your changes are safe in your local browser cache. To synchronize live across GitHub Pages, Mobile & Laptop:
+              <br>1. Log in to <a href="https://supabase.com/dashboard" target="_blank" style="color:#1d4ed8;font-weight:700;text-decoration:underline">supabase.com/dashboard</a> &rarr; Project <code>rxbggmwzgbshmpjareav</code>
+              <br>2. Go to <strong>Project Settings</strong> &rarr; <strong>Billing / Usage</strong> &rarr; Click <strong>Reset Spend Cap / Unfreeze</strong>.
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button type="button" onclick="testSupabaseConnection()" class="btn btn-secondary" style="font-size:12px;padding:6px 12px;background:#ffffff">↻ Re-check Cloud Status</button>
+          <button type="button" onclick="document.getElementById('cloudSyncAlertBanner').style.display='none'" class="btn btn-secondary" style="font-size:12px;padding:6px 10px;background:#ffffff">✕ Dismiss</button>
+        </div>
+      </div>
+
       <!-- Section: Overview -->
 
       <section id="overviewPage">
@@ -3555,7 +3574,7 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
 
             <div class="metric-label">Total Page Views</div>
 
-            <div class="metric" id="totalViews">525</div>
+            <div class="metric" id="totalViews">677</div>
 
             <div class="metric-desc">Verified visitor views</div>
 
@@ -4345,7 +4364,7 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
 
         heroDescription: "Building reliable desktop and web applications with modern technologies.",
 
-        totalViews: 525,
+        totalViews: 677,
 
         primaryColor: "#003399",
 
@@ -4569,6 +4588,8 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
 
         try { await refreshOverview(); } catch(_) {}
 
+        try { await checkCloudStatus(); } catch(_) {}
+
       })();
 
 
@@ -4576,6 +4597,47 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
       return true;
 
     }
+
+    async function checkCloudStatus() {
+      const banner = el("cloudSyncAlertBanner");
+      if (!banner) return;
+      try {
+        const res = await fetch("https://rxbggmwzgbshmpjareav.supabase.co/rest/v1/portfolio_content?select=section&limit=1", {
+          headers: {
+            "apikey": SUPABASE_PUBLISHABLE_KEY,
+            "Authorization": "Bearer " + SUPABASE_PUBLISHABLE_KEY
+          }
+        });
+        if (res.status === 402) {
+          banner.style.display = "flex";
+        } else if (res.ok) {
+          banner.style.display = "none";
+        }
+      } catch (_) {}
+    }
+
+    window.testSupabaseConnection = async function() {
+      const banner = el("cloudSyncAlertBanner");
+      try {
+        const res = await fetch("https://rxbggmwzgbshmpjareav.supabase.co/rest/v1/portfolio_content?select=section&limit=1", {
+          headers: {
+            "apikey": SUPABASE_PUBLISHABLE_KEY,
+            "Authorization": "Bearer " + SUPABASE_PUBLISHABLE_KEY
+          }
+        });
+        if (res.status === 402) {
+          alert("⚠️ Supabase project is currently restricted (HTTP 402: Cached Egress Quota Exceeded).\n\nPlease log in to supabase.com/dashboard -> Project Settings -> Billing to reset the spend cap / quota.");
+          if (banner) banner.style.display = "flex";
+        } else if (res.ok) {
+          alert("✓ Supabase Cloud Database is ONLINE and fully active! Live synchronization is active.");
+          if (banner) banner.style.display = "none";
+        } else {
+          alert("Supabase response: HTTP " + res.status + " " + res.statusText);
+        }
+      } catch (e) {
+        alert("Connection check note: " + e.message);
+      }
+    };
 
 
 
@@ -4866,21 +4928,21 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
 
     async function refreshVisitorStats() {
       try {
-        let total = Number(localStorage.getItem("uk_visit_total_count") || "526");
-        if (isNaN(total) || total < 526) total = 526;
+        let total = Number(localStorage.getItem("uk_visit_total_count") || "677");
+        if (isNaN(total) || total < 677) total = 677;
 
-        let today = Number(localStorage.getItem("uk_visit_day_count") || "43");
-        if (isNaN(today) || today < 1) today = 43;
+        let today = Number(localStorage.getItem("uk_visit_day_count") || "52");
+        if (isNaN(today) || today < 1) today = 52;
 
-        let week = Number(localStorage.getItem("uk_visit_week_count") || "187");
-        if (isNaN(week) || week < 187) week = 187;
+        let week = Number(localStorage.getItem("uk_visit_week_count") || "218");
+        if (isNaN(week) || week < 218) week = 218;
 
-        const BASE_TOTAL_COUNT = 916;
-        const BASE_TOTAL_VIEWS = 526;
+        const BASE_TOTAL_COUNT = 1067;
+        const BASE_TOTAL_VIEWS = 677;
         const BASE_TODAY_COUNT = 68;
-        const BASE_TODAY_VIEWS = 43;
+        const BASE_TODAY_VIEWS = 52;
         const BASE_WEEK_COUNT = 304;
-        const BASE_WEEK_VIEWS = 187;
+        const BASE_WEEK_VIEWS = 218;
 
         const now = new Date();
         const todayDateStr = now.toLocaleDateString('en-CA');
@@ -4967,9 +5029,9 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
         if (el("todayViews")) el("todayViews").textContent = today.toLocaleString("en-IN");
         if (el("weekViews")) el("weekViews").textContent = week.toLocaleString("en-IN");
       } catch (_) {
-        const fbTotal = Number(localStorage.getItem("uk_visit_total_count") || "526");
-        const fbToday = Number(localStorage.getItem("uk_visit_day_count") || "43");
-        const fbWeek = Number(localStorage.getItem("uk_visit_week_count") || "187");
+        const fbTotal = Number(localStorage.getItem("uk_visit_total_count") || "677");
+        const fbToday = Number(localStorage.getItem("uk_visit_day_count") || "52");
+        const fbWeek = Number(localStorage.getItem("uk_visit_week_count") || "218");
         if (el("totalViews")) el("totalViews").textContent = fbTotal.toLocaleString("en-IN");
         if (el("todayViews")) el("todayViews").textContent = fbToday.toLocaleString("en-IN");
         if (el("weekViews")) el("weekViews").textContent = fbWeek.toLocaleString("en-IN");
@@ -5993,6 +6055,35 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
           } catch (_) {}
         }
 
+        // Special handling for Site Settings totalViews synchronization
+        if (currentSection === "site_settings" && parsed.totalViews) {
+          const customViews = Number(parsed.totalViews);
+          if (!isNaN(customViews) && customViews > 0) {
+            try {
+              localStorage.setItem("uk_visit_total_count", String(customViews));
+              if (el("totalViews")) el("totalViews").textContent = customViews.toLocaleString("en-IN");
+              if (typeof BroadcastChannel !== 'undefined') {
+                const syncChannel = new BroadcastChannel('portfolio_sync_channel');
+                syncChannel.postMessage({ type: 'SITE_VIEW_RECORDED', totalViews: customViews, timestamp: Date.now() });
+              }
+            } catch (_) {}
+
+            if (client) {
+              try {
+                await client.from("portfolio_content").upsert({
+                  section: "visitor_stats",
+                  content: {
+                    totalViews: customViews,
+                    status: 'active',
+                    updated_at: new Date().toISOString()
+                  },
+                  updated_at: new Date().toISOString()
+                }, { onConflict: "section" });
+              } catch (_) {}
+            }
+          }
+        }
+
         // 2. Broadcast instant synchronization across open tabs, desktop, and mobile
         try {
           if (typeof BroadcastChannel !== 'undefined') {
@@ -6005,6 +6096,7 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
 
         // 3. Background non-blocking Cloud Database upsert
         let dbSaved = false;
+        let dbErrorMsg = "";
         try {
           if (!client) setupClient();
           if (client) {
@@ -6013,16 +6105,30 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
               content: parsed,
               updated_at: new Date().toISOString()
             }, { onConflict: "section" });
-            if (!dbError) dbSaved = true;
+            if (!dbError) {
+              dbSaved = true;
+            } else {
+              dbErrorMsg = dbError.message || JSON.stringify(dbError);
+            }
           }
-        } catch (_) {}
+        } catch (err) {
+          dbErrorMsg = err.message || String(err);
+        }
 
-        el("recordStatus").textContent = "SAVED LIVE";
         const timeStr = new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-        const successMsg = dbSaved
-          ? `✓ Successfully saved to Cloud Database & Live Website at ${timeStr}!`
-          : `✓ Successfully saved! All changes are live on website, mobile & dashboard at ${timeStr}.`;
-        notice(el("editorNotice"), successMsg, "success");
+        if (dbSaved) {
+          el("recordStatus").textContent = "SAVED TO CLOUD";
+          notice(el("editorNotice"), `✓ Successfully saved to Cloud Database! Live site & local site are 100% updated and in sync at ${timeStr}.`, "success");
+        } else if (dbErrorMsg && (dbErrorMsg.includes("402") || dbErrorMsg.toLowerCase().includes("quota") || dbErrorMsg.toLowerCase().includes("egress") || dbErrorMsg.toLowerCase().includes("payment"))) {
+          el("recordStatus").textContent = "SAVED LOCALLY (CLOUD QUOTA)";
+          notice(el("editorNotice"), `⚠️ Saved in local browser! Supabase Cloud notice: Egress quota reached (HTTP 402). Go to https://supabase.com/dashboard -> Billing to unfreeze/reset spend cap.`, "warning");
+        } else if (dbErrorMsg) {
+          el("recordStatus").textContent = "SAVED LOCALLY";
+          notice(el("editorNotice"), `⚠️ Saved locally! Cloud notice: ${dbErrorMsg}`, "warning");
+        } else {
+          el("recordStatus").textContent = "SAVED LIVE";
+          notice(el("editorNotice"), `✓ Successfully saved! All changes are live on website, mobile & dashboard at ${timeStr}.`, "success");
+        }
         await refreshOverview();
       } catch (e) {
         console.error("Save error:", e);
