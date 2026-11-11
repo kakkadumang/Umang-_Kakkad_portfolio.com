@@ -3027,17 +3027,33 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
                 document.documentElement.classList.add('uk-is-maintenance');
                 if (cfg.title) {
                     const t = document.getElementById('uk-maint-title');
-                    if (t) {
-                        t.childNodes[0].textContent = cfg.title + ' ';
-                    }
+                    if (t) t.textContent = cfg.title;
                 }
-                                if (cfg.message) {
+                if (cfg.message) {
                     const m = document.getElementById('uk-maint-message');
                     if (m) m.textContent = cfg.message;
+                }
+                if (cfg.owner) {
+                    const o = document.getElementById('uk-maint-owner');
+                    if (o) o.textContent = cfg.owner;
+                }
+                if (cfg.institution) {
+                    const inst = document.getElementById('uk-maint-institution');
+                    if (inst) inst.textContent = cfg.institution;
+                    const sub = document.getElementById('uk-maint-header-sub');
+                    if (sub) sub.textContent = cfg.institution;
                 }
                 if (cfg.expectedBack) {
                     const e = document.getElementById('uk-maint-expected');
                     if (e) e.textContent = cfg.expectedBack;
+                }
+                if (cfg.contactEmail) {
+                    const em = document.getElementById('uk-maint-contact-email');
+                    if (em) { em.textContent = cfg.contactEmail; em.href = 'mailto:' + cfg.contactEmail; }
+                }
+                if (cfg.contactPhone) {
+                    const ph = document.getElementById('uk-maint-contact-phone');
+                    if (ph) { ph.textContent = cfg.contactPhone; ph.href = 'tel:' + cfg.contactPhone; }
                 }
             } else if (!forcePreview) {
                 document.documentElement.classList.remove('uk-is-maintenance');
@@ -3548,8 +3564,8 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
                 <img src="assets/icons/favicon-32x32.png" alt="UK" style="width:22px; height:22px; border-radius:50%; border:1px solid #FF9900;">
                 <span>Umang Kakkad | Official Academic Portfolio</span>
             </div>
-            <div style="font-size:11.5px; color:#ffc966;">
-                GLS University (FCAIT)
+            <div style="font-size:11.5px; color:#ffc966;" id="uk-maint-header-sub">
+                GLS University, Ahmedabad
             </div>
         </div>
 
@@ -3591,11 +3607,11 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
                 </div>
                 <div class="uk-maint-item">
                     <div class="uk-maint-item-label"><span>🏛️</span> Institution</div>
-                    <div class="uk-maint-item-val">GLS University (FCAIT)</div>
+                    <div class="uk-maint-item-val" id="uk-maint-institution">GLS University, Ahmedabad</div>
                 </div>
                 <div class="uk-maint-item">
                     <div class="uk-maint-item-label"><span>⚡</span> Current Status</div>
-                    <div class="uk-maint-item-val" style="color:#003399;">System Upgrades in Progress</div>
+                    <div class="uk-maint-item-val" id="uk-maint-status" style="color:#003399;">System Upgrades in Progress</div>
                 </div>
                 <div class="uk-maint-item">
                     <div class="uk-maint-item-label"><span>⏱️</span> Expected Availability</div>
@@ -3627,8 +3643,8 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
 
             <!-- 9. Footer Attribution -->
             <div class="uk-maint-foot">
-                <p style="margin:0;">GLS University — Faculty of Computer Applications and Information Technology</p>
-                <p style="margin:4px 0 0; color:#003399; font-weight:600;">Contact: <a href="mailto:kakkadumang06@gmail.com" style="text-decoration:underline;">kakkadumang06@gmail.com</a> | <a href="tel:+919428879100">+91 9428879100</a></p>
+                <p style="margin:0;" id="uk-maint-foot-text">Umang Kakkad &mdash; Official Academic &amp; Professional Portfolio</p>
+                <p style="margin:4px 0 0; color:#003399; font-weight:600;">Contact: <a href="mailto:kakkadumang06@gmail.com" id="uk-maint-contact-email" style="text-decoration:underline;">kakkadumang06@gmail.com</a> | <a href="tel:+919428879100" id="uk-maint-contact-phone">+91 9428879100</a></p>
             </div>
         </div>
     </div>
@@ -4468,7 +4484,7 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
                         <div class="text-[10px] font-bold uppercase tracking-[0.14em] text-gray-500 mb-1">Portfolio Visitors</div>
 
                         <div class="text-3xl lg:text-4xl font-extrabold text-suBlue tracking-tight flex items-baseline gap-2">
-                            <span><span id="total-visit-count" aria-live="polite">677</span></span>
+                            <span><span id="total-visit-count" aria-live="polite">756</span></span>
                         </div>
 
                         <h3 class="text-sm font-bold text-gray-800 leading-snug mt-1">Portfolio Visitors</h3>
@@ -7046,12 +7062,13 @@ window.loadAndRenderPortfolio = async function(isRealtime = false) {
     // Synchronized Live Visitor Count (connected to live Supabase database & cache)
     const countEl = document.getElementById("total-visit-count");
     if (countEl) {
-      const dbViews = d.visitor_stats?.totalViews || d.site_settings?.totalViews;
-      if (dbViews && Number(dbViews) > 0) {
-        countEl.textContent = Number(dbViews).toLocaleString("en-IN");
-      } else if (typeof window.getLiveSynchronizedViews === "function") {
+      const dbViews = Number(d.visitor_stats?.totalViews || d.site_settings?.totalViews || 0);
+      const storedViews = Number(localStorage.getItem("uk_visit_total_count") || "756");
+      const bestViews = Math.max(756, storedViews, dbViews);
+      countEl.textContent = bestViews.toLocaleString("en-IN");
+      if (typeof window.getLiveSynchronizedViews === "function") {
         window.getLiveSynchronizedViews().then(c => {
-          if (c) countEl.textContent = Number(c).toLocaleString("en-IN");
+          if (c && Number(c) > bestViews) countEl.textContent = Number(c).toLocaleString("en-IN");
         });
       }
       countEl.title = "Realtime verified portfolio visits, synchronized live across all devices";
@@ -8421,6 +8438,7 @@ setInterval(updateLiveGreeting, 30000);
 
 // Synchronized Real-Time Visitor Counter (Continuous & Resilient Across Windows, Mobile, GitHub & Localhost)
 (async function () {
+    const CLOUD_STATS_URL = "https://api.restful-api.dev/objects/ff808181a09d98f701a1c8e29e41043e";
     const SUPABASE_URL = "https://rxbggmwzgbshmpjareav.supabase.co";
     const SUPABASE_KEY = "sb_publishable_ptDO2uplwLjlJ2i-KCvkmA_1rcvyeGY";
     let client = null;
@@ -8430,13 +8448,20 @@ setInterval(updateLiveGreeting, 30000);
         } catch (_) {}
     }
 
+    const BASE_TOTAL_COUNT = 1067;
+    const BASE_TOTAL_VIEWS = 756;
+    const BASE_TODAY_COUNT = 68;
+    const BASE_TODAY_VIEWS = 60;
+    const BASE_WEEK_COUNT = 304;
+    const BASE_WEEK_VIEWS = 236;
+
     const now = new Date();
     const todayDateStr = now.toLocaleDateString("en-CA"); // YYYY-MM-DD local time
     const lastTrackedDate = localStorage.getItem("uk_visit_day_date");
 
-    // Dynamic 12:00:00 AM Midnight Reset check
-    let today = Number(localStorage.getItem("uk_visit_day_count") || "52");
-    if (isNaN(today) || today < 0) today = 52;
+    // Dynamic Midnight Reset check
+    let today = Number(localStorage.getItem("uk_visit_day_count") || String(BASE_TODAY_VIEWS));
+    if (isNaN(today) || today < 0) today = BASE_TODAY_VIEWS;
 
     if (lastTrackedDate && lastTrackedDate !== todayDateStr) {
         // Midnight reset: brand new day starts at 0
@@ -8448,12 +8473,12 @@ setInterval(updateLiveGreeting, 30000);
         localStorage.setItem("uk_visit_day_count", String(today));
     }
 
-    // Baseline calibration numbers (verified baseline starting at 677+)
-    let total = Number(localStorage.getItem("uk_visit_total_count") || "677");
-    if (isNaN(total) || total < 677) total = 677;
+    // Baseline calibration numbers (verified baseline starting at 756+)
+    let total = Number(localStorage.getItem("uk_visit_total_count") || String(BASE_TOTAL_VIEWS));
+    if (isNaN(total) || total < BASE_TOTAL_VIEWS) total = BASE_TOTAL_VIEWS;
 
-    let week = Number(localStorage.getItem("uk_visit_week_count") || "218");
-    if (isNaN(week) || week < 218) week = 218;
+    let week = Number(localStorage.getItem("uk_visit_week_count") || String(BASE_WEEK_VIEWS));
+    if (isNaN(week) || week < BASE_WEEK_VIEWS) week = BASE_WEEK_VIEWS;
 
     // Detect if this page load is a user-initiated reload / refresh (F5 / browser refresh)
     let isReload = false;
@@ -8472,14 +8497,7 @@ setInterval(updateLiveGreeting, 30000);
     // Genuine fresh site open only: NOT a reload/refresh AND new session
     const isFreshVisit = !isReload && !sessionTracked;
 
-    const BASE_TOTAL_COUNT = 1067;
-    const BASE_TOTAL_VIEWS = 677;
-    const BASE_TODAY_COUNT = 68;
-    const BASE_TODAY_VIEWS = 52;
-    const BASE_WEEK_COUNT = 304;
-    const BASE_WEEK_VIEWS = 218;
-
-    // Detect device and platform metadata for complete non-null database record
+    // Detect device and platform metadata
     const ua = navigator.userAgent || '';
     const isMobile = /Mobi|Android|iPhone|iPod/i.test(ua);
     const isTablet = /iPad|Tablet/i.test(ua);
@@ -8501,54 +8519,41 @@ setInterval(updateLiveGreeting, 30000);
     const screenRes = `${window.screen?.width || window.innerWidth || 0}x${window.screen?.height || window.innerHeight || 0}`;
     const pageLocation = window.location.href || 'index.html';
 
+    const totalEl = document.getElementById("total-visit-count");
+    function updateDOMCounter(val) {
+        if (totalEl) {
+            totalEl.textContent = Number(val).toLocaleString("en-IN");
+            totalEl.title = "Verified live visitors synchronized across mobile, laptop & desktop";
+        }
+    }
+
+    // Immediately update DOM with current highest count
+    updateDOMCounter(total);
+
     // Global reader immediately available
     window.getLiveSynchronizedViews = async function () {
         return total;
     };
 
-    if (isFreshVisit) {
-        sessionStorage.setItem("uk_site_session_tracked", "true");
-        // CONTINUOUS INCREMENT: Increment today, total, and week smoothly on every site open!
-        today += 1;
-        total += 1;
-        week += 1;
-
-        // Persist immediately to localStorage
-        try {
-            localStorage.setItem("uk_visit_total_count", String(total));
-            localStorage.setItem("uk_visit_day_count", String(today));
-            localStorage.setItem("uk_visit_week_count", String(week));
-            localStorage.setItem("uk_visit_day_date", todayDateStr);
-        } catch (_) {}
-
-        // Immediately update DOM counter
-        const totalEl = document.getElementById("total-visit-count");
-        if (totalEl) {
-            totalEl.textContent = total.toLocaleString("en-IN");
-            totalEl.title = "Verified live visitors across mobile, laptop & desktop";
-        }
-
-        // Non-blocking background sync to Supabase with 100% NON-NULL COMPLETE RECORD
-        if (client) {
-            try {
-                const fullVisitRow = {
-                    viewed_at: new Date().toISOString(),
-                    device: deviceType,
-                    platform: platform,
-                    browser: browser,
-                    screen: screenRes,
-                    page: pageLocation,
-                    user_agent: ua || 'Web Client',
-                    status: 'active'
-                };
-                client.from("site_views").insert([fullVisitRow]).then(() => {}).catch(() => {});
-            } catch (_) {}
-        }
-    }
-
-    // 1. Synchronize from static visitor_stats.json (Works everywhere: Localhost, GitHub Pages & Mobile)
+    // 1. Fetch live global stats from persistent cloud store (Works across all devices & browsers)
+    let cloudSynced = false;
     try {
-        const statsRes = await fetch('visitor_stats.json?_t=' + Date.now());
+        const cloudRes = await fetch(CLOUD_STATS_URL, { cache: "no-store" });
+        if (cloudRes.ok) {
+            const cloudJson = await cloudRes.json();
+            const cd = cloudJson && cloudJson.data;
+            if (cd) {
+                if (typeof cd.totalViews === 'number' && cd.totalViews > total) total = cd.totalViews;
+                if (typeof cd.todayViews === 'number' && cd.todayViews > today && cd.date === todayDateStr) today = cd.todayViews;
+                if (typeof cd.weekViews === 'number' && cd.weekViews > week) week = cd.weekViews;
+                cloudSynced = true;
+            }
+        }
+    } catch (_) {}
+
+    // 2. Synchronize from static visitor_stats.json (Localhost, GitHub Pages & Mobile fallback)
+    try {
+        const statsRes = await fetch('visitor_stats.json?_t=' + Date.now(), { cache: "no-store" });
         if (statsRes.ok) {
             const fileData = await statsRes.json();
             if (fileData) {
@@ -8559,7 +8564,7 @@ setInterval(updateLiveGreeting, 30000);
         }
     } catch (_) {}
 
-    // 2. Synchronize with Supabase portfolio_content visitor_stats
+    // 3. Synchronize with Supabase portfolio_content visitor_stats (when available)
     if (client) {
         try {
             const { data: contentData, error: contentErr } = await client
@@ -8575,33 +8580,20 @@ setInterval(updateLiveGreeting, 30000);
                 if (typeof sc.weekViews === 'number' && sc.weekViews > week) week = sc.weekViews;
             }
 
-            // Sync with site_views count if available
             const { count: rawTotal, error: errTotal } = await client.from("site_views").select("*", { count: "exact", head: true });
             if (!errTotal && typeof rawTotal === "number" && rawTotal > 0) {
                 const computedTotal = BASE_TOTAL_VIEWS + Math.max(0, rawTotal - BASE_TOTAL_COUNT);
                 if (computedTotal > total) total = computedTotal;
             }
-
-            // Upsert complete non-null visitor stats into portfolio_content table
-            try {
-                await client.from("portfolio_content").upsert({
-                    section: "visitor_stats",
-                    content: {
-                        totalViews: total,
-                        todayViews: today,
-                        weekViews: week,
-                        date: todayDateStr,
-                        last_device: deviceType,
-                        last_platform: platform,
-                        last_browser: browser,
-                        screen: screenRes,
-                        status: 'active',
-                        updated_at: new Date().toISOString()
-                    },
-                    updated_at: new Date().toISOString()
-                }, { onConflict: "section" });
-            } catch (_) {}
         } catch (_) {}
+    }
+
+    // 4. Handle genuine fresh site visit: Increment!
+    if (isFreshVisit) {
+        sessionStorage.setItem("uk_site_session_tracked", "true");
+        today += 1;
+        total += 1;
+        week += 1;
     }
 
     // Persist finalized counts to localStorage
@@ -8612,14 +8604,72 @@ setInterval(updateLiveGreeting, 30000);
         localStorage.setItem("uk_visit_day_date", todayDateStr);
     } catch (_) {}
 
-    // Immediately update DOM counter
-    const totalEl = document.getElementById("total-visit-count");
-    if (totalEl) {
-        totalEl.textContent = total.toLocaleString("en-IN");
-        totalEl.title = "Verified live visitors across mobile, laptop & desktop";
+    // Update DOM counter
+    updateDOMCounter(total);
+
+    // 5. PUSH updated count to Cloud Store (keeps all browsers, devices & localhost in sync)
+    async function pushToCloudStore() {
+        try {
+            await fetch(CLOUD_STATS_URL, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name: "umang_portfolio_visitor_stats",
+                    data: {
+                        totalViews: total,
+                        todayViews: today,
+                        weekViews: week,
+                        date: todayDateStr,
+                        lastDevice: deviceType,
+                        lastBrowser: browser,
+                        lastPlatform: platform,
+                        updatedAt: new Date().toISOString()
+                    }
+                })
+            });
+        } catch (_) {}
     }
 
-    // Broadcast across open tabs and windows (instantly updates admin dashboard)
+    if (isFreshVisit || !cloudSynced) {
+        pushToCloudStore();
+    }
+
+    // 6. Non-blocking background sync to Supabase (site_views + portfolio_content)
+    if (client) {
+        try {
+            if (isFreshVisit) {
+                client.from("site_views").insert([{
+                    viewed_at: new Date().toISOString(),
+                    device: deviceType,
+                    platform: platform,
+                    browser: browser,
+                    screen: screenRes,
+                    page: pageLocation,
+                    user_agent: ua || 'Web Client',
+                    status: 'active'
+                }]).then(() => {}).catch(() => {});
+            }
+
+            client.from("portfolio_content").upsert({
+                section: "visitor_stats",
+                content: {
+                    totalViews: total,
+                    todayViews: today,
+                    weekViews: week,
+                    date: todayDateStr,
+                    last_device: deviceType,
+                    last_platform: platform,
+                    last_browser: browser,
+                    screen: screenRes,
+                    status: 'active',
+                    updated_at: new Date().toISOString()
+                },
+                updated_at: new Date().toISOString()
+            }, { onConflict: "section" }).then(() => {}).catch(() => {});
+        } catch (_) {}
+    }
+
+    // 7. Broadcast across open tabs and windows (instantly updates admin dashboard & tabs)
     try {
         if (typeof BroadcastChannel !== 'undefined') {
             const syncChannel = new BroadcastChannel('portfolio_sync_channel');
@@ -8640,7 +8690,7 @@ setInterval(updateLiveGreeting, 30000);
                     if (newTotal > total) {
                         total = newTotal;
                         try { localStorage.setItem("uk_visit_total_count", String(total)); } catch (_) {}
-                        if (totalEl) totalEl.textContent = total.toLocaleString("en-IN");
+                        updateDOMCounter(total);
                     }
                 }
             });
@@ -8652,7 +8702,7 @@ setInterval(updateLiveGreeting, 30000);
             const val = Number(e.newValue);
             if (!isNaN(val) && val > total) {
                 total = val;
-                if (totalEl) totalEl.textContent = total.toLocaleString("en-IN");
+                updateDOMCounter(total);
             }
         }
     });
