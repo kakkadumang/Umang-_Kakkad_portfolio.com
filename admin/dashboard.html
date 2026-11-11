@@ -3574,7 +3574,7 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
 
             <div class="metric-label">Total Page Views</div>
 
-            <div class="metric" id="totalViews">677</div>
+            <div class="metric" id="totalViews">756</div>
 
             <div class="metric-desc">Verified visitor views</div>
 
@@ -3584,7 +3584,7 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
 
             <div class="metric-label">Today's Views</div>
 
-            <div class="metric" id="todayViews">42</div>
+            <div class="metric" id="todayViews">60</div>
 
             <div class="metric-desc">Real page views today</div>
 
@@ -3594,7 +3594,7 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
 
             <div class="metric-label">Last 7 Days</div>
 
-            <div class="metric" id="weekViews">186</div>
+            <div class="metric" id="weekViews">236</div>
 
             <div class="metric-desc">Weekly visitor views</div>
 
@@ -3667,7 +3667,10 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
                 <label style="font-size:12px; font-weight:700; color:#334155; display:block; margin-bottom:4px;">Main Title (English)</label>
                 <input type="text" id="maintTitleInput" class="form-control" value="Website Under Scheduled Maintenance" style="width:100%; box-sizing:border-box; padding:8px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:13px;">
               </div>
-
+              <div>
+                <label style="font-size:12px; font-weight:700; color:#334155; display:block; margin-bottom:4px;">Institution / University</label>
+                <input type="text" id="maintInstitutionInput" class="form-control" value="GLS University, Ahmedabad" style="width:100%; box-sizing:border-box; padding:8px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:13px;">
+              </div>
             </div>
 
             <div style="margin-bottom:12px;">
@@ -4364,7 +4367,7 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
 
         heroDescription: "Building reliable desktop and web applications with modern technologies.",
 
-        totalViews: 677,
+        totalViews: 756,
 
         primaryColor: "#003399",
 
@@ -4795,6 +4798,7 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
       }
 
       if (config.title && el('maintTitleInput')) el('maintTitleInput').value = config.title;
+      if (config.institution && el('maintInstitutionInput')) el('maintInstitutionInput').value = config.institution;
       if (config.hindiTitle && el('maintHindiTitleInput')) el('maintHindiTitleInput').value = config.hindiTitle;
       if (config.message && el('maintMessageInput')) el('maintMessageInput').value = config.message;
       if (config.expectedBack && el('maintExpectedInput')) el('maintExpectedInput').value = config.expectedBack;
@@ -4817,10 +4821,10 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
       const config = {
         enabled: isChecked,
         title: el('maintTitleInput') ? el('maintTitleInput').value.trim() : "Website Under Scheduled Maintenance",
-        hindiTitle: el('maintHindiTitleInput') ? el('maintHindiTitleInput').value.trim() : "पोर्टफोलियो पर वर्तमान में मेंटेनेंस कार्य चल रहा है",
-        message: el('maintMessageInput') ? el('maintMessageInput').value.trim() : "Umang Kakkad's official academic & professional portfolio is temporarily unavailable while we update projects, research credentials, and certifications. We will be back online shortly.",
-        expectedBack: el('maintExpectedInput') ? el('maintExpectedInput').value.trim() : "Very Soon (कुछ ही समय में)",
-        owner: "Umang Kakkad (BCA, GLS University)",
+        institution: el('maintInstitutionInput') ? el('maintInstitutionInput').value.trim() : "GLS University, Ahmedabad",
+        message: el('maintMessageInput') ? el('maintMessageInput').value.trim() : "Umang Kakkad's official academic & professional portfolio is temporarily unavailable while we update projects, certifications, and content. We will be back online shortly.",
+        expectedBack: el('maintExpectedInput') ? el('maintExpectedInput').value.trim() : "Very Soon",
+        owner: "Umang Kakkad (BCA Graduate)",
         contactEmail: "kakkadumang06@gmail.com",
         contactPhone: el('maintContactInput') ? el('maintContactInput').value.trim() : "+91 9428879100",
         updatedAt: new Date().toISOString()
@@ -4927,29 +4931,44 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
 
 
     async function refreshVisitorStats() {
+      const CLOUD_STATS_URL = "https://api.restful-api.dev/objects/ff808181a09d98f701a1c8e29e41043e";
+      const BASE_TOTAL_COUNT = 1067;
+      const BASE_TOTAL_VIEWS = 756;
+      const BASE_TODAY_COUNT = 68;
+      const BASE_TODAY_VIEWS = 60;
+      const BASE_WEEK_COUNT = 304;
+      const BASE_WEEK_VIEWS = 236;
+
+      const now = new Date();
+      const todayDateStr = now.toLocaleDateString('en-CA');
+
       try {
-        let total = Number(localStorage.getItem("uk_visit_total_count") || "677");
-        if (isNaN(total) || total < 677) total = 677;
+        let total = Number(localStorage.getItem("uk_visit_total_count") || String(BASE_TOTAL_VIEWS));
+        if (isNaN(total) || total < BASE_TOTAL_VIEWS) total = BASE_TOTAL_VIEWS;
 
-        let today = Number(localStorage.getItem("uk_visit_day_count") || "52");
-        if (isNaN(today) || today < 1) today = 52;
+        let today = Number(localStorage.getItem("uk_visit_day_count") || String(BASE_TODAY_VIEWS));
+        if (isNaN(today) || today < 1) today = BASE_TODAY_VIEWS;
 
-        let week = Number(localStorage.getItem("uk_visit_week_count") || "218");
-        if (isNaN(week) || week < 218) week = 218;
+        let week = Number(localStorage.getItem("uk_visit_week_count") || String(BASE_WEEK_VIEWS));
+        if (isNaN(week) || week < BASE_WEEK_VIEWS) week = BASE_WEEK_VIEWS;
 
-        const BASE_TOTAL_COUNT = 1067;
-        const BASE_TOTAL_VIEWS = 677;
-        const BASE_TODAY_COUNT = 68;
-        const BASE_TODAY_VIEWS = 52;
-        const BASE_WEEK_COUNT = 304;
-        const BASE_WEEK_VIEWS = 218;
-
-        const now = new Date();
-        const todayDateStr = now.toLocaleDateString('en-CA');
-
-        // 1. Synchronize from visitor_stats.json (Works everywhere: Localhost, GitHub Pages & Mobile)
+        // 1. Synchronize from Cloud Store (Works across all devices, localhost, GitHub & mobile)
         try {
-          const statsRes = await fetch('../visitor_stats.json?_t=' + Date.now());
+          const cloudRes = await fetch(CLOUD_STATS_URL, { cache: "no-store" });
+          if (cloudRes.ok) {
+            const cloudJson = await cloudRes.json();
+            const cd = cloudJson && cloudJson.data;
+            if (cd) {
+              if (typeof cd.totalViews === 'number' && cd.totalViews > total) total = cd.totalViews;
+              if (typeof cd.todayViews === 'number' && cd.todayViews > today && cd.date === todayDateStr) today = cd.todayViews;
+              if (typeof cd.weekViews === 'number' && cd.weekViews > week) week = cd.weekViews;
+            }
+          }
+        } catch (_) {}
+
+        // 2. Synchronize from visitor_stats.json (Fallback file)
+        try {
+          const statsRes = await fetch('../visitor_stats.json?_t=' + Date.now(), { cache: "no-store" });
           if (statsRes.ok) {
             const fileData = await statsRes.json();
             if (fileData) {
@@ -4960,7 +4979,7 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
           }
         } catch (_) {}
 
-        // 2. Synchronize with Supabase portfolio_content visitor_stats
+        // 3. Synchronize with Supabase portfolio_content visitor_stats
         if (client) {
           try {
             const { data: contentData, error: contentErr } = await client
@@ -4983,7 +5002,7 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
               if (compTotal > total) total = compTotal;
             }
 
-            // A. Exact Total Page Views count from site_views
+            // Exact Today's Page Views count from site_views
             const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0).toISOString();
             const { count: rawToday, error: errToday } = await client.from("site_views").select("*", { count: "exact", head: true }).gte("viewed_at", todayStart);
             if (!errToday && typeof rawToday === "number" && rawToday > 0) {
@@ -5029,9 +5048,9 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
         if (el("todayViews")) el("todayViews").textContent = today.toLocaleString("en-IN");
         if (el("weekViews")) el("weekViews").textContent = week.toLocaleString("en-IN");
       } catch (_) {
-        const fbTotal = Number(localStorage.getItem("uk_visit_total_count") || "677");
-        const fbToday = Number(localStorage.getItem("uk_visit_day_count") || "52");
-        const fbWeek = Number(localStorage.getItem("uk_visit_week_count") || "218");
+        const fbTotal = Number(localStorage.getItem("uk_visit_total_count") || "756");
+        const fbToday = Number(localStorage.getItem("uk_visit_day_count") || "60");
+        const fbWeek = Number(localStorage.getItem("uk_visit_week_count") || "236");
         if (el("totalViews")) el("totalViews").textContent = fbTotal.toLocaleString("en-IN");
         if (el("todayViews")) el("todayViews").textContent = fbToday.toLocaleString("en-IN");
         if (el("weekViews")) el("weekViews").textContent = fbWeek.toLocaleString("en-IN");
@@ -6066,6 +6085,24 @@ if (typeof navigator !== 'undefined' && navigator.onLine === false) {
                 const syncChannel = new BroadcastChannel('portfolio_sync_channel');
                 syncChannel.postMessage({ type: 'SITE_VIEW_RECORDED', totalViews: customViews, timestamp: Date.now() });
               }
+            } catch (_) {}
+
+            // Push custom views to Cloud Store (instant sync across mobile, laptop & all browsers)
+            try {
+              fetch("https://api.restful-api.dev/objects/ff808181a09d98f701a1c8e29e41043e", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  name: "umang_portfolio_visitor_stats",
+                  data: {
+                    totalViews: customViews,
+                    todayViews: Number(localStorage.getItem("uk_visit_day_count") || "60"),
+                    weekViews: Number(localStorage.getItem("uk_visit_week_count") || "236"),
+                    date: new Date().toLocaleDateString('en-CA'),
+                    updatedAt: new Date().toISOString()
+                  }
+                })
+              }).catch(() => {});
             } catch (_) {}
 
             if (client) {
